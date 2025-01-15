@@ -1,26 +1,16 @@
 [
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
-    "Method": "GetQuestions",
+    "ContainingType": "QuestionsController",
+    "Method": "GetAllQuestions",
     "RelativePath": "api/Questions",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.Question, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
+    "ContainingType": "QuestionsController",
     "Method": "CreateQuestion",
     "RelativePath": "api/Questions",
     "HttpMethod": "POST",
@@ -28,25 +18,15 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "question",
-        "Type": "QuizMasterAPI.Models.Question",
+        "Name": "questionDto",
+        "Type": "QuizMasterAPI.Models.DTOs.CreateQuestionDto",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "QuizMasterAPI.Models.Question",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
+    "ContainingType": "QuestionsController",
     "Method": "GetQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "GET",
@@ -59,20 +39,10 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "QuizMasterAPI.Models.Question",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
+    "ContainingType": "QuestionsController",
     "Method": "UpdateQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "PUT",
@@ -85,15 +55,15 @@
         "IsRequired": true
       },
       {
-        "Name": "updatedQuestion",
-        "Type": "QuizMasterAPI.Models.Question",
+        "Name": "questionDto",
+        "Type": "QuizMasterAPI.Models.DTOs.UpdateQuestionDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
+    "ContainingType": "QuestionsController",
     "Method": "DeleteQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "DELETE",
@@ -109,7 +79,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
+    "ContainingType": "QuestionsController",
     "Method": "CheckAnswer",
     "RelativePath": "api/Questions/check-answer/{id}",
     "HttpMethod": "POST",
@@ -127,17 +97,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Boolean",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "QuizMasterAPI.Controllers.WeatherForecastController",

@@ -1,114 +1,80 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using QuizMasterAPI.Data;
-using QuizMasterAPI.Models;
-using System.Reflection.Metadata.Ecma335;
+using QuizMasterAPI.Interfaces;
+using QuizMasterAPI.Models.DTOs;
+using QuizMasterAPI.Models.Entities;
 
-namespace QuizMasterAPI.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class QuestionsController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class QuestionsController : ControllerBase
+    private readonly IQuestionService _questionService;
+
+    public QuestionsController(IQuestionService questionService)
     {
-        private readonly QuizDbContext _context;
+        _questionService = questionService;
+    }
 
-        public QuestionsController(QuizDbContext context)
+    [HttpGet]
+    public async Task<IActionResult> GetAllQuestions()
+    {
+        var questions = await _questionService.GetAllQuestions();
+        return Ok(questions);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuestion(int id)
+    {
+        var question = await _questionService.GetQuestion(id);
+        if (question == null)
         {
-            _context = context;
+            throw new KeyNotFoundException("Question not found.");
+        }
+        return Ok(question);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto questionDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Question>>> GetQuestions()
+        var question = await _questionService.CreateQuestion(questionDto);
+        return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionDto questionDto)
+    {
+        if (!ModelState.IsValid)
         {
-            return await _context.Questions.Include(q => q.AnswerOptions).ToListAsync();
-        }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Question>> GetQuestion(int id)
-        {
-            var question = await _context.Questions.Include(q => q.AnswerOptions).FirstOrDefaultAsync(q => q.Id == id);
-            if(question == null)
-            {
-                return NotFound();
-            }
-            return question;
+            return BadRequest(ModelState);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Question>> CreateQuestion(Question question)
+        var question = await _questionService.UpdateQuestion(id, questionDto);
+        if (question == null)
         {
-            foreach (var answerOption in question.AnswerOptions)
-            {
-                answerOption.QuestionId = question.Id;
-            }
-
-            _context.Questions.Add(question);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
+            throw new KeyNotFoundException("Question not found.");
         }
-        //update
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateQuestion(int id, Question updatedQuestion)
+        return Ok(question);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuestion(int id)
+    {
+        var result = await _questionService.DeleteQuestion(id);
+        if (!result)
         {
-            if(id != updatedQuestion.Id)
-            {
-                return BadRequest("Id вопроса не совпадает.");
-            }
-            var existingQuestion = await _context.Questions.Include(q => q.AnswerOptions).FirstOrDefaultAsync(q => q.Id == id);
-            if(existingQuestion == null)
-            {
-                return NotFound();
-            }
-            //update question
-            existingQuestion.Text = updatedQuestion.Text;
-            existingQuestion.CorrectAnswerId = updatedQuestion.CorrectAnswerId;
-            //update answer
-            _context.AnswerOptions.RemoveRange(existingQuestion.AnswerOptions);
-            foreach(var answerOption in updatedQuestion.AnswerOptions)
-            {
-                answerOption.QuestionId = id;
-                _context.AnswerOptions.Add(answerOption);
-            }
-            //save update
-            await _context.SaveChangesAsync();
-            return NoContent();
+            throw new KeyNotFoundException("Question not found.");
         }
+        return NoContent();
+    }
 
-        //delete
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteQuestion(int id)
-        {
-            var question = await _context.Questions.Include(q => q.AnswerOptions).FirstOrDefaultAsync(q => q.Id == id);
-            if(question == null)
-            {
-                return NotFound();
-            }
-
-            //delete question and answer
-            _context.AnswerOptions.RemoveRange(question.AnswerOptions);
-            _context.Questions.Remove(question);
-
-            //save
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        /////////////////////////////////////
-        [HttpPost("check-answer/{id}")]
-        public async Task<ActionResult<bool>> CheckAnswer(int id, [FromBody] int selectedAnswerId)
-        {
-            var question = await _context.Questions
-                .Include(q => q.AnswerOptions)
-                .FirstOrDefaultAsync(q => q.Id == id);
-
-            if (question == null)
-            {
-                return NotFound("Question not found.");
-            }
-
-            bool isCorrect = question.CorrectAnswerId == selectedAnswerId;
-
-            return Ok(isCorrect); 
-        }
+    [HttpPost("check-answer/{id}")]
+    public async Task<IActionResult> CheckAnswer(int id, [FromBody] int selectedAnswerId)
+    {
+        var isCorrect = await _questionService.CheckAnswer(id, selectedAnswerId);
+        return Ok(isCorrect);
     }
 }

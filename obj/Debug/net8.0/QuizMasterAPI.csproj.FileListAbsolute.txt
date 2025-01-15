@@ -174,3 +174,6 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\refi
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMasterAPI.pdb
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMasterAPI.genruntimeconfig.cache
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\ref\QuizMasterAPI.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMasterAPI.sourcelink.json
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

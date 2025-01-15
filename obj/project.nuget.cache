@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "4OykG0wjEK8=",
+  "dgSpecHash": "8hBUASK7Sx8=",
   "success": true,
   "projectFilePath": "C:\\Users\\zhanarys\\source\\repos\\QuizMasterAPI\\QuizMasterAPI\\QuizMasterAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\zhanarys\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\zhanarys\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\zhanarys\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\zhanarys\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\zhanarys\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

@@ -12,33 +12,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Question"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Question"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Question"
-                  }
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -48,48 +22,26 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Question"
-              }
-            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/CreateQuestionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/CreateQuestionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/CreateQuestionDto"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -112,24 +64,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Question"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -150,24 +85,19 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Question"
-              }
-            },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/UpdateQuestionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/UpdateQuestionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/Question"
+                "$ref": "#/components/schemas/UpdateQuestionDto"
               }
             }
           }
@@ -218,12 +148,6 @@
         ],
         "requestBody": {
           "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
             "application/json": {
               "schema": {
                 "type": "integer",
@@ -246,24 +170,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -310,45 +217,75 @@
   },
   "components": {
     "schemas": {
-      "AnswerOption": {
+      "AnswerOptionDto": {
+        "required": [
+          "text"
+        ],
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "text": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "questionId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "Question": {
+      "CreateQuestionDto": {
+        "required": [
+          "answerOptions",
+          "correctAnswerId",
+          "text"
+        ],
         "type": "object",
         "properties": {
-          "id": {
+          "text": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string"
+          },
+          "correctAnswerId": {
             "type": "integer",
             "format": "int32"
           },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
           "answerOptions": {
+            "maxItems": 5,
+            "minItems": 2,
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AnswerOption"
-            },
+              "$ref": "#/components/schemas/AnswerOptionDto"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateQuestionDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
             "nullable": true
           },
           "correctAnswerId": {
             "type": "integer",
             "format": "int32"
+          },
+          "answerOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerOptionDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
