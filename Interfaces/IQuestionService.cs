@@ -5,11 +5,11 @@ namespace QuizMasterAPI.Interfaces
 {
     public interface IQuestionService
     {
-        Task<IEnumerable<Question>> GetAllQuestions(); // Получение всех вопросов
-        Task<Question> GetQuestion(int id); // Получение вопроса по ID
-        Task<Question> CreateQuestion(CreateQuestionDto questionDto); // Создание вопроса
-        Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto); // Обновление вопроса
-        Task<bool> DeleteQuestion(int id); // Удаление вопроса
-        Task<bool> CheckAnswer(int questionId, int selectedAnswerId); // Проверка ответа
+        Task<IEnumerable<Question>> GetAllQuestions();
+        Task<Question> GetQuestion(int id);
+        Task<Question> CreateQuestion(CreateQuestionDto questionDto);
+        Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto);
+        Task<bool> DeleteQuestion(int id);
+        Task<bool> CheckAnswer(int questionId, int selectedAnswerId);
     }
 }

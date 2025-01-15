@@ -167,7 +167,6 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\stat
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.QuizMasterAPI.props
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.QuizMasterAPI.props
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMast.EB645C40.Up2Date
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMasterAPI.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\refint\QuizMasterAPI.dll
@@ -177,3 +176,4 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\ref\
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\QuizMasterAPI.sourcelink.json
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

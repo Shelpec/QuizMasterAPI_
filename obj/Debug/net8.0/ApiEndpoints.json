@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "GetAllQuestions",
     "RelativePath": "api/Questions",
     "HttpMethod": "GET",
@@ -10,7 +10,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "CreateQuestion",
     "RelativePath": "api/Questions",
     "HttpMethod": "POST",
@@ -18,7 +18,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "questionDto",
+        "Name": "dto",
         "Type": "QuizMasterAPI.Models.DTOs.CreateQuestionDto",
         "IsRequired": true
       }
@@ -26,7 +26,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "GetQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "GET",
@@ -42,7 +42,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "UpdateQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "PUT",
@@ -55,7 +55,7 @@
         "IsRequired": true
       },
       {
-        "Name": "questionDto",
+        "Name": "dto",
         "Type": "QuizMasterAPI.Models.DTOs.UpdateQuestionDto",
         "IsRequired": true
       }
@@ -63,7 +63,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "DeleteQuestion",
     "RelativePath": "api/Questions/{id}",
     "HttpMethod": "DELETE",
@@ -79,7 +79,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QuestionsController",
+    "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "CheckAnswer",
     "RelativePath": "api/Questions/check-answer/{id}",
     "HttpMethod": "POST",

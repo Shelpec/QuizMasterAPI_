@@ -38,32 +38,21 @@ namespace QuizMasterAPI.Services
 
         public async Task<Question> CreateQuestion(CreateQuestionDto questionDto)
         {
-            if (questionDto == null)
-            {
-                throw new ArgumentException("Question data cannot be null.");
-            }
-
             if (string.IsNullOrWhiteSpace(questionDto.Text))
             {
                 throw new ArgumentException("Question text cannot be empty.");
             }
 
-            if (questionDto.AnswerOptions == null || questionDto.AnswerOptions.Count != 3)
+            if (questionDto.AnswerOptions.Count != 3)
             {
                 throw new ArgumentException("Question must have exactly 3 answer options.");
-            }
-
-            if (!questionDto.AnswerOptions.Any(a => a.Id == questionDto.CorrectAnswerId))
-            {
-                throw new ArgumentException("Correct answer ID must match one of the provided answer options.");
             }
 
             var question = new Question
             {
                 Text = questionDto.Text,
-                CorrectAnswerId = questionDto.CorrectAnswerId,
                 AnswerOptions = questionDto.AnswerOptions
-                    .Select(a => new AnswerOption { Text = a.Text })
+                    .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
                     .ToList()
             };
 
@@ -75,78 +64,73 @@ namespace QuizMasterAPI.Services
 
         public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto)
         {
-            var existingQuestion = await _context.Questions
-                .Include(q => q.AnswerOptions)
-                .FirstOrDefaultAsync(q => q.Id == id);
+            var question = await GetQuestion(id);
 
-            if (existingQuestion == null)
+            question.Text = questionDto.Text;
+            _context.AnswerOptions.RemoveRange(question.AnswerOptions);
+
+            question.AnswerOptions = questionDto.AnswerOptions.Select(a => new AnswerOption
             {
-                throw new KeyNotFoundException($"Question with ID {id} not found.");
-            }
-
-            if (string.IsNullOrWhiteSpace(questionDto.Text))
-            {
-                throw new ArgumentException("Question text cannot be empty.");
-            }
-
-            if (questionDto.AnswerOptions == null || questionDto.AnswerOptions.Count != 3)
-            {
-                throw new ArgumentException("Question must have exactly 3 answer options.");
-            }
-
-            if (!questionDto.AnswerOptions.Any(a => a.Id == questionDto.CorrectAnswerId))
-            {
-                throw new ArgumentException("Correct answer ID must match one of the provided answer options.");
-            }
-
-
-            // Обновление текста и правильного ответа
-            existingQuestion.Text = questionDto.Text;
-            existingQuestion.CorrectAnswerId = questionDto.CorrectAnswerId;
-
-            _context.AnswerOptions.RemoveRange(existingQuestion.AnswerOptions);
-
-            // Добавляем новые варианты ответов
-            existingQuestion.AnswerOptions = questionDto.AnswerOptions.Select(dto => new AnswerOption
-            {
-                Text = dto.Text
+                Text = a.Text,
+                IsCorrect = a.IsCorrect,
+                QuestionId = id
             }).ToList();
 
             await _context.SaveChangesAsync();
-            return existingQuestion;
+            return question;
         }
-
 
         public async Task<bool> DeleteQuestion(int id)
         {
-            var question = await _context.Questions
-                .Include(q => q.AnswerOptions)
-                .FirstOrDefaultAsync(q => q.Id == id);
-
-            if (question == null)
-            {
-                throw new KeyNotFoundException($"Question with ID {id} not found.");
-            }
-
-            _context.AnswerOptions.RemoveRange(question.AnswerOptions);
+            var question = await GetQuestion(id);
             _context.Questions.Remove(question);
             await _context.SaveChangesAsync();
-
             return true;
         }
 
         public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
         {
-            var question = await _context.Questions
-                .Include(q => q.AnswerOptions)
-                .FirstOrDefaultAsync(q => q.Id == questionId);
+            var question = await GetQuestion(questionId);
+            var selectedAnswer = question.AnswerOptions.FirstOrDefault(a => a.Id == selectedAnswerId);
 
-            if (question == null)
+            if (selectedAnswer == null)
             {
-                throw new KeyNotFoundException($"Question with ID {questionId} not found.");
+                throw new ArgumentException("Answer option not found.");
             }
 
-            return question.CorrectAnswerId == selectedAnswerId;
+            return selectedAnswer.IsCorrect;
         }
+
+        //public async Task<int> StartQuiz(int questionCount, List<int> selectedAnswers)
+        //{
+        //    // Получаем вопросы
+        //    var questions = await _context.Questions
+        //        .Include(q => q.AnswerOptions)
+        //        .Take(questionCount)
+        //        .ToListAsync();
+
+        //    // Если вопросов меньше, чем нужно
+        //    if (questions.Count < questionCount)
+        //    {
+        //        throw new InvalidOperationException("Not enough questions available in the database.");
+        //    }
+
+        //    int correctAnswers = 0;
+
+        //    // Проверяем каждый ответ
+        //    for (int i = 0; i < questionCount; i++)
+        //    {
+        //        var question = questions[i];
+        //        var selectedAnswerId = selectedAnswers[i];
+
+        //        if (question.CorrectAnswerId == selectedAnswerId)
+        //        {
+        //            correctAnswers++;
+        //        }
+        //    }
+
+        //    return correctAnswers;
+        //}
+
     }
 }
