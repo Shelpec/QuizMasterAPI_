@@ -101,36 +101,122 @@ namespace QuizMasterAPI.Services
             return selectedAnswer.IsCorrect;
         }
 
-        //public async Task<int> StartQuiz(int questionCount, List<int> selectedAnswers)
+        public async Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count)
+        {
+            var questions = await _context.Questions
+                .Include(q => q.AnswerOptions)
+                .OrderBy(q => Guid.NewGuid())
+                .Take(count)
+                .ToListAsync();
+
+            return questions.Select(q => new QuestionDto
+            {
+                Id = q.Id,
+                Text = q.Text,
+                HasMultipleCorrectAnswers = q.AnswerOptions.Count(a => a.IsCorrect) > 1,
+                AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
+                {
+                    Id = a.Id,
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
+            });
+        }
+
+        public async Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers)
+        {
+            var questionIds = answers.Select(a => a.QuestionId).ToList();
+            var questions = await _context.Questions
+                .Include(q => q.AnswerOptions)
+                .Where(q => questionIds.Contains(q.Id))
+                .ToListAsync();
+
+            var response = new AnswerValidationResponseDto();
+            foreach (var answer in answers)
+            {
+                var question = questions.First(q => q.Id == answer.QuestionId);
+                var correctAnswers = question.AnswerOptions
+                    .Where(a => a.IsCorrect)
+                    .Select(a => a.Id)
+                    .ToList();
+
+                var isCorrect = !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
+                                !answer.SelectedAnswerIds.Except(correctAnswers).Any();
+
+                response.Results.Add(new QuestionValidationResultDto
+                {
+                    QuestionText = question.Text,
+                    CorrectAnswers = question.AnswerOptions
+                        .Where(a => a.IsCorrect)
+                        .Select(a => a.Text)
+                        .ToList(),
+                    SelectedAnswers = question.AnswerOptions
+                        .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
+                        .Select(a => a.Text)
+                        .ToList()
+                });
+
+                if (isCorrect)
+                {
+                    response.CorrectCount++;
+                }
+            }
+
+            return response;
+        }
+
+        //public async Task<IEnumerable<RandomQuestionDto>> GetRandomQuestionsAsync(int questionCount)
         //{
-        //    // Получаем вопросы
         //    var questions = await _context.Questions
-        //        .Include(q => q.AnswerOptions)
-        //        .Take(questionCount)
+        //        .Include(q => q.AnswerOptions) // Загружаем варианты ответов
+        //        .OrderBy(q => Guid.NewGuid()) // Рандомизируем порядок
+        //        .Take(questionCount) // Берем указанное количество
         //        .ToListAsync();
 
-        //    // Если вопросов меньше, чем нужно
-        //    if (questions.Count < questionCount)
+        //    return questions.Select(q => new RandomQuestionDto
         //    {
-        //        throw new InvalidOperationException("Not enough questions available in the database.");
-        //    }
-
-        //    int correctAnswers = 0;
-
-        //    // Проверяем каждый ответ
-        //    for (int i = 0; i < questionCount; i++)
-        //    {
-        //        var question = questions[i];
-        //        var selectedAnswerId = selectedAnswers[i];
-
-        //        if (question.CorrectAnswerId == selectedAnswerId)
+        //        QuestionId = q.Id,
+        //        QuestionText = q.Text,
+        //        AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
         //        {
-        //            correctAnswers++;
+        //            Id = a.Id,
+        //            Text = a.Text
+        //        }).ToList()
+        //    });
+        //}
+
+
+        //public async Task<IEnumerable<AnswerCheckResultDto>> CheckAnswersAsync(IEnumerable<AnswerSubmissionDto> answers)
+        //{
+        //    var results = new List<AnswerCheckResultDto>();
+
+        //    foreach (var answer in answers)
+        //    {
+        //        var question = await _context.Questions
+        //            .Include(q => q.AnswerOptions)
+        //            .FirstOrDefaultAsync(q => q.Id == answer.QuestionId);
+
+        //        if (question == null)
+        //        {
+        //            continue; // Если вопрос не найден, пропускаем
         //        }
+
+        //        var correctAnswer = question.AnswerOptions.FirstOrDefault(a => a.IsCorrect);
+        //        var selectedAnswer = question.AnswerOptions.FirstOrDefault(a => a.Id == answer.SelectedAnswerId);
+
+        //        results.Add(new AnswerCheckResultDto
+        //        {
+        //            QuestionText = question.Text,
+        //            CorrectAnswerText = correctAnswer?.Text ?? "Unknown",
+        //            SelectedAnswerText = selectedAnswer?.Text ?? "Unknown",
+        //            IsCorrect = correctAnswer?.Id == selectedAnswer?.Id
+        //        });
         //    }
 
-        //    return correctAnswers;
+        //    return results;
         //}
+
+
 
     }
 }

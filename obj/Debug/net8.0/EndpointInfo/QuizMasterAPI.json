@@ -130,47 +130,107 @@
         }
       }
     },
-    "/api/Questions/check-answer/{id}": {
-      "post": {
+    "/api/Questions/random": {
+      "get": {
         "tags": [
           "Questions"
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "name": "count",
+            "in": "query",
             "schema": {
               "type": "integer",
               "format": "int32"
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuestionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Questions/check-answers": {
+      "post": {
+        "tags": [
+          "Questions"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AnswerValidationDto"
+                }
               }
             },
             "text/json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AnswerValidationDto"
+                }
               }
             },
             "application/*+json": {
               "schema": {
-                "type": "integer",
-                "format": "int32"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AnswerValidationDto"
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerValidationResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerValidationResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerValidationResponseDto"
+                }
+              }
+            }
           }
         }
       }
@@ -220,12 +280,51 @@
       "AnswerOptionDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "text": {
             "type": "string",
             "nullable": true
           },
           "isCorrect": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnswerValidationDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "selectedAnswerIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnswerValidationResponseDto": {
+        "type": "object",
+        "properties": {
+          "correctCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionValidationResultDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -241,6 +340,54 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AnswerOptionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasMultipleCorrectAnswers": {
+            "type": "boolean"
+          },
+          "answerOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerOptionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionValidationResultDto": {
+        "type": "object",
+        "properties": {
+          "questionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "correctAnswers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "selectedAnswers": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
             "nullable": true
           }

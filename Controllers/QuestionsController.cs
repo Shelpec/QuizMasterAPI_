@@ -58,24 +58,64 @@ namespace QuizMasterAPI.Controllers
             return NoContent();
         }
 
-        [HttpPost("check-answer/{id}")]
-        public async Task<IActionResult> CheckAnswer(int id, [FromBody] int selectedAnswerId)
+        [HttpGet("random")]
+        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetRandomQuestions([FromQuery] int count)
         {
-            var isCorrect = await _service.CheckAnswer(id, selectedAnswerId);
-            return Ok(isCorrect);
+            if (count <= 0)
+            {
+                return BadRequest("Count must be greater than zero.");
+            }
+
+            var questions = await _service.GetRandomQuestions(count);
+            return Ok(questions);
         }
 
-        //[HttpPost("start-quiz")]
-        //public async Task<ActionResult<int>> StartQuiz([FromBody] QuizRequestDto quizRequest)
+        [HttpPost("check-answers")]
+        public async Task<ActionResult<AnswerValidationResponseDto>> CheckAnswers([FromBody] List<AnswerValidationDto> answers)
+        {
+            if (!answers.Any())
+            {
+                return BadRequest("Answers cannot be empty.");
+            }
+
+            var result = await _service.CheckAnswers(answers);
+            return Ok(result);
+        }
+
+        //[HttpGet("random-questions")]
+        //public async Task<ActionResult<IEnumerable<RandomQuestionDto>>> GetRandomQuestions([FromQuery] int questionCount)
         //{
-        //    if (quizRequest.SelectedAnswers.Count != quizRequest.QuestionCount)
+        //    if (questionCount <= 0)
         //    {
-        //        return BadRequest("Number of answers does not match the number of questions.");
+        //        return BadRequest("Question count must be greater than 0.");
         //    }
 
-        //    var correctAnswersCount = await _questionService.StartQuiz(quizRequest.QuestionCount, quizRequest.SelectedAnswers);
+        //    var questions = await _service.GetRandomQuestionsAsync(questionCount);
+        //    if (!questions.Any())
+        //    {
+        //        return NotFound("No questions available.");
+        //    }
 
-        //    return Ok(correctAnswersCount);
+        //    return Ok(questions);
+        //}
+
+
+        //[HttpPost("check-answers")]
+        //public async Task<ActionResult> CheckAnswers([FromBody] IEnumerable<AnswerSubmissionDto> answers)
+        //{
+        //    if (answers == null || !answers.Any())
+        //    {
+        //        return BadRequest("Answers cannot be empty.");
+        //    }
+
+        //    var results = await _service.CheckAnswersAsync(answers);
+        //    var correctAnswersCount = results.Count(r => r.IsCorrect);
+
+        //    return Ok(new
+        //    {
+        //        CorrectAnswersCount = correctAnswersCount,
+        //        Results = results
+        //    });
         //}
 
     }
