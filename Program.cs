@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using QuizMasterAPI.Data;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Middleware;
+using QuizMasterAPI.Repositories;
 using QuizMasterAPI.Services;
 using System.Threading.RateLimiting;
 
@@ -11,8 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<QuizDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
