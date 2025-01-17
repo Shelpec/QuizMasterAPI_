@@ -319,6 +319,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
           "results": {
             "type": "array",
             "items": {

@@ -100,24 +100,20 @@ namespace QuizMasterAPI.Services
         {
             var questionIds = answers.Select(a => a.QuestionId).ToList();
             var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
-
             var response = new AnswerValidationResponseDto();
-            foreach (var answer in answers)
+            foreach(var answer in answers)
             {
                 var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                if (question == null)
+                if(question == null)
                 {
-                    throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found.");
+                    throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
                 }
-
-                var correctAnswers = question.AnswerOptions
+                var correctAnsers = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
-
-                var isCorrect = !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
-                                !answer.SelectedAnswerIds.Except(correctAnswers).Any();
-
+                var isCorrect = !correctAnsers.Except(answer.SelectedAnswerIds).Any() &&
+                    !answer.SelectedAnswerIds.Except(correctAnsers).Any();
                 response.Results.Add(new QuestionValidationResultDto
                 {
                     QuestionText = question.Text,
@@ -129,16 +125,15 @@ namespace QuizMasterAPI.Services
                         .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
                         .Select(a => a.Text)
                         .ToList()
+                
                 });
-
                 if (isCorrect)
                 {
+                    response.Score += correctAnsers.Count > 1 ? 2 : 2;
                     response.CorrectCount++;
                 }
             }
-
             return response;
         }
-
     }
 }
