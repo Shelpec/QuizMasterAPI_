@@ -178,6 +178,53 @@
   },
   {
     "ContainingType": "QuizMasterAPI.Controllers.TestsController",
+    "Method": "UpdateTest",
+    "RelativePath": "api/Tests/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "QuizMasterAPI.Models.DTOs.UpdateTestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.DTOs.TestDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "QuizMasterAPI.Controllers.TestsController",
+    "Method": "DeleteTest",
+    "RelativePath": "api/Tests/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuizMasterAPI.Controllers.TestsController",
     "Method": "CheckTestAnswers",
     "RelativePath": "api/Tests/{testId}/check",
     "HttpMethod": "POST",
@@ -211,7 +258,7 @@
     "ContainingType": "QuizMasterAPI.Controllers.TestsController",
     "Method": "CreateTest",
     "RelativePath": "api/Tests/create",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [

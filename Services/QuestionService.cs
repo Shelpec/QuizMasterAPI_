@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuizMasterAPI.Data;
-using QuizMasterAPI.Interfaces;
+﻿using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
-
 
 namespace QuizMasterAPI.Services
 {
@@ -16,67 +13,102 @@ namespace QuizMasterAPI.Services
             _repository = repository;
         }
 
+        /// <summary>
+        /// Получить все вопросы (можно просто _repository.GetAllAsync())
+        /// </summary>
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
-            return await _repository.GetAllQuestionsAsync();
+            return await _repository.GetAllAsync();
         }
 
+        /// <summary>
+        /// Получить конкретный вопрос по ID
+        /// </summary>
         public async Task<Question> GetQuestion(int id)
         {
-            var question = await _repository.GetQuestionByIdAsync(id);
-            if(question == null)
+            var question = await _repository.GetByIdAsync(id);
+            if (question == null)
             {
                 throw new KeyNotFoundException($"Question with ID {id} not found.");
             }
             return question;
         }
 
+        /// <summary>
+        /// Создать новый вопрос с вариантами
+        /// </summary>
         public async Task<Question> CreateQuestion(CreateQuestionDto questionDto)
         {
             var question = new Question
             {
                 Text = questionDto.Text,
                 AnswerOptions = questionDto.AnswerOptions
-                .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
-                .ToList()
+                    .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
+                    .ToList()
             };
-            await _repository.AddQuestionAsync(question);
+
+            await _repository.AddAsync(question);
+            // Не забываем сохранить изменения
+            await _repository.SaveChangesAsync();
             return question;
         }
 
+        /// <summary>
+        /// Обновить вопрос
+        /// </summary>
         public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto)
         {
+            // 1. Находим существующий вопрос
             var question = await GetQuestion(id);
+
+            // 2. Меняем поля
             question.Text = questionDto.Text;
             question.AnswerOptions = questionDto.AnswerOptions
-                .Select(a => new AnswerOption 
+                .Select(a => new AnswerOption
                 {
-                Text = a.Text,
-                IsCorrect = a.IsCorrect,
-                QuestionId = id}
-                ).ToList();
-            await _repository.UpdateQuestionAsync(question);
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect,
+                    QuestionId = id
+                })
+                .ToList();
+
+            // 3. Вызываем UpdateAsync + SaveChangesAsync
+            await _repository.UpdateAsync(question);
+            await _repository.SaveChangesAsync();
+
             return question;
         }
 
+        /// <summary>
+        /// Удалить вопрос
+        /// </summary>
         public async Task<bool> DeleteQuestion(int id)
         {
             var question = await GetQuestion(id);
-            await _repository.DeleteQuestionAsync(question);
+            await _repository.DeleteAsync(question);
+            await _repository.SaveChangesAsync();
             return true;
         }
 
+        /// <summary>
+        /// Проверить один вариант ответа
+        /// </summary>
         public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
         {
             var question = await GetQuestion(questionId);
-            var selectedAnser = question.AnswerOptions.FirstOrDefault(a => a.Id == selectedAnswerId);
-            if(selectedAnser != null)
+
+            var selectedAnswer = question.AnswerOptions.FirstOrDefault(a => a.Id == selectedAnswerId);
+            if (selectedAnswer == null)
             {
-                throw new ArgumentException("Anser option not found.");
+                throw new ArgumentException("Answer option not found.");
             }
-            return selectedAnser.IsCorrect;
+
+            return selectedAnswer.IsCorrect;
         }
 
+        /// <summary>
+        /// Получить случайные вопросы
+        /// </summary>
         public async Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count)
         {
             var questions = await _repository.GetRandomQuestionsAsync(count);
@@ -95,25 +127,34 @@ namespace QuizMasterAPI.Services
             });
         }
 
-
+        /// <summary>
+        /// Проверить несколько ответов по разным вопросам
+        /// </summary>
         public async Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers)
         {
             var questionIds = answers.Select(a => a.QuestionId).ToList();
             var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+
             var response = new AnswerValidationResponseDto();
-            foreach(var answer in answers)
+
+            foreach (var answer in answers)
             {
                 var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                if(question == null)
+                if (question == null)
                 {
                     throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
                 }
-                var correctAnsers = question.AnswerOptions
+
+                var correctAnswers = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
-                var isCorrect = !correctAnsers.Except(answer.SelectedAnswerIds).Any() &&
-                    !answer.SelectedAnswerIds.Except(correctAnsers).Any();
+
+                var isCorrect =
+                    !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
+                    !answer.SelectedAnswerIds.Except(correctAnswers).Any();
+
+                // Детальная информация
                 response.Results.Add(new QuestionValidationResultDto
                 {
                     QuestionText = question.Text,
@@ -125,14 +166,18 @@ namespace QuizMasterAPI.Services
                         .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
                         .Select(a => a.Text)
                         .ToList()
-                
                 });
+
                 if (isCorrect)
                 {
-                    response.Score += correctAnsers.Count > 1 ? 2 : 2;
+                    // Простой подсчёт очков:
+                    // Если несколько правильных ответов, даём 2 очка, 
+                    // если один — тоже 2 (по коду).
+                    response.Score += (correctAnswers.Count > 1) ? 2 : 2;
                     response.CorrectCount++;
                 }
             }
+
             return response;
         }
     }

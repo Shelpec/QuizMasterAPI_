@@ -82,41 +82,5 @@ namespace QuizMasterAPI.Controllers
             return Ok(result);
         }
 
-        //[HttpGet("random-questions")]
-        //public async Task<ActionResult<IEnumerable<RandomQuestionDto>>> GetRandomQuestions([FromQuery] int questionCount)
-        //{
-        //    if (questionCount <= 0)
-        //    {
-        //        return BadRequest("Question count must be greater than 0.");
-        //    }
-
-        //    var questions = await _service.GetRandomQuestionsAsync(questionCount);
-        //    if (!questions.Any())
-        //    {
-        //        return NotFound("No questions available.");
-        //    }
-
-        //    return Ok(questions);
-        //}
-
-
-        //[HttpPost("check-answers")]
-        //public async Task<ActionResult> CheckAnswers([FromBody] IEnumerable<AnswerSubmissionDto> answers)
-        //{
-        //    if (answers == null || !answers.Any())
-        //    {
-        //        return BadRequest("Answers cannot be empty.");
-        //    }
-
-        //    var results = await _service.CheckAnswersAsync(answers);
-        //    var correctAnswersCount = results.Count(r => r.IsCorrect);
-
-        //    return Ok(new
-        //    {
-        //        CorrectAnswersCount = correctAnswersCount,
-        //        Results = results
-        //    });
-        //}
-
     }
 }

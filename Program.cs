@@ -14,10 +14,16 @@ builder.Services.AddDbContext<QuizDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // –епозитории и сервисы:
-builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+//builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
-builder.Services.AddScoped<ITestRepository, TestRepository>();
+//builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+// –егистрируем специализированные репозитории:
+builder.Services.AddScoped<ITestRepository, TestRepository>();
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 
 // Swagger (документаци€):
 builder.Services.AddEndpointsApiExplorer();

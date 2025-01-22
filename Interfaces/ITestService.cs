@@ -24,6 +24,10 @@ namespace QuizMasterAPI.Interfaces
 
         Task<TestCheckResultDto> CheckTestAnswersAsync(int testId, List<TestAnswerValidationDto> userAnswers);
 
+        // Новый метод: обновление теста
+        Task<Test> UpdateTestAsync(int id, List<int> questionIds);
 
+        // Новый метод: удаление теста
+        Task DeleteTestAsync(int id);
     }
 }

@@ -19,29 +19,25 @@ namespace QuizMasterAPI.Services
 
         public async Task<Test> CreateTestAsync(int questionCount)
         {
-            // 1. Получаем нужное кол-во случайных вопросов:
             var randomQuestions = await _questionRepository.GetRandomQuestionsAsync(questionCount);
 
-            // 2. Создаем новый тест
             var newTest = new Test
             {
                 CreatedAt = DateTime.UtcNow
             };
 
-            // 3. Создаем связи (TestQuestion) к каждому вопросу:
             foreach (var question in randomQuestions)
             {
-                var testQuestion = new TestQuestion
+                newTest.TestQuestions.Add(new TestQuestion
                 {
                     QuestionId = question.Id
-                };
-                newTest.TestQuestions.Add(testQuestion);
+                });
             }
 
-            // 4. Сохраняем тест в базе:
-            var createdTest = await _testRepository.CreateTestAsync(newTest);
+            await _testRepository.AddAsync(newTest);
+            await _testRepository.SaveChangesAsync();
 
-            return createdTest;
+            return newTest;
         }
 
         public async Task<Test?> GetTestByIdAsync(int id)
@@ -54,59 +50,102 @@ namespace QuizMasterAPI.Services
             return await _testRepository.GetAllTestsAsync();
         }
 
+
+        public async Task<Test> UpdateTestAsync(int id, List<int> questionIds)
+        {
+            // 1. Проверяем, существует ли тест
+            var test = await _testRepository.GetTestByIdAsync(id);
+            if (test == null)
+                throw new KeyNotFoundException($"Тест с Id={id} не найден.");
+
+            // 2. Проверяем, существуют ли все указанные вопросы
+            var questions = await _questionRepository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+            if (questions.Count != questionIds.Count)
+                throw new ArgumentException("Некоторые из указанных вопросов не найдены.");
+
+            // 3. Обновляем связанные вопросы
+            test.TestQuestions.Clear();
+            foreach (var question in questions)
+            {
+                test.TestQuestions.Add(new TestQuestion
+                {
+                    QuestionId = question.Id,
+                    TestId = test.Id
+                });
+            }
+
+            await _testRepository.UpdateAsync(test);
+            await _testRepository.SaveChangesAsync();
+
+            return test;
+        }
+
+        public async Task DeleteTestAsync(int id)
+        {
+            var test = await _testRepository.GetTestByIdAsync(id);
+            if (test == null)
+                throw new KeyNotFoundException($"Тест с Id={id} не найден.");
+
+            await _testRepository.DeleteAsync(test);
+            await _testRepository.SaveChangesAsync();
+        }
+
+
         /// <summary>
         /// Проверяем ответы по тесту
         /// </summary>
         public async Task<TestCheckResultDto> CheckTestAnswersAsync(int testId, List<TestAnswerValidationDto> userAnswers)
         {
-            // 1. Загружаем тест со всеми вопросами + вариантами:
-            //    (предполагаем, что в репозитории вы делаете .Include(t => t.TestQuestions).ThenInclude(tq => tq.Question))
+            // 1. Загружаем тест со всеми вопросами
             var test = await _testRepository.GetTestByIdAsync(testId);
             if (test == null)
                 throw new KeyNotFoundException($"Test with ID {testId} not found.");
 
-            // Для удобства подгрузим варианты ответа (если не были подгружены):
-            // Можно либо расширить репозиторий GetTestByIdAsync(...Include(tq => tq.Question.AnswerOptions)),
-            // либо вручную запросить QuestionRepository.
-            // Ниже для наглядности сделаем:
-            var questionIds = test.TestQuestions.Select(tq => tq.QuestionId).ToList();
-            var questionsWithAnswers = await _questionRepository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+            // Множество ID вопросов, реально входящих в тест
+            var validQuestionIds = test.TestQuestions.Select(tq => tq.QuestionId).ToHashSet();
 
-            // 2. Начинаем формировать результат
+            // 2. Проверяем, нет ли вопросов, не входящих в тест
+            var invalidUserAnswers = userAnswers.Where(ua => !validQuestionIds.Contains(ua.QuestionId)).ToList();
+            if (invalidUserAnswers.Any())
+            {
+                var invalidIds = string.Join(",", invalidUserAnswers.Select(i => i.QuestionId));
+                throw new ArgumentException($"Вопрос(ы) с ID [{invalidIds}] не принадлежат тесту с ID {testId}.");
+            }
+
+            // 3. Подгружаем варианты ответов для всех вопросов теста
+            var questionsWithAnswers = await _questionRepository.GetQuestionsWithAnswersByIdsAsync(validQuestionIds.ToList());
+
+            // 4. Готовим структуру результата
             var result = new TestCheckResultDto
             {
                 TotalQuestions = test.TestQuestions.Count
             };
 
-            // 3. Для каждого вопроса в тесте проверим, что пользователь выбрал
+            // 5. Проверяем ответы пользователя
             foreach (var testQuestion in test.TestQuestions)
             {
-                // Находим соответствующий вопрос (с его вариантами)
                 var question = questionsWithAnswers.FirstOrDefault(q => q.Id == testQuestion.QuestionId);
                 if (question == null)
-                    throw new KeyNotFoundException($"Question with ID {testQuestion.QuestionId} not found.");
+                    throw new KeyNotFoundException($"Question with ID {testQuestion.QuestionId} not found in DB.");
 
-                // Ищем ответ пользователя (SelectedAnswerIds) по этому question.Id
+                // Ищем, что выбрал пользователь
                 var userAnswer = userAnswers.FirstOrDefault(a => a.QuestionId == question.Id);
-
-                // Если пользователь не передал ничего про этот вопрос, считаем ответ неправильным
                 var selectedAnswerIds = userAnswer?.SelectedAnswerIds ?? new List<int>();
 
-                // Получаем все правильные варианты
+                // Все правильные варианты ответа
                 var correctAnswerIds = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
 
-                // Проверим, верно ли
-                // Правильным считаем ответ, если выбран ровно тот набор, что и correctAnswerIds
+                // Логика проверки (набор выбранных совпадает с набором правильных)
                 bool isCorrect = !correctAnswerIds.Except(selectedAnswerIds).Any()
                                  && !selectedAnswerIds.Except(correctAnswerIds).Any();
 
                 if (isCorrect)
                     result.CorrectCount++;
 
-                // 4. Формируем детальную информацию
+                // Детали
                 var questionCheck = new QuestionCheckResultDto
                 {
                     QuestionId = question.Id,

@@ -5,38 +5,40 @@ using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Repositories
 {
-    public class TestRepository : ITestRepository
+    public class TestRepository : GenericRepository<Test>, ITestRepository
     {
-        private readonly QuizDbContext _context;
+        private readonly QuizDbContext _ctx;
 
-        public TestRepository(QuizDbContext context)
+        public TestRepository(QuizDbContext context) : base(context)
         {
-            _context = context;
+            _ctx = context;
         }
 
-        public async Task<Test> CreateTestAsync(Test test)
-        {
-            _context.Tests.Add(test);
-            await _context.SaveChangesAsync();
-            return test;
-        }
-
+        /// <summary>
+        /// Получить тест по ID со связанными вопросами и вариантами ответов.
+        /// Переопределяем, т.к. нужно Include
+        /// </summary>
         public async Task<Test?> GetTestByIdAsync(int id)
         {
-            return await _context.Tests
+            return await _ctx.Tests
                 .Include(t => t.TestQuestions)
-                .ThenInclude(tq => tq.Question)
-                .ThenInclude(q => q.AnswerOptions)  // <-- Подгружаем варианты ответов
+                    .ThenInclude(tq => tq.Question)
+                    .ThenInclude(q => q.AnswerOptions)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-
+        /// <summary>
+        /// Получить все тесты, подгрузив вопросы.
+        /// </summary>
         public async Task<IEnumerable<Test>> GetAllTestsAsync()
         {
-            return await _context.Tests
+            return await _ctx.Tests
                 .Include(t => t.TestQuestions)
-                .ThenInclude(tq => tq.Question)
+                    .ThenInclude(tq => tq.Question)
                 .ToListAsync();
         }
+
+        // Остальные CRUD-методы (Add, Update, Delete) 
+        // мы используем из базового GenericRepository.
     }
 }

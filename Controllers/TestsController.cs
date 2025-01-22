@@ -16,28 +16,24 @@ namespace QuizMasterAPI.Controllers
             _testService = testService;
         }
 
+
         /// <summary>
-        /// Создаёт новый тест с указанным кол-вом вопросов.
-        /// GET /api/tests/create?count=3
+        /// Создаёт новый тест с указанным количеством вопросов.
         /// </summary>
-        [HttpGet("create")]
+        [HttpPost("create")]
         public async Task<ActionResult<TestDto>> CreateTest([FromQuery] int count)
         {
             if (count <= 0)
                 return BadRequest("Количество вопросов (count) должно быть больше 0.");
 
-            // 1. Создаём тест (сущность EF).
             var test = await _testService.CreateTestAsync(count);
 
-            // 2. Конвертируем Test -> TestDto
             var testDto = ConvertToDto(test);
-
-            return Ok(testDto);
+            return CreatedAtAction(nameof(GetTest), new { id = testDto.Id }, testDto);
         }
 
         /// <summary>
-        /// Получаем тест по Id
-        /// GET /api/tests/{id}
+        /// Получить тест по ID.
         /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<TestDto>> GetTest(int id)
@@ -46,24 +42,59 @@ namespace QuizMasterAPI.Controllers
             if (test == null)
                 return NotFound($"Тест с Id={id} не найден.");
 
-            // Маппинг: Test -> TestDto
             return Ok(ConvertToDto(test));
         }
 
         /// <summary>
-        /// Пример получения всех тестов (для отладки).
+        /// Получить все тесты.
         /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestDto>>> GetAllTests()
         {
             var tests = await _testService.GetAllTestsAsync();
-            // Маппим сразу все
             var result = tests.Select(t => ConvertToDto(t)).ToList();
             return Ok(result);
         }
 
         /// <summary>
-        /// Маппинг сущности EF -> DTO
+        /// Обновить существующий тест (например, изменить связанные вопросы).
+        /// </summary>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TestDto>> UpdateTest(int id, [FromBody] UpdateTestDto dto)
+        {
+            if (dto.QuestionIds == null || !dto.QuestionIds.Any())
+                return BadRequest("Необходимо указать хотя бы один вопрос для теста.");
+
+            try
+            {
+                var updatedTest = await _testService.UpdateTestAsync(id, dto.QuestionIds);
+                return Ok(ConvertToDto(updatedTest));
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Удалить тест по ID.
+        /// </summary>
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTest(int id)
+        {
+            try
+            {
+                await _testService.DeleteTestAsync(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Маппинг сущности EF -> DTO.
         /// </summary>
         private TestDto ConvertToDto(Test test)
         {
@@ -83,16 +114,12 @@ namespace QuizMasterAPI.Controllers
                             {
                                 Id = ao.Id,
                                 Text = ao.Text
-                                // Если хотим показать пользователю, какой ответ правильный:
-                                //IsCorrect = ao.IsCorrect
                             })
                             .ToList()
                     }
-                })
-                .ToList()
+                }).ToList()
             };
         }
-
 
         /// <summary>
         /// Проверяем ответы на тест.
