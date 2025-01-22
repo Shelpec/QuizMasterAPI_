@@ -57,7 +57,7 @@ namespace QuizMasterAPI.Controllers
         public async Task<ActionResult<IEnumerable<TestDto>>> GetAllTests()
         {
             var tests = await _testService.GetAllTestsAsync();
-            // Маппим сразу все.
+            // Маппим сразу все
             var result = tests.Select(t => ConvertToDto(t)).ToList();
             return Ok(result);
         }
