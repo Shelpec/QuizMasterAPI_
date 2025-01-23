@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Services;
@@ -24,7 +25,7 @@ namespace QuizMasterAPI.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
