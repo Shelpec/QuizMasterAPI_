@@ -13,6 +13,13 @@ namespace QuizMasterAPI.Repositories
         {
             _ctx = context;
         }
+        public async Task<Question?> GetQuestionByIdAsync(int id)
+        {
+            return await _ctx.Questions
+                .Include(q => q.AnswerOptions) // Подгружаем связанные варианты ответов
+                .FirstOrDefaultAsync(q => q.Id == id);
+        }
+
 
         public async Task<List<Question>> GetQuestionsWithAnswersByIdsAsync(List<int> questionIds)
         {

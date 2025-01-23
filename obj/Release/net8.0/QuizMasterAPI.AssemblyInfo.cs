@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QuizMasterAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be5dbf852e3c7a9ce82408c35145c9cf86830105")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2928b4e360335c4d884e5978817f3a21aa76e84f")]
 [assembly: System.Reflection.AssemblyProductAttribute("QuizMasterAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QuizMasterAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

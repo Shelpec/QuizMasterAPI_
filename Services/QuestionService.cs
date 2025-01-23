@@ -26,13 +26,37 @@ namespace QuizMasterAPI.Services
         /// </summary>
         public async Task<Question> GetQuestion(int id)
         {
-            var question = await _repository.GetByIdAsync(id);
+            var question = await _repository.GetQuestionByIdAsync(id);
             if (question == null)
             {
                 throw new KeyNotFoundException($"Question with ID {id} not found.");
             }
             return question;
         }
+
+        private QuestionDto MapToDto(Question question)
+        {
+            return new QuestionDto
+            {
+                Id = question.Id,
+                Text = question.Text,
+                HasMultipleCorrectAnswers = question.AnswerOptions.Count(a => a.IsCorrect) > 1,
+                AnswerOptions = question.AnswerOptions.Select(a => new AnswerOptionDto
+                {
+                    Id = a.Id,
+                    Text = a.Text,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
+            };
+        }
+        public async Task<QuestionDto> GetQuestionDto(int id)
+        {
+            var question = await GetQuestion(id); // Вызов с подгруженными AnswerOptions
+            return MapToDto(question);
+        }
+
+
+
 
         /// <summary>
         /// Создать новый вопрос с вариантами

@@ -6,5 +6,7 @@ namespace QuizMasterAPI.Interfaces
     {
         Task<List<Question>> GetQuestionsWithAnswersByIdsAsync(List<int> questionIds);
         Task<List<Question>> GetRandomQuestionsAsync(int count);
+        Task<Question?> GetQuestionByIdAsync(int id);
+
     }
 }

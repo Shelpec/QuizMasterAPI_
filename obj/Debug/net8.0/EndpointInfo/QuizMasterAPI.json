@@ -64,7 +64,24 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionDto"
+                }
+              }
+            }
           }
         }
       },
@@ -541,6 +558,9 @@
           "text": {
             "type": "string",
             "nullable": true
+          },
+          "isCorrect": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

@@ -12,6 +12,7 @@ namespace QuizMasterAPI.Interfaces
         Task<bool> DeleteQuestion(int id);
         Task<bool> CheckAnswer(int questionId, int selectedAnswerId);
 
+        Task<QuestionDto> GetQuestionDto(int id);
         Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count);
         Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers);
     }

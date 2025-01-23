@@ -23,19 +23,22 @@ namespace QuizMasterAPI.Controllers
             return Ok(questions);
         }
 
+
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuestion(int id)
+        public async Task<ActionResult<QuestionDto>> GetQuestion(int id)
         {
             try
             {
-                var question = await _service.GetQuestion(id);
-                return Ok(question);
+                var questionDto = await _service.GetQuestionDto(id);
+                return Ok(questionDto);
             }
-            catch (Exception ex)
+            catch (KeyNotFoundException ex)
             {
                 return NotFound(new { Error = ex.Message });
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
@@ -62,13 +65,24 @@ namespace QuizMasterAPI.Controllers
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetRandomQuestions([FromQuery] int count)
         {
             if (count <= 0)
-            {
-                return BadRequest("Count must be greater than zero.");
-            }
+                return BadRequest("Count must be greater than 0.");
 
-            var questions = await _service.GetRandomQuestions(count);
-            return Ok(questions);
+            var questionDtos = await _service.GetRandomQuestions(count);
+            return Ok(questionDtos);
         }
+
+
+        //[HttpGet("random")]
+        //public async Task<ActionResult<IEnumerable<QuestionDto>>> GetRandomQuestions([FromQuery] int count)
+        //{
+        //    if (count <= 0)
+        //    {
+        //        return BadRequest("Count must be greater than zero.");
+        //    }
+
+        //    var questions = await _service.GetRandomQuestions(count);
+        //    return Ok(questions);
+        //}
 
         [HttpPost("check-answers")]
         public async Task<ActionResult<AnswerValidationResponseDto>> CheckAnswers([FromBody] List<AnswerValidationDto> answers)
