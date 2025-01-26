@@ -1,4 +1,5 @@
-﻿using QuizMasterAPI.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 
@@ -8,37 +9,51 @@ namespace QuizMasterAPI.Services
     {
         private readonly ITestRepository _testRepository;
         private readonly IQuestionRepository _questionRepository;
-
+        private readonly QuizDbContext _context; // <-- добавили поле
         public TestService(
             ITestRepository testRepository,
-            IQuestionRepository questionRepository)
+            IQuestionRepository questionRepository,
+            QuizDbContext context)
         {
             _testRepository = testRepository;
             _questionRepository = questionRepository;
+            _context = context; // <-- инжектим контекст
         }
 
-        public async Task<Test> CreateTestAsync(int questionCount)
+        public async Task<Test> CreateTestAsync(int questionCount, string userId)
         {
-            var randomQuestions = await _questionRepository.GetRandomQuestionsAsync(questionCount);
+            // Создаём новый тест, генерируем вопрос(ы)
+            var questions = await _questionRepository.GetRandomQuestionsAsync(questionCount);
 
-            var newTest = new Test
+            var test = new Test
             {
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                TestQuestions = questions.Select(q => new TestQuestion
+                {
+                    QuestionId = q.Id
+                }).ToList()
             };
 
-            foreach (var question in randomQuestions)
-            {
-                newTest.TestQuestions.Add(new TestQuestion
-                {
-                    QuestionId = question.Id
-                });
-            }
-
-            await _testRepository.AddAsync(newTest);
+            await _testRepository.AddAsync(test);
             await _testRepository.SaveChangesAsync();
 
-            return newTest;
+            // Дополнительно: создаём запись в UserTest, чтобы связать тест с пользователем
+            var userTest = new UserTest
+            {
+                UserId = userId,
+                TestId = test.Id,
+                TotalQuestions = questionCount,
+                CorrectAnswers = 0, // пока что 0, если тест только создан
+                DateCreated = DateTime.UtcNow,
+                IsPassed = false
+            };
+
+            _context.UserTests.Add(userTest); // или через репозиторий
+            await _context.SaveChangesAsync();
+
+            return test;
         }
+
 
         public async Task<Test?> GetTestByIdAsync(int id)
         {
