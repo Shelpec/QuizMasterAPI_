@@ -20,10 +20,10 @@ namespace QuizMasterAPI.Services
             _context = context; // <-- инжектим контекст
         }
 
-        public async Task<Test> CreateTestAsync(int questionCount, string userId)
+        public async Task<Test> CreateTestAsync(int questionCount, int? topicId, string userId)
         {
             // Создаём новый тест, генерируем вопрос(ы)
-            var questions = await _questionRepository.GetRandomQuestionsAsync(questionCount);
+            var questions = await _questionRepository.GetRandomQuestionsAsync(questionCount, topicId);
 
             var test = new Test
             {

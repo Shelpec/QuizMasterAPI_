@@ -10,7 +10,7 @@ namespace QuizMasterAPI.Interfaces
         /// </summary>
         /// <param name="questionCount">Количество вопросов</param>
         /// <returns>Созданный тест</returns>
-        Task<Test> CreateTestAsync(int questionCount, string userId);
+        Task<Test> CreateTestAsync(int questionCount,int? topicId, string userId);
 
         /// <summary>
         /// Получить тест по его Id

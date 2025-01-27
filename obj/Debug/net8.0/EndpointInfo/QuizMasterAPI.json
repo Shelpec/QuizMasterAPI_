@@ -327,6 +327,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "topicId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -671,6 +679,11 @@
         "properties": {
           "text": {
             "type": "string",
+            "nullable": true
+          },
+          "topicId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           },
           "answerOptions": {

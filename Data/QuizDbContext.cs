@@ -11,6 +11,7 @@ public class QuizDbContext : IdentityDbContext<User>
     public DbSet<Test> Tests { get; set; } = null!;
     public DbSet<TestQuestion> TestQuestions { get; set; } = null!;
 
+    public DbSet<Topic> Topics { get; set; } = null!;
 
     public DbSet<UserTest> UserTests { get; set; } = null!;
 
@@ -46,5 +47,12 @@ public class QuizDbContext : IdentityDbContext<User>
             .WithMany()
             .HasForeignKey(ut => ut.TestId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Question>()
+            .HasOne(q => q.Topic)
+            .WithMany()  // если у Topic нет списка вопросов
+            .HasForeignKey(q => q.TopicId)
+            .OnDelete(DeleteBehavior.SetNull);
+
     }
 }

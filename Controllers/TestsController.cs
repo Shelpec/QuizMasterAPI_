@@ -26,7 +26,7 @@ namespace QuizMasterAPI.Controllers
         /// </summary>
         [Authorize]
         [HttpPost("create")]
-        public async Task<ActionResult<TestDto>> CreateTest([FromQuery] int count)
+        public async Task<ActionResult<TestDto>> CreateTest([FromQuery] int count, [FromQuery] int? topicId)
         {
             if (count <= 0)
                 return BadRequest("Количество вопросов (count) должно быть больше 0.");
@@ -39,7 +39,7 @@ namespace QuizMasterAPI.Controllers
             }
 
             // Вызываем перегруженный метод CreateTestAsync
-            var test = await _testService.CreateTestAsync(count, userId);
+            var test = await _testService.CreateTestAsync(count, topicId, userId);
 
             var testDto = ConvertToDto(test);
             return CreatedAtAction(nameof(GetTest), new { id = testDto.Id }, testDto);

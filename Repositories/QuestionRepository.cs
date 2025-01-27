@@ -37,5 +37,22 @@ namespace QuizMasterAPI.Repositories
                 .Take(count)
                 .ToListAsync();
         }
+        public async Task<List<Question>> GetRandomQuestionsAsync(int count, int? topicId)
+        {
+            var query = _ctx.Questions
+                            .Include(q => q.AnswerOptions)
+                            .AsQueryable();
+
+            if (topicId.HasValue)
+            {
+                query = query.Where(q => q.TopicId == topicId.Value);
+            }
+
+            return await query
+                .OrderBy(q => Guid.NewGuid())
+                .Take(count)
+                .ToListAsync();
+        }
+
     }
 }

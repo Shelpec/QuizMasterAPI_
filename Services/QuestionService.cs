@@ -66,16 +66,17 @@ namespace QuizMasterAPI.Services
             var question = new Question
             {
                 Text = questionDto.Text,
+                TopicId = questionDto.TopicId, // <-- Устанавливаем тему
                 AnswerOptions = questionDto.AnswerOptions
                     .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
                     .ToList()
             };
 
             await _repository.AddAsync(question);
-            // Не забываем сохранить изменения
             await _repository.SaveChangesAsync();
             return question;
         }
+
 
         /// <summary>
         /// Обновить вопрос
