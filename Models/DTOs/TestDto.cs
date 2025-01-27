@@ -4,7 +4,10 @@
     {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
-        public List<TestQuestionDto> Questions { get; set; } = new();
-    }
 
+        // Дополнительно (если хотите)
+        // public string Name { get; set; }
+        // public int CountOfQuestions { get; set; }
+        // public int? TopicId { get; set; }
+    }
 }

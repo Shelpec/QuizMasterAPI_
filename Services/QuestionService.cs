@@ -152,6 +152,7 @@ namespace QuizMasterAPI.Services
             });
         }
 
+
         /// <summary>
         /// Проверить несколько ответов по разным вопросам
         /// </summary>

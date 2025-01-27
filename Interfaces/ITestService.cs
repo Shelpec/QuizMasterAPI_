@@ -1,33 +1,23 @@
-﻿using QuizMasterAPI.Models.DTOs;
-using QuizMasterAPI.Models.Entities;
+﻿using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Interfaces
 {
+    /// <summary>
+    /// Логика для управления шаблонами Test.
+    /// </summary>
     public interface ITestService
     {
-        /// <summary>
-        /// Создает тест со случайным набором вопросов.
-        /// </summary>
-        /// <param name="questionCount">Количество вопросов</param>
-        /// <returns>Созданный тест</returns>
-        Task<Test> CreateTestAsync(int questionCount,int? topicId, string userId);
+        // Создать шаблон
+        Task<Test> CreateTemplateAsync(string name, int countOfQuestions, int? topicId);
 
-        /// <summary>
-        /// Получить тест по его Id
-        /// </summary>
+        // Получить шаблон
         Task<Test?> GetTestByIdAsync(int id);
-
-        /// <summary>
-        /// Получить все тесты
-        /// </summary>
         Task<IEnumerable<Test>> GetAllTestsAsync();
 
-        Task<TestCheckResultDto> CheckTestAnswersAsync(int testId, List<TestAnswerValidationDto> userAnswers);
+        // Обновить шаблон (например, изменить количество вопросов, тему и т.д.)
+        Task<Test> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId);
 
-        // Новый метод: обновление теста
-        Task<Test> UpdateTestAsync(int id, List<int> questionIds);
-
-        // Новый метод: удаление теста
+        // Удалить
         Task DeleteTestAsync(int id);
     }
 }

@@ -14,31 +14,17 @@ namespace QuizMasterAPI.Repositories
             _ctx = context;
         }
 
-        /// <summary>
-        /// Получить тест по ID со связанными вопросами и вариантами ответов.
-        /// Переопределяем, т.к. нужно Include
-        /// </summary>
         public async Task<Test?> GetTestByIdAsync(int id)
         {
+            // Если нужно подгружать Topic, добавляйте .Include(t => t.Topic)
             return await _ctx.Tests
-                .Include(t => t.TestQuestions)
-                    .ThenInclude(tq => tq.Question)
-                    .ThenInclude(q => q.AnswerOptions)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        /// <summary>
-        /// Получить все тесты, подгрузив вопросы.
-        /// </summary>
         public async Task<IEnumerable<Test>> GetAllTestsAsync()
         {
             return await _ctx.Tests
-                .Include(t => t.TestQuestions)
-                    .ThenInclude(tq => tq.Question)
                 .ToListAsync();
         }
-
-        // Остальные CRUD-методы (Add, Update, Delete) 
-        // мы используем из базового GenericRepository.
     }
 }

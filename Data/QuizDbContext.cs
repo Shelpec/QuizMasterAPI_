@@ -9,11 +9,10 @@ public class QuizDbContext : IdentityDbContext<User>
     public DbSet<Question> Questions { get; set; } = null!;
     public DbSet<AnswerOption> AnswerOptions { get; set; } = null!;
     public DbSet<Test> Tests { get; set; } = null!;
-    public DbSet<TestQuestion> TestQuestions { get; set; } = null!;
-
+    public DbSet<UserTest> UserTests { get; set; } = null!;
+    public DbSet<UserTestQuestion> UserTestQuestions { get; set; } = null!;
     public DbSet<Topic> Topics { get; set; } = null!;
 
-    public DbSet<UserTest> UserTests { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,16 +24,16 @@ public class QuizDbContext : IdentityDbContext<User>
             .HasForeignKey(a => a.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Настройка связей TestQuestion -> Test, TestQuestion -> Question
-        modelBuilder.Entity<TestQuestion>()
-            .HasOne(tq => tq.Test)
-            .WithMany(t => t.TestQuestions)
-            .HasForeignKey(tq => tq.TestId);
+        // Пример настройки связи (можно дополнительно конфигурировать DeleteBehavior и т.д.)
+        modelBuilder.Entity<UserTestQuestion>()
+            .HasOne(utq => utq.UserTest)
+            .WithMany(ut => ut.UserTestQuestions)
+            .HasForeignKey(utq => utq.UserTestId);
 
-        modelBuilder.Entity<TestQuestion>()
-            .HasOne(tq => tq.Question)
+        modelBuilder.Entity<UserTestQuestion>()
+            .HasOne(utq => utq.Question)
             .WithMany()
-            .HasForeignKey(tq => tq.QuestionId);
+            .HasForeignKey(utq => utq.QuestionId);
 
         modelBuilder.Entity<UserTest>()
             .HasOne(ut => ut.User)

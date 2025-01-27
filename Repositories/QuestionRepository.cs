@@ -40,8 +40,8 @@ namespace QuizMasterAPI.Repositories
         public async Task<List<Question>> GetRandomQuestionsAsync(int count, int? topicId)
         {
             var query = _ctx.Questions
-                            .Include(q => q.AnswerOptions)
-                            .AsQueryable();
+                .Include(q => q.AnswerOptions)
+                .AsQueryable();
 
             if (topicId.HasValue)
             {
@@ -49,10 +49,11 @@ namespace QuizMasterAPI.Repositories
             }
 
             return await query
-                .OrderBy(q => Guid.NewGuid())
+                .OrderBy(_ => Guid.NewGuid())
                 .Take(count)
                 .ToListAsync();
         }
+
 
     }
 }

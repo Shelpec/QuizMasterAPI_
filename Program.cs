@@ -71,6 +71,12 @@ builder.Services.AddScoped<ITestService, TestService>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
+// Вот сюда добавляем:
+builder.Services.AddScoped<IUserTestService, UserTestService>();
+
+// также регистрируем UserTestRepository, если ещё не
+builder.Services.AddScoped<IUserTestRepository, UserTestRepository>();
+
 // Регистрируем специализированные репозитории:
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();

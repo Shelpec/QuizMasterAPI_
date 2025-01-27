@@ -182,7 +182,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.Entities.Test, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -208,7 +208,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.DTOs.TestDto",
+        "Type": "QuizMasterAPI.Models.Entities.Test",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -232,14 +232,24 @@
         "IsRequired": true
       },
       {
-        "Name": "dto",
-        "Type": "QuizMasterAPI.Models.DTOs.UpdateTestDto",
-        "IsRequired": true
+        "Name": "newName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "countOfQuestions",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "topicId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.DTOs.TestDto",
+        "Type": "QuizMasterAPI.Models.Entities.Test",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -267,20 +277,56 @@
   },
   {
     "ContainingType": "QuizMasterAPI.Controllers.TestsController",
-    "Method": "CheckTestAnswers",
-    "RelativePath": "api/Tests/{testId}/check",
+    "Method": "CreateTemplate",
+    "RelativePath": "api/Tests/create-template",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "testId",
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "countOfQuestions",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "topicId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.Entities.Test",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "QuizMasterAPI.Controllers.UserTestsController",
+    "Method": "CheckAnswers",
+    "RelativePath": "api/UserTests/{userTestId}/check",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userTestId",
         "Type": "System.Int32",
         "IsRequired": true
       },
       {
-        "Name": "dto",
-        "Type": "QuizMasterAPI.Models.DTOs.TestCheckDto",
+        "Name": "answers",
+        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.TestAnswerValidationDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -297,27 +343,22 @@
     ]
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.TestsController",
-    "Method": "CreateTest",
-    "RelativePath": "api/Tests/create",
+    "ContainingType": "QuizMasterAPI.Controllers.UserTestsController",
+    "Method": "StartTest",
+    "RelativePath": "api/UserTests/start/{testId}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "count",
+        "Name": "testId",
         "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "topicId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.DTOs.TestDto",
+        "Type": "QuizMasterAPI.Models.Entities.UserTest",
         "MediaTypes": [
           "text/plain",
           "application/json",

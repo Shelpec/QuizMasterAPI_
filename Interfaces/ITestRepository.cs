@@ -1,8 +1,10 @@
-﻿namespace QuizMasterAPI.Interfaces
+﻿using QuizMasterAPI.Models.Entities;
+
+namespace QuizMasterAPI.Interfaces
 {
-    public interface ITestRepository : IGenericRepository<Models.Entities.Test>
+    public interface ITestRepository : IGenericRepository<Test>
     {
-        Task<Models.Entities.Test?> GetTestByIdAsync(int id);
-        Task<IEnumerable<Models.Entities.Test>> GetAllTestsAsync();
+        Task<Test?> GetTestByIdAsync(int id);
+        Task<IEnumerable<Test>> GetAllTestsAsync();
     }
 }

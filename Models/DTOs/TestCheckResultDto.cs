@@ -14,7 +14,6 @@
     {
         public int QuestionId { get; set; }
         public bool IsCorrect { get; set; }
-
         public List<string> CorrectAnswers { get; set; } = new();
         public List<string> SelectedAnswers { get; set; } = new();
     }
