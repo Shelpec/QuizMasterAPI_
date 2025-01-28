@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QuizMasterAPI.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    partial class QuizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250127121013_AddUserTestAnswer")]
+    partial class AddUserTestAnswer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,7 +176,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Questions", (string)null);
+                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.AnswerOption", b =>
@@ -198,7 +201,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("AnswerOptions", (string)null);
+                    b.ToTable("AnswerOptions");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Test", b =>
@@ -224,7 +227,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests", (string)null);
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Topic", b =>
@@ -241,7 +244,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Topics", (string)null);
+                    b.ToTable("Topics");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.User", b =>
@@ -349,7 +352,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserTests", (string)null);
+                    b.ToTable("UserTests");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.UserTestAnswer", b =>
@@ -370,7 +373,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasIndex("UserTestQuestionId");
 
-                    b.ToTable("UserTestAnswers", (string)null);
+                    b.ToTable("UserTestAnswers");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.UserTestQuestion", b =>
@@ -393,7 +396,7 @@ namespace QuizMasterAPI.Migrations
 
                     b.HasIndex("UserTestId");
 
-                    b.ToTable("UserTestQuestions", (string)null);
+                    b.ToTable("UserTestQuestions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -18,6 +18,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
+//builder.Services
+//    .AddControllers()
+//    .AddJsonOptions(options =>
+//    {
+//        options.JsonSerializerOptions.ReferenceHandler =
+//            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+//        options.JsonSerializerOptions.MaxDepth = 64; // или больше, чем 32
+//    });
+
+
 // Подключение EF Core:
 builder.Services.AddDbContext<QuizDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

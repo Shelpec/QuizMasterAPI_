@@ -326,7 +326,7 @@
       },
       {
         "Name": "answers",
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.TestAnswerValidationDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -358,7 +358,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.Entities.UserTest",
+        "Type": "QuizMasterAPI.Models.DTOs.UserTestDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

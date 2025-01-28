@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
-using QuizMasterAPI.Models.Entities;
 using System.Security.Claims;
 
 namespace QuizMasterAPI.Controllers
@@ -20,11 +19,11 @@ namespace QuizMasterAPI.Controllers
 
         /// <summary>
         /// Начать прохождение теста (шаблона) с Id = testId.
-        /// Генерируем случайные вопросы пользователю.
+        /// Генерируем случайные вопросы пользователю и возвращаем их с вариантами ответов и текстами вопросов.
         /// </summary>
         [Authorize]
         [HttpPost("start/{testId}")]
-        public async Task<ActionResult<UserTest>> StartTest(int testId)
+        public async Task<ActionResult<UserTestDto>> StartTest(int testId)
         {
             // Достаем userId из токена
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -33,12 +32,17 @@ namespace QuizMasterAPI.Controllers
 
             try
             {
-                var userTest = await _userTestService.StartTestAsync(testId, userId);
-                return Ok(userTest);
+                var userTestDto = await _userTestService.StartTestAsync(testId, userId);
+                return Ok(userTestDto);
             }
             catch (KeyNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Логируйте ошибку здесь (например, с помощью ILogger)
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -47,7 +51,7 @@ namespace QuizMasterAPI.Controllers
         /// </summary>
         [Authorize]
         [HttpPost("{userTestId}/check")]
-        public async Task<ActionResult<TestCheckResultDto>> CheckAnswers(int userTestId, [FromBody] List<TestAnswerValidationDto> answers)
+        public async Task<ActionResult<TestCheckResultDto>> CheckAnswers(int userTestId, [FromBody] List<UserAnswerSubmitDto> answers)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
@@ -55,7 +59,7 @@ namespace QuizMasterAPI.Controllers
 
             try
             {
-                var result = await _userTestService.CheckUserTestAnswersAsync(userTestId, answers, userId);
+                var result = await _userTestService.SubmitAndCheckAnswersAsync(userTestId, answers, userId);
                 return Ok(result);
             }
             catch (KeyNotFoundException ex)
@@ -65,6 +69,11 @@ namespace QuizMasterAPI.Controllers
             catch (UnauthorizedAccessException ex)
             {
                 return Forbid(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Логируйте ошибку здесь (например, с помощью ILogger)
+                return StatusCode(500, ex.Message);
             }
         }
     }

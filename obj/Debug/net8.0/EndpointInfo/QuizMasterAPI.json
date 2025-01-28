@@ -550,17 +550,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestDto"
                 }
               }
             }
@@ -590,7 +590,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/TestAnswerValidationDto"
+                  "$ref": "#/components/schemas/UserAnswerSubmitDto"
                 }
               }
             },
@@ -598,7 +598,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/TestAnswerValidationDto"
+                  "$ref": "#/components/schemas/UserAnswerSubmitDto"
                 }
               }
             },
@@ -606,7 +606,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/TestAnswerValidationDto"
+                  "$ref": "#/components/schemas/UserAnswerSubmitDto"
                 }
               }
             }
@@ -678,27 +678,6 @@
   },
   "components": {
     "schemas": {
-      "AnswerOption": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "questionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isCorrect": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "AnswerOptionDto": {
         "type": "object",
         "properties": {
@@ -786,35 +765,6 @@
           },
           "password": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Question": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "topicId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "topic": {
-            "$ref": "#/components/schemas/Topic"
-          },
-          "answerOptions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AnswerOption"
-            },
             "nullable": true
           }
         },
@@ -944,24 +894,6 @@
         },
         "additionalProperties": false
       },
-      "TestAnswerValidationDto": {
-        "type": "object",
-        "properties": {
-          "questionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "selectedAnswerIds": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "TestCheckResultDto": {
         "type": "object",
         "properties": {
@@ -978,20 +910,6 @@
             "items": {
               "$ref": "#/components/schemas/QuestionCheckResultDto"
             },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Topic": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
             "nullable": true
           }
         },
@@ -1014,108 +932,34 @@
         },
         "additionalProperties": false
       },
-      "User": {
+      "UserAnswerSubmitDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "normalizedUserName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "normalizedEmail": {
-            "type": "string",
-            "nullable": true
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "passwordHash": {
-            "type": "string",
-            "nullable": true
-          },
-          "securityStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "concurrencyStamp": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumberConfirmed": {
-            "type": "boolean"
-          },
-          "twoFactorEnabled": {
-            "type": "boolean"
-          },
-          "lockoutEnd": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lockoutEnabled": {
-            "type": "boolean"
-          },
-          "accessFailedCount": {
+          "userTestQuestionId": {
             "type": "integer",
             "format": "int32"
           },
-          "fullName": {
-            "type": "string",
+          "selectedAnswerOptionIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
             "nullable": true
-          },
-          "dateRegistered": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
       },
-      "UserTest": {
+      "UserTestDto": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          },
           "testId": {
             "type": "integer",
             "format": "int32"
-          },
-          "test": {
-            "$ref": "#/components/schemas/Test"
-          },
-          "totalQuestions": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "correctAnswers": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isPassed": {
-            "type": "boolean"
           },
           "dateCreated": {
             "type": "string",
@@ -1124,21 +968,17 @@
           "userTestQuestions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserTestQuestion"
+              "$ref": "#/components/schemas/UserTestQuestionDto"
             },
             "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "UserTestQuestion": {
+      "UserTestQuestionDto": {
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userTestId": {
             "type": "integer",
             "format": "int32"
           },
@@ -1146,8 +986,16 @@
             "type": "integer",
             "format": "int32"
           },
-          "question": {
-            "$ref": "#/components/schemas/Question"
+          "questionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "answerOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerOptionDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

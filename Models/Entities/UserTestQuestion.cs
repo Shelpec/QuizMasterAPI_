@@ -1,26 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using QuizMasterAPI.Models.Entities;
 
-namespace QuizMasterAPI.Models.Entities
+public class UserTestQuestion
 {
-    /// <summary>
-    /// Какие конкретно вопросы достались пользователю в рамках его UserTest.
-    /// Раньше это могло называться TestQuestion, теперь это привязано именно к UserTest.
-    /// </summary>
-    public class UserTestQuestion
-    {
-        [Key]
-        public int Id { get; set; }
-        
-        
-        public int UserTestId { get; set; }
+    public int Id { get; set; }
 
-        [JsonIgnore]
-        public UserTest UserTest { get; set; } = null!;
+    public int UserTestId { get; set; }
+    public UserTest UserTest { get; set; } = null!;
 
-        // Ссылка на сам вопрос
-        public int QuestionId { get; set; }
-        public Question Question { get; set; } = null!;
-    }
+    public int QuestionId { get; set; }
+    public Question Question { get; set; } = null!;
+
+    public ICollection<UserTestAnswer> UserTestAnswers { get; set; } = new List<UserTestAnswer>();
 }
