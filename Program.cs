@@ -11,42 +11,48 @@ using QuizMasterAPI.Repositories;
 using QuizMasterAPI.Services;
 using System.Text;
 
+using Serilog;
+using Serilog.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// 1) Очищаем провайдеры логирования
+builder.Logging.ClearProviders();
 
+// 2) Конфигурируем Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() // Можно выставить нужный уровень
+    .WriteTo.Console()    // Логи в консоль
+                          // RollingInterval.Day создаст для каждого дня свой файл (myapp-2023-01-28.txt и т.п.)
+    .WriteTo.File("Logs/myapp-.txt",
+                  rollingInterval: RollingInterval.Day,
+                  retainedFileCountLimit: 7, // сколько файлов хранить
+                  restrictedToMinimumLevel: LogEventLevel.Information) // например, с уровня "Information"
+    .CreateLogger();
 
+// 3) Говорим приложению использовать Serilog
+builder.Host.UseSerilog(Log.Logger);
+
+// Контроллеры
 builder.Services.AddControllers();
 
-
-//builder.Services
-//    .AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.ReferenceHandler =
-//            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
-//        options.JsonSerializerOptions.MaxDepth = 64; // или больше, чем 32
-//    });
-
-
-// Подключение EF Core:
+// Подключение EF Core
 builder.Services.AddDbContext<QuizDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-
+// Настройка Identity
 builder.Services.AddIdentityCore<User>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 6; // Минимальная длина пароля
-    options.Password.RequireNonAlphanumeric = false; // Отключить символы вроде !@#
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<QuizDbContext>();
 
 // JWT
-// Чтение настроек JWT из конфигурации
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 var key = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
@@ -73,35 +79,27 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Репозитории и сервисы:
-//builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+// Репозитории и сервисы
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
-//builder.Services.AddScoped<ITestRepository, TestRepository>();
+
+builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
+
+builder.Services.AddScoped<IUserTestRepository, UserTestRepository>();
+builder.Services.AddScoped<IUserTestService, UserTestService>();
 
 builder.Services.AddScoped<IUserTestAnswerRepository, UserTestAnswerRepository>();
 builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-// Регистрация сервисов:
-builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
-
-// Вот сюда добавляем:
-builder.Services.AddScoped<IUserTestService, UserTestService>();
-
-// также регистрируем UserTestRepository, если ещё не
-builder.Services.AddScoped<IUserTestRepository, UserTestRepository>();
-
-// Регистрируем специализированные репозитории:
-builder.Services.AddScoped<ITestRepository, TestRepository>();
-builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
-
-// Swagger (документация):
+// Swagger (документация)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Middleware для глобального перехвата исключений
 app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
@@ -111,12 +109,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-// Включаем аутентификацию + авторизацию
+
+// Аутентификация + авторизация
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
 
 app.Run();

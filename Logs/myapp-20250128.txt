@@ -1,0 +1,454 @@
+2025-01-28 16:42:36.768 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-28 16:42:37.359 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-28 16:42:37.656 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-28 16:42:37.656 +05:00 [INF] Hosting environment: Development
+2025-01-28 16:42:37.657 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-28 16:42:37.992 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-28 16:42:37.995 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 658.7027ms
+2025-01-28 16:42:38.013 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 19.2108ms
+2025-01-28 16:42:38.187 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-28 16:42:38.268 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 81.2332ms
+2025-01-28 16:42:38.440 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-28 16:42:38.524 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 76.4425ms
+2025-01-28 16:43:09.296 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/UserTests/start/3005 - null 0
+2025-01-28 16:43:09.514 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-01-28 16:43:09.522 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-01-28 16:43:09.525 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/UserTests/start/3005 - 401 null null 229.6016ms
+2025-01-28 16:43:14.449 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/Auth/login - application/json 47
+2025-01-28 16:43:14.460 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-28 16:43:14.525 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-28 16:43:14.971 +05:00 [INF] Запрос на логин пользователя: f
+2025-01-28 16:43:18.685 +05:00 [INF] Executed DbCommand (123ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-28 16:43:19.293 +05:00 [INF] Пользователь f успешно залогинился
+2025-01-28 16:43:19.312 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-28 16:43:19.337 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4797.9014ms
+2025-01-28 16:43:19.338 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-28 16:43:19.359 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 4909.683ms
+2025-01-28 16:44:14.886 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/UserTests/2009/check - application/json 203
+2025-01-28 16:44:15.062 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/UserTests/2009/check - 404 null null 177.0056ms
+2025-01-28 16:44:15.064 +05:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: POST https://localhost:44336/api/UserTests/2009/check, Response status code: 404
+2025-01-28 16:44:24.050 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2005/check - null null
+2025-01-28 16:44:24.072 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:24.091 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:44:24.262 +05:00 [INF] Вход в CheckAnswers(UserTestId=2005)
+2025-01-28 16:44:24.280 +05:00 [INF] CheckAnswersAsync(UserTestId=2005)
+2025-01-28 16:44:24.552 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-28 16:44:24.762 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-28 16:44:25.195 +05:00 [INF] Executed DbCommand (23ms) [Parameters=[@__questionIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM [Questions] AS [q]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+WHERE [q].[Id] IN (
+    SELECT [q0].[value]
+    FROM OPENJSON(@__questionIds_0) WITH ([value] int '$') AS [q0]
+)
+ORDER BY [q].[Id]
+2025-01-28 16:44:25.232 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestCheckResultDto'.
+2025-01-28 16:44:25.248 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 1156.2814ms
+2025-01-28 16:44:25.249 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:25.250 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2005/check - 200 null application/json; charset=utf-8 1200.0992ms
+2025-01-28 16:44:30.758 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2006/check - null null
+2025-01-28 16:44:30.761 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:30.762 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:44:30.805 +05:00 [INF] Вход в CheckAnswers(UserTestId=2006)
+2025-01-28 16:44:30.806 +05:00 [INF] CheckAnswersAsync(UserTestId=2006)
+2025-01-28 16:44:30.836 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-28 16:44:30.861 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__questionIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM [Questions] AS [q]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+WHERE [q].[Id] IN (
+    SELECT [q0].[value]
+    FROM OPENJSON(@__questionIds_0) WITH ([value] int '$') AS [q0]
+)
+ORDER BY [q].[Id]
+2025-01-28 16:44:30.865 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestCheckResultDto'.
+2025-01-28 16:44:30.868 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 104.7523ms
+2025-01-28 16:44:30.868 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:30.869 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2006/check - 200 null application/json; charset=utf-8 111.1162ms
+2025-01-28 16:44:37.203 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2020/check - null null
+2025-01-28 16:44:37.205 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:37.206 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:44:37.220 +05:00 [INF] Вход в CheckAnswers(UserTestId=2020)
+2025-01-28 16:44:37.221 +05:00 [INF] CheckAnswersAsync(UserTestId=2020)
+2025-01-28 16:44:37.248 +05:00 [INF] Executed DbCommand (25ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-28 16:44:37.363 +05:00 [ERR] Ошибка в CheckAnswersAsync(UserTestId=2020)
+System.Collections.Generic.KeyNotFoundException: UserTest with ID=2020 not found.
+   at QuizMasterAPI.Services.UserTestAnswerService.CheckAnswersAsync(Int32 userTestId, String userId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\UserTestAnswerService.cs:line 79
+2025-01-28 16:44:37.549 +05:00 [ERR] Ошибка в CheckAnswers(UserTestId=2020)
+System.Collections.Generic.KeyNotFoundException: UserTest with ID=2020 not found.
+   at QuizMasterAPI.Services.UserTestAnswerService.CheckAnswersAsync(Int32 userTestId, String userId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\UserTestAnswerService.cs:line 79
+   at UserTestAnswersController.CheckAnswers(Int32 userTestId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\UserTestAnswersController.cs:line 52
+2025-01-28 16:44:37.606 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 400.3331ms
+2025-01-28 16:44:37.607 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:44:37.776 +05:00 [ERR] Необработанное исключение поймано в Middleware.
+System.Collections.Generic.KeyNotFoundException: UserTest with ID=2020 not found.
+   at QuizMasterAPI.Services.UserTestAnswerService.CheckAnswersAsync(Int32 userTestId, String userId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\UserTestAnswerService.cs:line 79
+   at UserTestAnswersController.CheckAnswers(Int32 userTestId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\UserTestAnswersController.cs:line 52
+   at lambda_method152(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at QuizMasterAPI.Middleware.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Middleware\ExceptionMiddleware.cs:line 23
+2025-01-28 16:44:37.794 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2020/check - 404 null application/json 590.4316ms
+2025-01-28 16:54:05.841 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-28 16:54:06.326 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-28 16:54:06.638 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-28 16:54:06.638 +05:00 [INF] Hosting environment: Development
+2025-01-28 16:54:06.638 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-28 16:54:06.928 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 629.0858ms
+2025-01-28 16:54:06.967 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-28 16:54:06.986 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 11.6427ms
+2025-01-28 16:54:07.113 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-28 16:54:07.194 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 81.6484ms
+2025-01-28 16:54:07.344 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-28 16:54:07.390 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 46.295ms
+2025-01-28 16:54:34.666 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/UserTestAnswers/2009/save - application/json 106
+2025-01-28 16:54:34.883 +05:00 [INF] Executing endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-28 16:54:34.954 +05:00 [INF] Route matched with {action = "SaveAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAnswers(Int32, System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto]) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:54:37.283 +05:00 [INF] Вход в SaveAnswers(UserTestId=2009), Count=1
+2025-01-28 16:54:37.302 +05:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2025-01-28 16:54:37.376 +05:00 [INF] Executed action UserTestAnswersController.SaveAnswers (QuizMasterAPI) in 2409.1901ms
+2025-01-28 16:54:37.376 +05:00 [INF] Executed endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-28 16:54:37.389 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/UserTestAnswers/2009/save - 401 null application/problem+json; charset=utf-8 2723.3984ms
+2025-01-28 16:55:44.474 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/Auth/login - application/json 47
+2025-01-28 16:55:44.493 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-28 16:55:44.505 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-28 16:55:44.528 +05:00 [INF] Запрос на логин пользователя: f
+2025-01-28 16:55:46.706 +05:00 [INF] Executed DbCommand (151ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-28 16:55:47.339 +05:00 [INF] Пользователь f успешно залогинился
+2025-01-28 16:55:47.347 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-28 16:55:47.359 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 2852.5834ms
+2025-01-28 16:55:47.361 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-28 16:55:47.375 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 2900.9875ms
+2025-01-28 16:56:24.862 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:44336/api/UserTestAnswers/2009/save - application/json 105
+2025-01-28 16:56:24.979 +05:00 [INF] Executing endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-28 16:56:24.980 +05:00 [INF] Route matched with {action = "SaveAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAnswers(Int32, System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto]) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:56:25.043 +05:00 [INF] Вход в SaveAnswers(UserTestId=2009), Count=1
+2025-01-28 16:56:25.053 +05:00 [INF] SaveAnswersAsync(UserTestId=2009, CountAnswers=1)
+2025-01-28 16:56:25.356 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-28 16:56:25.566 +05:00 [INF] Executed DbCommand (25ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-28 16:56:25.861 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-01-28 16:56:25.862 +05:00 [INF] Executed action UserTestAnswersController.SaveAnswers (QuizMasterAPI) in 881.1446ms
+2025-01-28 16:56:25.862 +05:00 [INF] Executed endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-28 16:56:25.865 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:44336/api/UserTestAnswers/2009/save - 200 null text/plain; charset=utf-8 1003.3915ms
+2025-01-28 16:58:13.405 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2005/check - null null
+2025-01-28 16:58:13.443 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:58:13.452 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-28 16:58:13.479 +05:00 [INF] Вход в CheckAnswers(UserTestId=2005)
+2025-01-28 16:58:13.486 +05:00 [INF] CheckAnswersAsync(UserTestId=2005)
+2025-01-28 16:58:13.521 +05:00 [INF] Executed DbCommand (21ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-28 16:58:13.747 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@__questionIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM [Questions] AS [q]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+WHERE [q].[Id] IN (
+    SELECT [q0].[value]
+    FROM OPENJSON(@__questionIds_0) WITH ([value] int '$') AS [q0]
+)
+ORDER BY [q].[Id]
+2025-01-28 16:58:13.776 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestCheckResultDto'.
+2025-01-28 16:58:13.787 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 335.1194ms
+2025-01-28 16:58:13.788 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-28 16:58:13.789 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:44336/api/UserTestAnswers/2005/check - 200 null application/json; charset=utf-8 386.2127ms
+2025-01-28 16:58:27.660 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Questions - null null
+2025-01-28 16:58:27.663 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-01-28 16:58:27.672 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllQuestions() on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-01-28 16:58:27.678 +05:00 [INF] Вход в GetAllQuestions
+2025-01-28 16:58:27.691 +05:00 [INF] GetAllQuestions()
+2025-01-28 16:58:27.723 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId]
+FROM [Questions] AS [q]
+2025-01-28 16:58:27.769 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Question, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-01-28 16:58:27.780 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 107.4829ms
+2025-01-28 16:58:27.781 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-01-28 16:58:27.781 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Questions - 200 null application/json; charset=utf-8 121.0636ms
+2025-01-28 16:58:56.540 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Questions - application/json 62
+2025-01-28 16:58:56.542 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.CreateQuestion (QuizMasterAPI)'
+2025-01-28 16:58:56.558 +05:00 [INF] Route matched with {action = "CreateQuestion", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] CreateQuestion(QuizMasterAPI.Models.DTOs.CreateQuestionDto) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-01-28 16:58:56.592 +05:00 [INF] Вход в CreateQuestion для аа
+2025-01-28 16:58:56.594 +05:00 [INF] CreateQuestion(Text=аа)
+2025-01-28 16:58:56.895 +05:00 [INF] Executed DbCommand (28ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Questions] ([Text], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-01-28 16:58:56.978 +05:00 [ERR] An exception occurred in the database while saving changes for context type 'QuizDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Questions_Topics_TopicId". The conflict occurred in database "QuizMDb", table "dbo.Topics", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:8408f454-4af9-4c32-badd-4c626970feb0
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Questions_Topics_TopicId". The conflict occurred in database "QuizMDb", table "dbo.Topics", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:8408f454-4af9-4c32-badd-4c626970feb0
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-01-28 16:58:57.251 +05:00 [ERR] Ошибка в CreateQuestion(Text=аа)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Questions_Topics_TopicId". The conflict occurred in database "QuizMDb", table "dbo.Topics", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:8408f454-4af9-4c32-badd-4c626970feb0
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.GenericRepository`1.SaveChangesAsync() in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\GenericRepository.cs:line 55
+   at QuizMasterAPI.Services.QuestionService.CreateQuestion(CreateQuestionDto questionDto) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\QuestionService.cs:line 90
+2025-01-28 16:58:57.430 +05:00 [ERR] Ошибка в CreateQuestion для аа
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Questions_Topics_TopicId". The conflict occurred in database "QuizMDb", table "dbo.Topics", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:8408f454-4af9-4c32-badd-4c626970feb0
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.GenericRepository`1.SaveChangesAsync() in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\GenericRepository.cs:line 55
+   at QuizMasterAPI.Services.QuestionService.CreateQuestion(CreateQuestionDto questionDto) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\QuestionService.cs:line 90
+   at QuizMasterAPI.Controllers.QuestionsController.CreateQuestion(CreateQuestionDto dto) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\QuestionsController.cs:line 66
+2025-01-28 16:58:57.504 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.CreateQuestion (QuizMasterAPI) in 944.6603ms
+2025-01-28 16:58:57.505 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.CreateQuestion (QuizMasterAPI)'
+2025-01-28 16:58:57.672 +05:00 [ERR] Необработанное исключение поймано в Middleware.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Questions_Topics_TopicId". The conflict occurred in database "QuizMDb", table "dbo.Topics", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:8408f454-4af9-4c32-badd-4c626970feb0
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.GenericRepository`1.SaveChangesAsync() in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\GenericRepository.cs:line 55
+   at QuizMasterAPI.Services.QuestionService.CreateQuestion(CreateQuestionDto questionDto) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\QuestionService.cs:line 90
+   at QuizMasterAPI.Controllers.QuestionsController.CreateQuestion(CreateQuestionDto dto) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\QuestionsController.cs:line 66
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at QuizMasterAPI.Middleware.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Middleware\ExceptionMiddleware.cs:line 23
+2025-01-28 16:58:57.690 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Questions - 500 null application/json 1149.8868ms
+2025-01-28 16:59:13.443 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Questions/1001 - null null
+2025-01-28 16:59:13.464 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-01-28 16:59:13.478 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-01-28 16:59:13.480 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Questions/1001 - 401 null null 37.0179ms
+2025-01-28 16:59:23.749 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests - null null
+2025-01-28 16:59:23.750 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-01-28 16:59:23.758 +05:00 [INF] Route matched with {action = "GetAllTests", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.Entities.Test]]] GetAllTests() on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-01-28 16:59:23.766 +05:00 [INF] Вход в GetAllTests
+2025-01-28 16:59:23.768 +05:00 [INF] GetAllTestsAsync()
+2025-01-28 16:59:23.793 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+2025-01-28 16:59:23.829 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.Entities.Test, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-01-28 16:59:23.844 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI) in 85.1976ms
+2025-01-28 16:59:23.844 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-01-28 16:59:23.845 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests - 200 null application/json; charset=utf-8 95.9305ms

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
@@ -10,56 +11,93 @@ using System.Security.Claims;
 public class UserTestsController : ControllerBase
 {
     private readonly IUserTestService _userTestService;
+    private readonly ILogger<UserTestsController> _logger;
 
-    public UserTestsController(IUserTestService userTestService)
+    public UserTestsController(IUserTestService userTestService, ILogger<UserTestsController> logger)
     {
         _userTestService = userTestService;
+        _logger = logger;
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<UserTest>> GetUserTest(int id)
     {
-        var ut = await _userTestService.GetByIdAsync(id);
-        if (ut == null) return NotFound();
-        return Ok(ut);
+        _logger.LogInformation("Вход в GetUserTest(Id={Id})", id);
+        try
+        {
+            var ut = await _userTestService.GetByIdAsync(id);
+            if (ut == null)
+                return NotFound();
+            return Ok(ut);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в GetUserTest(Id={Id})", id);
+            throw;
+        }
     }
 
     [HttpPost]
     public async Task<ActionResult<UserTest>> CreateUserTest([FromBody] UserTest model)
     {
-        // Для примера базовый CRUD
-        var created = await _userTestService.CreateAsync(model);
-        return CreatedAtAction(nameof(GetUserTest), new { id = created.Id }, created);
+        _logger.LogInformation("Вход в CreateUserTest");
+        try
+        {
+            var created = await _userTestService.CreateAsync(model);
+            return CreatedAtAction(nameof(GetUserTest), new { id = created.Id }, created);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в CreateUserTest");
+            throw;
+        }
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUserTest(int id, [FromBody] UserTest model)
     {
-        // Проверка id == model.Id?
-        model.Id = id;
-        await _userTestService.UpdateAsync(model);
-        return NoContent();
+        _logger.LogInformation("Вход в UpdateUserTest(Id={Id})", id);
+        try
+        {
+            model.Id = id;
+            await _userTestService.UpdateAsync(model);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в UpdateUserTest(Id={Id})", id);
+            throw;
+        }
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUserTest(int id)
     {
-        await _userTestService.DeleteAsync(id);
-        return NoContent();
+        _logger.LogInformation("Вход в DeleteUserTest(Id={Id})", id);
+        try
+        {
+            await _userTestService.DeleteAsync(id);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в DeleteUserTest(Id={Id})", id);
+            throw;
+        }
     }
 
-    /// <summary>
-    /// Начать прохождение теста (шаблона) с Id = testId.
-    /// Генерируем случайные вопросы пользователю и возвращаем их с вариантами ответов и текстами вопросов.
-    /// </summary>
     [Authorize]
     [HttpPost("start/{testId}")]
     public async Task<ActionResult<UserTestDto>> StartTest(int testId)
     {
-        // Достаем userId из токена
+        _logger.LogInformation("Вход в StartTest(TestId={TestId})", testId);
+
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))
+        {
+            _logger.LogWarning("StartTest: пользователь не авторизован");
             return Unauthorized("Пользователь не авторизован.");
+        }
 
         try
         {
@@ -68,12 +106,13 @@ public class UserTestsController : ControllerBase
         }
         catch (KeyNotFoundException ex)
         {
+            _logger.LogWarning("StartTest: не найден TestId={TestId}. {Message}", testId, ex.Message);
             return NotFound(ex.Message);
         }
         catch (Exception ex)
         {
-            // Логируйте ошибку здесь (например, с помощью ILogger)
-            return StatusCode(500, ex.Message);
+            _logger.LogError(ex, "Ошибка в StartTest(TestId={TestId})", testId);
+            throw;
         }
     }
 }

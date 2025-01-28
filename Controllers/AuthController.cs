@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using QuizMasterAPI.Configurations;
@@ -16,55 +17,89 @@ namespace QuizMasterAPI.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly JwtSettings _jwtSettings;
+        private readonly ILogger<AuthController> _logger; // Логгер
 
-        public AuthController(UserManager<User> userManager, IOptions<JwtSettings> jwtSettings)
+        public AuthController(
+            UserManager<User> userManager,
+            IOptions<JwtSettings> jwtSettings,
+            ILogger<AuthController> logger) // Внедряем логгер
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
+            _logger = logger;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
-            // Проверяем, не занят ли Email
-            var existingUser = await _userManager.FindByEmailAsync(model.Email);
-            if (existingUser != null)
+            _logger.LogInformation("Запрос на регистрацию пользователя: {Email}", model.Email);
+
+            try
             {
-                return BadRequest("Email already in use.");
+                var existingUser = await _userManager.FindByEmailAsync(model.Email);
+                if (existingUser != null)
+                {
+                    _logger.LogWarning("Email={Email} уже используется", model.Email);
+                    return BadRequest("Email already in use.");
+                }
+
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FullName = model.FirstName
+                };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                {
+                    _logger.LogWarning("Ошибка при создании пользователя {Email}: {Errors}",
+                        model.Email,
+                        string.Join(";", result.Errors.Select(e => e.Description)));
+                    return BadRequest(result.Errors);
+                }
+
+                _logger.LogInformation("Пользователь {Email} успешно зарегистрирован", model.Email);
+                return Ok("User registered successfully!");
             }
-
-            // Создаём пользователя
-            var user = new User
+            catch (Exception ex)
             {
-                UserName = model.Email,
-                Email = model.Email,
-                FullName = model.FirstName // Добавили поле FullName
-            };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
+                _logger.LogError(ex, "Ошибка при регистрации пользователя: {Email}", model.Email);
+                throw;
             }
-
-            return Ok("User registered successfully!");
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
-            // Проверяем пользователя
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-                return Unauthorized("Invalid credentials");
+            _logger.LogInformation("Запрос на логин пользователя: {Email}", model.Email);
 
-            var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
-            if (!isPasswordValid)
-                return Unauthorized("Invalid credentials");
+            try
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    _logger.LogWarning("Логин не удался: пользователь {Email} не найден", model.Email);
+                    return Unauthorized("Invalid credentials");
+                }
 
-            // Генерируем JWT
-            var token = GenerateJwtToken(user);
-            return Ok(new { token });
+                var isPasswordValid = await _userManager.CheckPasswordAsync(user, model.Password);
+                if (!isPasswordValid)
+                {
+                    _logger.LogWarning("Логин не удался: неверный пароль для {Email}", model.Email);
+                    return Unauthorized("Invalid credentials");
+                }
+
+                var token = GenerateJwtToken(user);
+                _logger.LogInformation("Пользователь {Email} успешно залогинился", model.Email);
+
+                return Ok(new { token });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при логине пользователя: {Email}", model.Email);
+                throw;
+            }
         }
 
         private string GenerateJwtToken(User user)
@@ -76,7 +111,7 @@ namespace QuizMasterAPI.Controllers
             {
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-                new System.Security.Claims.Claim("FullName", user.FullName) // Кастомный claim
+                new System.Security.Claims.Claim("FullName", user.FullName)
             };
 
             var token = new JwtSecurityToken(

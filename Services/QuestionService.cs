@@ -1,4 +1,5 @@
-﻿using QuizMasterAPI.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 
@@ -7,31 +8,46 @@ namespace QuizMasterAPI.Services
     public class QuestionService : IQuestionService
     {
         private readonly IQuestionRepository _repository;
+        private readonly ILogger<QuestionService> _logger;
 
-        public QuestionService(IQuestionRepository repository)
+        public QuestionService(IQuestionRepository repository, ILogger<QuestionService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
-        /// <summary>
-        /// Получить все вопросы (можно просто _repository.GetAllAsync())
-        /// </summary>
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
-            return await _repository.GetAllAsync();
+            _logger.LogInformation("GetAllQuestions()");
+            try
+            {
+                return await _repository.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в GetAllQuestions()");
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Получить конкретный вопрос по ID
-        /// </summary>
         public async Task<Question> GetQuestion(int id)
         {
-            var question = await _repository.GetQuestionByIdAsync(id);
-            if (question == null)
+            _logger.LogInformation("GetQuestion(Id={Id})", id);
+            try
             {
-                throw new KeyNotFoundException($"Question with ID {id} not found.");
+                var question = await _repository.GetQuestionByIdAsync(id);
+                if (question == null)
+                {
+                    _logger.LogWarning("Question с ID={Id} не найден", id);
+                    throw new KeyNotFoundException($"Question with ID {id} not found.");
+                }
+                return question;
             }
-            return question;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в GetQuestion(Id={Id})", id);
+                throw;
+            }
         }
 
         private QuestionDto MapToDto(Question question)
@@ -49,162 +65,177 @@ namespace QuizMasterAPI.Services
                 }).ToList()
             };
         }
+
         public async Task<QuestionDto> GetQuestionDto(int id)
         {
-            var question = await GetQuestion(id); // Вызов с подгруженными AnswerOptions
+            var question = await GetQuestion(id);
             return MapToDto(question);
         }
 
-
-
-
-        /// <summary>
-        /// Создать новый вопрос с вариантами
-        /// </summary>
         public async Task<Question> CreateQuestion(CreateQuestionDto questionDto)
         {
-            var question = new Question
+            _logger.LogInformation("CreateQuestion(Text={Text})", questionDto.Text);
+            try
             {
-                Text = questionDto.Text,
-                TopicId = questionDto.TopicId, // <-- Устанавливаем тему
-                AnswerOptions = questionDto.AnswerOptions
-                    .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
-                    .ToList()
-            };
+                var question = new Question
+                {
+                    Text = questionDto.Text,
+                    TopicId = questionDto.TopicId,
+                    AnswerOptions = questionDto.AnswerOptions
+                        .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
+                        .ToList()
+                };
 
-            await _repository.AddAsync(question);
-            await _repository.SaveChangesAsync();
-            return question;
+                await _repository.AddAsync(question);
+                await _repository.SaveChangesAsync();
+                return question;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в CreateQuestion(Text={Text})", questionDto.Text);
+                throw;
+            }
         }
 
-
-        /// <summary>
-        /// Обновить вопрос
-        /// </summary>
         public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto)
         {
-            // 1. Находим существующий вопрос
-            var question = await GetQuestion(id);
+            _logger.LogInformation("UpdateQuestion(Id={Id})", id);
+            try
+            {
+                var question = await GetQuestion(id);
+                question.Text = questionDto.Text;
+                question.AnswerOptions = questionDto.AnswerOptions
+                    .Select(a => new AnswerOption
+                    {
+                        Text = a.Text,
+                        IsCorrect = a.IsCorrect,
+                        QuestionId = id
+                    })
+                    .ToList();
 
-            // 2. Меняем поля
-            question.Text = questionDto.Text;
-            question.AnswerOptions = questionDto.AnswerOptions
-                .Select(a => new AnswerOption
-                {
-                    Text = a.Text,
-                    IsCorrect = a.IsCorrect,
-                    QuestionId = id
-                })
-                .ToList();
-
-            // 3. Вызываем UpdateAsync + SaveChangesAsync
-            await _repository.UpdateAsync(question);
-            await _repository.SaveChangesAsync();
-
-            return question;
+                await _repository.UpdateAsync(question);
+                await _repository.SaveChangesAsync();
+                return question;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в UpdateQuestion(Id={Id})", id);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Удалить вопрос
-        /// </summary>
         public async Task<bool> DeleteQuestion(int id)
         {
-            var question = await GetQuestion(id);
-            await _repository.DeleteAsync(question);
-            await _repository.SaveChangesAsync();
-            return true;
+            _logger.LogInformation("DeleteQuestion(Id={Id})", id);
+            try
+            {
+                var question = await GetQuestion(id);
+                await _repository.DeleteAsync(question);
+                await _repository.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в DeleteQuestion(Id={Id})", id);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Проверить один вариант ответа
-        /// </summary>
         public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
         {
+            _logger.LogInformation("CheckAnswer(QuestionId={Qid}, AnswerId={Aid})", questionId, selectedAnswerId);
             var question = await GetQuestion(questionId);
 
             var selectedAnswer = question.AnswerOptions.FirstOrDefault(a => a.Id == selectedAnswerId);
             if (selectedAnswer == null)
             {
+                _logger.LogWarning("Answer option Id={Aid} не найден в QuestionId={Qid}", selectedAnswerId, questionId);
                 throw new ArgumentException("Answer option not found.");
             }
 
             return selectedAnswer.IsCorrect;
         }
 
-        /// <summary>
-        /// Получить случайные вопросы
-        /// </summary>
         public async Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count)
         {
-            var questions = await _repository.GetRandomQuestionsAsync(count);
-
-            return questions.Select(q => new QuestionDto
+            _logger.LogInformation("GetRandomQuestions(count={Count})", count);
+            try
             {
-                Id = q.Id,
-                Text = q.Text,
-                HasMultipleCorrectAnswers = q.AnswerOptions.Count(a => a.IsCorrect) > 1,
-                AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
+                var questions = await _repository.GetRandomQuestionsAsync(count);
+                return questions.Select(q => new QuestionDto
                 {
-                    Id = a.Id,
-                    Text = a.Text,
-                    IsCorrect = a.IsCorrect
-                }).ToList()
-            });
+                    Id = q.Id,
+                    Text = q.Text,
+                    HasMultipleCorrectAnswers = q.AnswerOptions.Count(a => a.IsCorrect) > 1,
+                    AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
+                    {
+                        Id = a.Id,
+                        Text = a.Text,
+                        IsCorrect = a.IsCorrect
+                    }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в GetRandomQuestions(count={Count})", count);
+                throw;
+            }
         }
 
-
-        /// <summary>
-        /// Проверить несколько ответов по разным вопросам
-        /// </summary>
         public async Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers)
         {
-            var questionIds = answers.Select(a => a.QuestionId).ToList();
-            var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
-
-            var response = new AnswerValidationResponseDto();
-
-            foreach (var answer in answers)
+            _logger.LogInformation("CheckAnswers для {Count} вопросов", answers.Count);
+            try
             {
-                var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                if (question == null)
+                var questionIds = answers.Select(a => a.QuestionId).ToList();
+                var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+
+                var response = new AnswerValidationResponseDto();
+
+                foreach (var answer in answers)
                 {
-                    throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
-                }
+                    var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question == null)
+                    {
+                        throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
+                    }
 
-                var correctAnswers = question.AnswerOptions
-                    .Where(a => a.IsCorrect)
-                    .Select(a => a.Id)
-                    .ToList();
-
-                var isCorrect =
-                    !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
-                    !answer.SelectedAnswerIds.Except(correctAnswers).Any();
-
-                // Детальная информация
-                response.Results.Add(new QuestionValidationResultDto
-                {
-                    QuestionText = question.Text,
-                    CorrectAnswers = question.AnswerOptions
+                    var correctAnswers = question.AnswerOptions
                         .Where(a => a.IsCorrect)
-                        .Select(a => a.Text)
-                        .ToList(),
-                    SelectedAnswers = question.AnswerOptions
-                        .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
-                        .Select(a => a.Text)
-                        .ToList()
-                });
+                        .Select(a => a.Id)
+                        .ToList();
 
-                if (isCorrect)
-                {
-                    // Простой подсчёт очков:
-                    // Если несколько правильных ответов, даём 2 очка, 
-                    // если один — тоже 2 (по коду).
-                    response.Score += (correctAnswers.Count > 1) ? 2 : 2;
-                    response.CorrectCount++;
+                    var isCorrect =
+                        !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
+                        !answer.SelectedAnswerIds.Except(correctAnswers).Any();
+
+                    response.Results.Add(new QuestionValidationResultDto
+                    {
+                        QuestionText = question.Text,
+                        CorrectAnswers = question.AnswerOptions
+                            .Where(a => a.IsCorrect)
+                            .Select(a => a.Text)
+                            .ToList(),
+                        SelectedAnswers = question.AnswerOptions
+                            .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
+                            .Select(a => a.Text)
+                            .ToList()
+                    });
+
+                    if (isCorrect)
+                    {
+                        response.Score += (correctAnswers.Count > 1) ? 2 : 2;
+                        response.CorrectCount++;
+                    }
                 }
-            }
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка в CheckAnswers");
+                throw;
+            }
         }
     }
 }
