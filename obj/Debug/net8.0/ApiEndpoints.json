@@ -312,21 +312,16 @@
     ]
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.UserTestsController",
+    "ContainingType": "UserTestAnswersController",
     "Method": "CheckAnswers",
-    "RelativePath": "api/UserTests/{userTestId}/check",
-    "HttpMethod": "POST",
+    "RelativePath": "api/UserTestAnswers/{userTestId}/check",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "userTestId",
         "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "answers",
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -343,7 +338,117 @@
     ]
   },
   {
-    "ContainingType": "QuizMasterAPI.Controllers.UserTestsController",
+    "ContainingType": "UserTestAnswersController",
+    "Method": "SaveAnswers",
+    "RelativePath": "api/UserTestAnswers/{userTestId}/save",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userTestId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "answers",
+        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserTestsController",
+    "Method": "CreateUserTest",
+    "RelativePath": "api/UserTests",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "QuizMasterAPI.Models.Entities.UserTest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.Entities.UserTest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "UserTestsController",
+    "Method": "GetUserTest",
+    "RelativePath": "api/UserTests/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.Entities.UserTest",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "UserTestsController",
+    "Method": "UpdateUserTest",
+    "RelativePath": "api/UserTests/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "QuizMasterAPI.Models.Entities.UserTest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserTestsController",
+    "Method": "DeleteUserTest",
+    "RelativePath": "api/UserTests/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserTestsController",
     "Method": "StartTest",
     "RelativePath": "api/UserTests/start/{testId}",
     "HttpMethod": "POST",

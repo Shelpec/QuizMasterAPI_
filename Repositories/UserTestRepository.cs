@@ -17,9 +17,17 @@ namespace QuizMasterAPI.Repositories
         public async Task<UserTest?> GetUserTestWithQuestionsAsync(int userTestId)
         {
             return await _ctx.UserTests
+
+                // Чтобы подгрузить UserTestQuestions
+                .Include(ut => ut.UserTestQuestions)
+                    // Чтобы подгрузить сами ответы пользователя:
+                    .ThenInclude(utq => utq.UserTestAnswers)
+
+                // Параллельно — загружаем Question и AnswerOptions
                 .Include(ut => ut.UserTestQuestions)
                     .ThenInclude(utq => utq.Question)
-                    .ThenInclude(q => q.AnswerOptions)
+                        .ThenInclude(q => q.AnswerOptions)
+
                 .FirstOrDefaultAsync(ut => ut.Id == userTestId);
         }
 

@@ -3,28 +3,22 @@ using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Interfaces
 {
-    /// <summary>
-    /// Логика прохождения теста конкретным пользователем.
-    /// </summary>
     public interface IUserTestService
     {
-        /// <summary>
-        /// Пользователь (userId) начинает прохождение теста (testId).
-        /// Генерируются случайные вопросы по настройкам шаблона.
-        /// </summary>
-        /// <summary>
-        /// Пользователь (userId) начинает прохождение теста (testId).
-        /// Генерируются случайные вопросы по настройкам шаблона.
-        /// </summary>
+        // Создать UserTest (без логики ответов)
+        Task<UserTest> CreateAsync(UserTest userTest);
+
+        // Получить UserTest
+        Task<UserTest?> GetByIdAsync(int id);
+
+        // Обновить (например, IsPassed, CorrectAnswers, если надо)
+        Task UpdateAsync(UserTest userTest);
+
+        // Удалить
+        Task DeleteAsync(int id);
+
+        // Дополнительно: "Старт теста" — 
+        // метод, генерирующий UserTestQuestions, если хотите 
         Task<UserTestDto> StartTestAsync(int testId, string userId);
-
-        /// <summary>
-        /// Проверяем ответы пользователя по UserTest (id).
-        /// Возвращаем результат с количеством правильных и т.д.
-        /// </summary>
-        Task<TestCheckResultDto> CheckUserTestAnswersAsync(int userTestId, List<TestAnswerValidationDto> answers, string userId);
-
-        Task<TestCheckResultDto> SubmitAndCheckAnswersAsync(int userTestId, List<UserAnswerSubmitDto> answers, string userId);
-
     }
 }

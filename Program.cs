@@ -79,7 +79,12 @@ builder.Services.AddScoped<IQuestionService, QuestionService>();
 //builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 
+builder.Services.AddScoped<IUserTestAnswerRepository, UserTestAnswerRepository>();
+builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+// Регистрация сервисов:
+builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
 
 // Вот сюда добавляем:
 builder.Services.AddScoped<IUserTestService, UserTestService>();
