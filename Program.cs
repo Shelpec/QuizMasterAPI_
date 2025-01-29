@@ -14,6 +14,7 @@ using System.Text;
 using Serilog;
 using Serilog.Events;
 using Microsoft.OpenApi.Models;
+using QuizMasterAPI.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,7 +82,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Добавляем AutoMapper, указав любой класс-профиль:
-builder.Services.AddAutoMapper(typeof(QuizMasterAPI.MappingProfiles.MappingProfile));
+//builder.Services.AddAutoMapper(typeof(QuizMasterAPI.MappingProfiles.MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Репозитории и сервисы
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

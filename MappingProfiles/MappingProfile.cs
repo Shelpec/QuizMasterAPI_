@@ -23,11 +23,12 @@ namespace QuizMasterAPI.MappingProfiles
             // UserTestQuestion.Question.AnswerOptions
             // =========================================
             CreateMap<UserTestQuestion, UserTestQuestionDto>()
-                // Для questionText
-                .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Question.Text))
-                // Для answerOptions
-                .ForMember(dest => dest.AnswerOptions, opt => opt.MapFrom(src => src.Question.AnswerOptions))
-                .ReverseMap();
+                .ForMember(dest => dest.QuestionText,
+                    opt => opt.MapFrom(src => src.Question.Text))
+                .ForMember(dest => dest.AnswerOptions,
+                    opt => opt.MapFrom(src => src.Question.AnswerOptions));
+            CreateMap<AnswerOption, AnswerOptionDto>();
+
 
             // UserTest -> UserTestDto
             CreateMap<UserTest, UserTestDto>()
@@ -46,11 +47,11 @@ namespace QuizMasterAPI.MappingProfiles
             // UserTest <-> UserTestDto
             CreateMap<UserTest, UserTestDto>().ReverseMap();
 
-            // UserTestQuestion <-> UserTestQuestionDto
-            CreateMap<UserTestQuestion, UserTestQuestionDto>()
-                // QuestionText берем из Question.Text
-                .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Question.Text))
-                .ReverseMap();
+            //// UserTestQuestion <-> UserTestQuestionDto
+            //CreateMap<UserTestQuestion, UserTestQuestionDto>()
+            //    // QuestionText берем из Question.Text
+            //    .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Question.Text))
+            //    .ReverseMap();
 
             // Если нужно: CreateQuestionDto -> Question
             CreateMap<CreateQuestionDto, Question>()

@@ -1109,3 +1109,1005 @@ ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
 2025-01-29 16:24:23.310 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 793.3826ms
 2025-01-29 16:24:23.310 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
 2025-01-29 16:24:23.311 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - 200 null application/json; charset=utf-8 809.6203ms
+2025-01-29 17:05:25.252 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:05:25.774 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:05:26.078 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:05:26.078 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:05:26.078 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:05:26.405 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 650.788ms
+2025-01-29 17:05:26.416 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:05:26.434 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 10.1717ms
+2025-01-29 17:05:26.604 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:05:26.695 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 91.0344ms
+2025-01-29 17:05:26.836 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:05:26.883 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 45.1317ms
+2025-01-29 17:06:13.608 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:06:13.796 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:06:13.923 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:06:14.515 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:06:18.038 +05:00 [INF] Executed DbCommand (132ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:06:18.677 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:06:18.694 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:06:18.717 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4775.6294ms
+2025-01-29 17:06:18.718 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:06:18.745 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 5136.4156ms
+2025-01-29 17:07:35.074 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3008 - null null
+2025-01-29 17:07:35.230 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:07:35.244 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:07:35.649 +05:00 [INF] Вход в GetUserTest(Id=3008)
+2025-01-29 17:07:40.309 +05:00 [INF] GetByIdAsync(UserTestId=3008)
+2025-01-29 17:07:51.642 +05:00 [INF] Executed DbCommand (65ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+FROM [UserTests] AS [u]
+WHERE [u].[Id] = @__userTestId_0
+2025-01-29 17:08:16.898 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:08:17.033 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 41787.1748ms
+2025-01-29 17:08:17.033 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:08:17.034 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3008 - 200 null application/json; charset=utf-8 41960.4009ms
+2025-01-29 17:08:31.778 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3008 - null null
+2025-01-29 17:08:36.436 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:08:36.437 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:09:24.946 +05:00 [INF] Вход в GetUserTest(Id=3008)
+2025-01-29 17:09:25.514 +05:00 [INF] GetByIdAsync(UserTestId=3008)
+2025-01-29 17:09:26.237 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+FROM [UserTests] AS [u]
+WHERE [u].[Id] = @__userTestId_0
+2025-01-29 17:09:27.331 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:09:27.364 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 50926.474ms
+2025-01-29 17:09:27.364 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:09:27.366 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3008 - 200 null application/json; charset=utf-8 55587.7214ms
+2025-01-29 17:09:41.280 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3007 - null null
+2025-01-29 17:09:41.282 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:09:41.283 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:09:41.298 +05:00 [INF] Вход в GetUserTest(Id=3007)
+2025-01-29 17:09:44.834 +05:00 [INF] GetByIdAsync(UserTestId=3007)
+2025-01-29 17:09:51.115 +05:00 [INF] Executed DbCommand (34ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+FROM [UserTests] AS [u]
+WHERE [u].[Id] = @__userTestId_0
+2025-01-29 17:10:17.337 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:10:17.376 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 36093.456ms
+2025-01-29 17:10:17.377 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:10:17.378 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3007 - 200 null application/json; charset=utf-8 36097.9172ms
+2025-01-29 17:13:42.181 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3007 - null null
+2025-01-29 17:13:42.214 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:13:42.215 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:13:42.228 +05:00 [INF] Вход в GetUserTest(Id=3007)
+2025-01-29 17:14:26.902 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:14:27.367 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:14:27.647 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:14:27.647 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:14:27.648 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:14:27.926 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 585.5492ms
+2025-01-29 17:14:27.976 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:14:28.004 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 16.65ms
+2025-01-29 17:14:28.147 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:14:28.240 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 94.547ms
+2025-01-29 17:14:28.408 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:14:28.474 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 64.2984ms
+2025-01-29 17:14:50.695 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:14:50.861 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:14:50.931 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:14:51.405 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:14:55.128 +05:00 [INF] Executed DbCommand (169ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:14:55.686 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:14:55.702 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:14:55.723 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4779.1305ms
+2025-01-29 17:14:55.724 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:14:55.744 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 5049.2655ms
+2025-01-29 17:15:22.996 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3007 - null null
+2025-01-29 17:15:23.166 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:15:23.180 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:15:23.637 +05:00 [INF] Вход в GetUserTest(Id=3007)
+2025-01-29 17:15:23.639 +05:00 [INF] GetByIdAsync(UserTestId=3007)
+2025-01-29 17:15:23.923 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:15:24.164 +05:00 [INF] Executed DbCommand (42ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-29 17:15:24.345 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:15:24.423 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 1240.7675ms
+2025-01-29 17:15:24.424 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:15:24.604 +05:00 [ERR] Необработанное исключение поймано в Middleware.
+System.Text.Json.JsonException: A possible object cycle was detected. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32. Consider using ReferenceHandler.Preserve on JsonSerializerOptions to support cycles. Path: $.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at QuizMasterAPI.Middleware.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Middleware\ExceptionMiddleware.cs:line 23
+2025-01-29 17:15:24.696 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3007 - 500 null application/json 1700.7322ms
+2025-01-29 17:18:40.750 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:18:41.282 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:18:41.586 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:18:41.586 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:18:41.586 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:18:42.010 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:18:42.007 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 760.2393ms
+2025-01-29 17:18:42.047 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 17.6117ms
+2025-01-29 17:18:42.232 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:18:42.347 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 115.7181ms
+2025-01-29 17:18:42.517 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:18:42.570 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 52.882ms
+2025-01-29 17:19:06.518 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:19:06.711 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:19:06.801 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:19:07.310 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:19:10.862 +05:00 [INF] Executed DbCommand (149ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:19:11.466 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:19:11.488 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:19:11.517 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4701.2164ms
+2025-01-29 17:19:11.519 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:19:11.548 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 5030.4321ms
+2025-01-29 17:19:34.344 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3006 - null null
+2025-01-29 17:19:34.571 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:19:34.583 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:19:35.055 +05:00 [INF] Вход в GetUserTest(Id=3006)
+2025-01-29 17:19:35.058 +05:00 [INF] GetByIdAsync(UserTestId=3006)
+2025-01-29 17:19:35.365 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:19:35.541 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-29 17:19:35.725 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:19:35.798 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 1213.4463ms
+2025-01-29 17:19:35.799 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:19:35.980 +05:00 [ERR] Необработанное исключение поймано в Middleware.
+System.Text.Json.JsonException: A possible object cycle was detected. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32. Consider using ReferenceHandler.Preserve on JsonSerializerOptions to support cycles. Path: $.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at QuizMasterAPI.Middleware.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Middleware\ExceptionMiddleware.cs:line 23
+2025-01-29 17:19:36.069 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3006 - 500 null application/json 1725.1754ms
+2025-01-29 17:19:41.326 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTests/3005 - null null
+2025-01-29 17:19:41.333 +05:00 [INF] Executing endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:19:41.334 +05:00 [INF] Route matched with {action = "GetUserTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Entities.UserTest]] GetUserTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:19:41.369 +05:00 [INF] Вход в GetUserTest(Id=3005)
+2025-01-29 17:19:41.370 +05:00 [INF] GetByIdAsync(UserTestId=3005)
+2025-01-29 17:19:41.384 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-29 17:19:41.395 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Entities.UserTest'.
+2025-01-29 17:19:41.401 +05:00 [INF] Executed action UserTestsController.GetUserTest (QuizMasterAPI) in 66.4272ms
+2025-01-29 17:19:41.402 +05:00 [INF] Executed endpoint 'UserTestsController.GetUserTest (QuizMasterAPI)'
+2025-01-29 17:19:41.494 +05:00 [ERR] Необработанное исключение поймано в Middleware.
+System.Text.Json.JsonException: A possible object cycle was detected. This can either be due to a cycle or if the object depth is larger than the maximum allowed depth of 32. Consider using ReferenceHandler.Preserve on JsonSerializerOptions to support cycles. Path: $.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.UserTest.UserTestQuestions.
+   at System.Text.Json.ThrowHelper.ThrowJsonException_SerializerCycleDetected(Int32 maxDepth)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnWriteResume(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryWrite(Utf8JsonWriter writer, TCollection value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.GetMemberAndWriteJson(Object obj, WriteStack& state, Utf8JsonWriter writer)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryWrite(Utf8JsonWriter writer, T value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.SerializeAsync(PipeWriter pipeWriter, T rootValue, Int32 flushThreshold, CancellationToken cancellationToken, Object rootValueBoxed)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonOutputFormatter.WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResultFilterAsync>g__Awaited|30_0[TFilter,TFilterAsync](ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResultExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.ResultNext[TFilter,TFilterAsync](State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeResultFilters()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at QuizMasterAPI.Middleware.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Middleware\ExceptionMiddleware.cs:line 23
+2025-01-29 17:19:41.509 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTests/3005 - 500 null application/json 183.5971ms
+2025-01-29 17:21:28.466 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:21:28.946 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:21:29.257 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:21:29.257 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:21:29.257 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:21:29.662 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 739.7711ms
+2025-01-29 17:21:29.818 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:21:29.842 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 8.6153ms
+2025-01-29 17:21:29.963 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:21:30.113 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 150.6957ms
+2025-01-29 17:21:30.278 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:21:30.377 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 100.7289ms
+2025-01-29 17:21:44.744 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:21:44.905 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:21:45.001 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:21:45.460 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:21:48.962 +05:00 [INF] Executed DbCommand (117ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:21:49.603 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:21:49.619 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:21:49.641 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4626.0955ms
+2025-01-29 17:21:49.643 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:21:49.671 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 4928.1675ms
+2025-01-29 17:27:59.845 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/4005 - null 0
+2025-01-29 17:27:59.973 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:27:59.986 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:28:00.390 +05:00 [INF] Вход в StartTest(TestId=4005)
+2025-01-29 17:28:00.396 +05:00 [INF] StartTestAsync(TestId=4005, UserId=6e735eae-b399-4c76-ad85-161f9288dd17)
+2025-01-29 17:29:22.841 +05:00 [INF] Executed DbCommand (18ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+WHERE [t].[Id] = @__id_0
+2025-01-29 17:29:44.137 +05:00 [INF] Executed DbCommand (53ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-01-29 17:31:07.045 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-01-29 17:32:30.405 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2),
+(@p6, @p7, 3)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-01-29 17:32:41.040 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:32:41.177 +05:00 [INF] Executed DbCommand (33ms) [Parameters=[@__userTest_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTest_Id_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-01-29 17:48:31.877 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:48:32.416 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:48:32.691 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:48:32.691 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:48:32.691 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:48:32.977 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 582.7549ms
+2025-01-29 17:48:32.991 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:48:33.010 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 8.5692ms
+2025-01-29 17:48:33.190 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:48:33.279 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 88.7768ms
+2025-01-29 17:48:33.422 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:48:33.517 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 95.0108ms
+2025-01-29 17:48:56.836 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:48:57.025 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:48:57.106 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:48:57.607 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:49:01.137 +05:00 [INF] Executed DbCommand (124ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:49:01.732 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:49:01.747 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:49:01.768 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4650.0678ms
+2025-01-29 17:49:01.769 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:49:01.793 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 4957.5505ms
+2025-01-29 17:49:20.638 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - null 0
+2025-01-29 17:49:20.760 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:49:20.772 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:49:21.175 +05:00 [INF] Вход в StartTest(TestId=3005)
+2025-01-29 17:49:21.181 +05:00 [INF] StartTestAsync(TestId=3005, UserId=6e735eae-b399-4c76-ad85-161f9288dd17)
+2025-01-29 17:49:25.919 +05:00 [INF] Executed DbCommand (73ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+WHERE [t].[Id] = @__id_0
+2025-01-29 17:49:32.157 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-01-29 17:49:44.135 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-01-29 17:50:00.813 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTestQuestions] ([QuestionId], [UserTestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-01-29 17:50:01.612 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:50:01.718 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userTest_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTest_Id_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-01-29 17:51:05.145 +05:00 [INF] Тест успешно создан: UserTestId=3010
+2025-01-29 17:51:08.229 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-01-29 17:51:08.440 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 107667.3417ms
+2025-01-29 17:51:08.440 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:51:08.442 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - 200 null application/json; charset=utf-8 107804.7362ms
+2025-01-29 17:53:12.810 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:53:13.321 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:53:13.584 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:53:13.585 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:53:13.585 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:53:13.885 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 589.1709ms
+2025-01-29 17:53:13.921 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:53:13.959 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 16.8441ms
+2025-01-29 17:53:14.076 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:53:14.167 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 91.7244ms
+2025-01-29 17:53:14.344 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:53:14.423 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 92.99ms
+2025-01-29 17:53:52.484 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:53:52.687 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:53:52.762 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:53:53.240 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:53:56.827 +05:00 [INF] Executed DbCommand (123ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:53:57.387 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:53:57.401 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:53:57.421 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4647.3173ms
+2025-01-29 17:53:57.422 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:53:57.442 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 4958.0171ms
+2025-01-29 17:54:17.038 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - null 0
+2025-01-29 17:54:17.169 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:54:17.183 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:54:17.746 +05:00 [INF] Вход в StartTest(TestId=3005)
+2025-01-29 17:54:17.753 +05:00 [INF] StartTestAsync(TestId=3005, UserId=6e735eae-b399-4c76-ad85-161f9288dd17)
+2025-01-29 17:54:21.468 +05:00 [INF] Executed DbCommand (47ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+WHERE [t].[Id] = @__id_0
+2025-01-29 17:54:26.600 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-01-29 17:54:34.695 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-01-29 17:54:40.806 +05:00 [INF] Executed DbCommand (41ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTestQuestions] ([QuestionId], [UserTestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-01-29 17:54:41.143 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:54:41.263 +05:00 [INF] Executed DbCommand (30ms) [Parameters=[@__userTest_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTest_Id_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-01-29 17:56:56.004 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:56:56.532 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:56:56.792 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:56:56.792 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:56:56.792 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:56:57.082 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 571.6285ms
+2025-01-29 17:56:57.133 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:56:57.154 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 13.9394ms
+2025-01-29 17:56:57.286 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:56:57.371 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 84.9477ms
+2025-01-29 17:56:57.530 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:56:57.608 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 81.7388ms
+2025-01-29 17:57:13.374 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 17:57:13.523 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:57:13.588 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 17:57:14.005 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 17:57:17.725 +05:00 [INF] Executed DbCommand (145ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 17:57:18.354 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 17:57:18.374 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 17:57:18.403 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4800.128ms
+2025-01-29 17:57:18.404 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 17:57:18.430 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 5056.4984ms
+2025-01-29 17:57:39.774 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - null 0
+2025-01-29 17:57:39.906 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:57:39.918 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 17:57:40.319 +05:00 [INF] Вход в StartTest(TestId=3005)
+2025-01-29 17:57:40.325 +05:00 [INF] StartTestAsync(TestId=3005, UserId=6e735eae-b399-4c76-ad85-161f9288dd17)
+2025-01-29 17:57:43.926 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+WHERE [t].[Id] = @__id_0
+2025-01-29 17:57:49.890 +05:00 [INF] Executed DbCommand (38ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-01-29 17:57:57.651 +05:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-01-29 17:58:02.767 +05:00 [INF] Executed DbCommand (38ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTestQuestions] ([QuestionId], [UserTestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-01-29 17:58:03.573 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 17:58:03.717 +05:00 [INF] Executed DbCommand (34ms) [Parameters=[@__userTest_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTest_Id_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-01-29 17:58:50.958 +05:00 [INF] Тест успешно создан: UserTestId=3012
+2025-01-29 17:58:53.813 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-01-29 17:58:53.923 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 74003.1946ms
+2025-01-29 17:58:53.924 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 17:58:53.925 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/3005 - 200 null application/json; charset=utf-8 74151.648ms
+2025-01-29 17:59:39.688 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-01-29 17:59:40.164 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-01-29 17:59:40.443 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-01-29 17:59:40.443 +05:00 [INF] Hosting environment: Development
+2025-01-29 17:59:40.443 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-01-29 17:59:40.744 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 610.3161ms
+2025-01-29 17:59:40.753 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-01-29 17:59:40.791 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 13.7466ms
+2025-01-29 17:59:40.950 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-01-29 17:59:41.114 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 164.4223ms
+2025-01-29 17:59:41.286 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-01-29 17:59:41.386 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 95.9159ms
+2025-01-29 18:01:34.543 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 44
+2025-01-29 18:01:34.725 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 18:01:34.791 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-01-29 18:01:35.305 +05:00 [INF] Запрос на логин пользователя: d
+2025-01-29 18:01:38.934 +05:00 [INF] Executed DbCommand (119ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-01-29 18:01:39.617 +05:00 [INF] Пользователь d успешно залогинился
+2025-01-29 18:01:39.642 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-01-29 18:01:39.664 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 4861.8636ms
+2025-01-29 18:01:39.665 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-01-29 18:01:39.690 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 5153.3938ms
+2025-01-29 18:02:04.415 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/4005 - null 0
+2025-01-29 18:02:04.555 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 18:02:04.566 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-01-29 18:02:04.950 +05:00 [INF] Вход в StartTest(TestId=4005)
+2025-01-29 18:02:04.956 +05:00 [INF] StartTestAsync(TestId=4005, UserId=6e735eae-b399-4c76-ad85-161f9288dd17)
+2025-01-29 18:02:10.851 +05:00 [INF] Executed DbCommand (69ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[Name], [t].[TopicId]
+FROM [Tests] AS [t]
+WHERE [t].[Id] = @__id_0
+2025-01-29 18:02:24.672 +05:00 [INF] Executed DbCommand (36ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-01-29 18:02:27.083 +05:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-01-29 18:02:29.473 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2),
+(@p6, @p7, 3)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-01-29 18:02:30.427 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 18:02:30.698 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[@__userTest_Id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTest_Id_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-01-29 18:02:33.312 +05:00 [INF] Тест успешно создан: UserTestId=3013
+2025-01-29 18:02:37.186 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-01-29 18:02:52.417 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 47848.3803ms
+2025-01-29 18:02:52.417 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-01-29 18:02:52.418 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/4005 - 200 null application/json; charset=utf-8 48004.4917ms
+2025-01-29 18:05:18.372 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTestAnswers/3013/save - application/json 372
+2025-01-29 18:05:18.390 +05:00 [INF] Executing endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-29 18:05:18.399 +05:00 [INF] Route matched with {action = "SaveAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAnswers(Int32, System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto]) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-29 18:05:18.460 +05:00 [INF] Вход в SaveAnswers(UserTestId=3013), Count=4
+2025-01-29 18:05:18.463 +05:00 [INF] SaveAnswersAsync(UserTestId=3013, CountAnswers=4)
+2025-01-29 18:05:18.509 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-01-29 18:05:18.660 +05:00 [INF] Executed DbCommand (21ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-29 18:05:18.738 +05:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32), @p7='?' (DbType = Int32), @p8='?' (DbType = Int32), @p9='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestAnswers] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2),
+(@p6, @p7, 3),
+(@p8, @p9, 4)) AS i ([AnswerOptionId], [UserTestQuestionId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([AnswerOptionId], [UserTestQuestionId])
+VALUES (i.[AnswerOptionId], i.[UserTestQuestionId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-01-29 18:05:18.744 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2025-01-29 18:05:18.745 +05:00 [INF] Executed action UserTestAnswersController.SaveAnswers (QuizMasterAPI) in 345.6689ms
+2025-01-29 18:05:18.745 +05:00 [INF] Executed endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-01-29 18:05:18.746 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTestAnswers/3013/save - 200 null text/plain; charset=utf-8 381.9956ms
+2025-01-29 18:05:36.058 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTestAnswers/3013/check - null null
+2025-01-29 18:05:36.061 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-29 18:05:36.071 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-01-29 18:05:36.079 +05:00 [INF] Вход в CheckAnswers(UserTestId=3013)
+2025-01-29 18:05:36.085 +05:00 [INF] CheckAnswersAsync(UserTestId=3013)
+2025-01-29 18:05:36.097 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u2].[Id], [u2].[CorrectAnswers], [u2].[DateCreated], [u2].[IsPassed], [u2].[TestId], [u2].[TotalQuestions], [u2].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Id1], [s].[AnswerOptionId], [s].[UserTestQuestionId], [s].[Text], [s].[TopicId], [s].[Id2], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u2]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u2].[Id] = [s].[UserTestId]
+ORDER BY [u2].[Id], [s].[Id], [s].[Id0], [s].[Id1]
+2025-01-29 18:05:36.295 +05:00 [INF] Executed DbCommand (10ms) [Parameters=[@__questionIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM [Questions] AS [q]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+WHERE [q].[Id] IN (
+    SELECT [q0].[value]
+    FROM OPENJSON(@__questionIds_0) WITH ([value] int '$') AS [q0]
+)
+ORDER BY [q].[Id]
+2025-01-29 18:05:36.309 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestCheckResultDto'.
+2025-01-29 18:05:36.316 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 244.9611ms
+2025-01-29 18:05:36.316 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-01-29 18:05:36.317 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTestAnswers/3013/check - 200 null application/json; charset=utf-8 259.5207ms
