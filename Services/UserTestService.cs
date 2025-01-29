@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
@@ -13,19 +14,22 @@ namespace QuizMasterAPI.Services
         private readonly IQuestionRepository _questionRepository;
         private readonly QuizDbContext _context;
         private readonly ILogger<UserTestService> _logger;
+        private readonly IMapper _mapper; // <-- AutoMapper
 
         public UserTestService(
             IUserTestRepository userTestRepository,
             ITestRepository testRepository,
             IQuestionRepository questionRepository,
             QuizDbContext context,
-            ILogger<UserTestService> logger)
+            ILogger<UserTestService> logger,
+            IMapper mapper) // <-- получаем из DI
         {
             _userTestRepository = userTestRepository;
             _testRepository = testRepository;
             _questionRepository = questionRepository;
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task<UserTest> CreateAsync(UserTest userTest)
@@ -131,6 +135,7 @@ namespace QuizMasterAPI.Services
                 _context.UserTestQuestions.AddRange(userTestQuestions);
                 await _context.SaveChangesAsync();
 
+                // Грузим созданный UserTest + Questions + AnswerOptions
                 var createdUserTest = await _context.UserTests
                     .Include(ut => ut.UserTestQuestions)
                         .ThenInclude(utq => utq.Question)
@@ -140,26 +145,10 @@ namespace QuizMasterAPI.Services
                 if (createdUserTest == null)
                     throw new Exception("Не удалось загрузить созданный UserTest.");
 
-                var dto = new UserTestDto
-                {
-                    Id = createdUserTest.Id,
-                    TestId = createdUserTest.TestId,
-                    DateCreated = createdUserTest.DateCreated,
-                    UserTestQuestions = createdUserTest.UserTestQuestions
-                        .Select(utq => new UserTestQuestionDto
-                        {
-                            Id = utq.Id,
-                            QuestionId = utq.QuestionId,
-                            QuestionText = utq.Question.Text,
-                            AnswerOptions = utq.Question.AnswerOptions
-                                .Select(ao => new AnswerOptionDto
-                                {
-                                    Id = ao.Id,
-                                    Text = ao.Text
-                                })
-                                .ToList()
-                        }).ToList()
-                };
+                // 4) Маппим в UserTestDto
+                // Благодаря настройке в MappingProfile, 
+                // userTestQuestions[].answerOptions будет заполняться из question.AnswerOptions
+                var dto = _mapper.Map<UserTestDto>(createdUserTest);
 
                 _logger.LogInformation("Тест успешно создан: UserTestId={UserTestId}", dto.Id);
                 return dto;

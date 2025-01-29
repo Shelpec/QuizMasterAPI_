@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
+using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Services
@@ -8,14 +10,16 @@ namespace QuizMasterAPI.Services
     {
         private readonly ITestRepository _testRepository;
         private readonly ILogger<TestService> _logger;
+        private readonly IMapper _mapper;
 
-        public TestService(ITestRepository testRepository, ILogger<TestService> logger)
+        public TestService(ITestRepository testRepository, ILogger<TestService> logger, IMapper mapper)
         {
             _testRepository = testRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<Test> CreateTemplateAsync(string name, int countOfQuestions, int? topicId)
+        public async Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId)
         {
             _logger.LogInformation("CreateTemplateAsync(Name={Name}, count={Count}, topic={Topic})", name, countOfQuestions, topicId);
             try
@@ -30,7 +34,8 @@ namespace QuizMasterAPI.Services
 
                 await _testRepository.AddAsync(test);
                 await _testRepository.SaveChangesAsync();
-                return test;
+
+                return _mapper.Map<TestDto>(test);
             }
             catch (Exception ex)
             {
@@ -39,12 +44,16 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<Test?> GetTestByIdAsync(int id)
+        public async Task<TestDto?> GetTestByIdAsync(int id)
         {
             _logger.LogInformation("GetTestByIdAsync(Id={Id})", id);
             try
             {
-                return await _testRepository.GetTestByIdAsync(id);
+                var test = await _testRepository.GetTestByIdAsync(id);
+                if (test == null)
+                    return null;
+
+                return _mapper.Map<TestDto>(test);
             }
             catch (Exception ex)
             {
@@ -53,12 +62,13 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<IEnumerable<Test>> GetAllTestsAsync()
+        public async Task<IEnumerable<TestDto>> GetAllTestsAsync()
         {
             _logger.LogInformation("GetAllTestsAsync()");
             try
             {
-                return await _testRepository.GetAllTestsAsync();
+                var tests = await _testRepository.GetAllTestsAsync();
+                return _mapper.Map<IEnumerable<TestDto>>(tests);
             }
             catch (Exception ex)
             {
@@ -67,7 +77,7 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<Test> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId)
+        public async Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId)
         {
             _logger.LogInformation("UpdateTestAsync(Id={Id}, Name={Name}, Count={Count})", id, newName, countOfQuestions);
             try
@@ -82,7 +92,7 @@ namespace QuizMasterAPI.Services
 
                 await _testRepository.UpdateAsync(test);
                 await _testRepository.SaveChangesAsync();
-                return test;
+                return _mapper.Map<TestDto>(test);
             }
             catch (Exception ex)
             {

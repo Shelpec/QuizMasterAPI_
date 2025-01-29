@@ -13,6 +13,7 @@ using System.Text;
 
 using Serilog;
 using Serilog.Events;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,10 +24,10 @@ builder.Logging.ClearProviders();
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug() // Можно выставить нужный уровень
     .WriteTo.Console()    // Логи в консоль
-                          // RollingInterval.Day создаст для каждого дня свой файл (myapp-2023-01-28.txt и т.п.)
+                          
     .WriteTo.File("Logs/myapp-.txt",
                   rollingInterval: RollingInterval.Day,
-                  retainedFileCountLimit: 7, // сколько файлов хранить
+                  retainedFileCountLimit: 7, 
                   restrictedToMinimumLevel: LogEventLevel.Information) // например, с уровня "Information"
     .CreateLogger();
 
@@ -79,6 +80,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Добавляем AutoMapper, указав любой класс-профиль:
+builder.Services.AddAutoMapper(typeof(QuizMasterAPI.MappingProfiles.MappingProfile));
+
 // Репозитории и сервисы
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
@@ -95,7 +99,39 @@ builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
 
 // Swagger (документация)
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuizMasterAPI", Version = "v1" });
+
+    // Настройка авторизации через JWT
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Введите токен JWT в формате: Bearer {your_token}"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
+
 
 var app = builder.Build();
 

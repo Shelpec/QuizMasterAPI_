@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "QuizMasterAPI",
-    "version": "1.0"
+    "version": "v1"
   },
   "paths": {
     "/api/Auth/register": {
@@ -913,10 +913,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "score": {
-            "type": "integer",
-            "format": "int32"
-          },
           "results": {
             "type": "array",
             "items": {
@@ -1030,8 +1026,14 @@
             "type": "string",
             "nullable": true
           },
-          "hasMultipleCorrectAnswers": {
-            "type": "boolean"
+          "topicId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "topic": {
+            "type": "string",
+            "nullable": true
           },
           "answerOptions": {
             "type": "array",
@@ -1428,6 +1430,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Введите токен JWT в формате: Bearer {your_token}",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

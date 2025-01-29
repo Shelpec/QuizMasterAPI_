@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
@@ -9,13 +10,19 @@ namespace QuizMasterAPI.Services
     {
         private readonly IQuestionRepository _repository;
         private readonly ILogger<QuestionService> _logger;
+        private readonly IMapper _mapper;
 
-        public QuestionService(IQuestionRepository repository, ILogger<QuestionService> logger)
+        public QuestionService(IQuestionRepository repository, ILogger<QuestionService> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
+        /// <summary>
+        /// Получить все вопросы (возвращаем сущности Question).
+        /// Если нужно DTO, сделайте _mapper.Map<IEnumerable<QuestionDto>>(...).
+        /// </summary>
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
             _logger.LogInformation("GetAllQuestions()");
@@ -30,6 +37,9 @@ namespace QuizMasterAPI.Services
             }
         }
 
+        /// <summary>
+        /// Получить сущность Question по Id
+        /// </summary>
         public async Task<Question> GetQuestion(int id)
         {
             _logger.LogInformation("GetQuestion(Id={Id})", id);
@@ -50,41 +60,26 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        private QuestionDto MapToDto(Question question)
-        {
-            return new QuestionDto
-            {
-                Id = question.Id,
-                Text = question.Text,
-                HasMultipleCorrectAnswers = question.AnswerOptions.Count(a => a.IsCorrect) > 1,
-                AnswerOptions = question.AnswerOptions.Select(a => new AnswerOptionDto
-                {
-                    Id = a.Id,
-                    Text = a.Text,
-                    IsCorrect = a.IsCorrect
-                }).ToList()
-            };
-        }
-
+        /// <summary>
+        /// Получить QuestionDto (маппим из Question).
+        /// </summary>
         public async Task<QuestionDto> GetQuestionDto(int id)
         {
             var question = await GetQuestion(id);
-            return MapToDto(question);
+            // AutoMapper: Question -> QuestionDto
+            return _mapper.Map<QuestionDto>(question);
         }
 
+        /// <summary>
+        /// Создать вопрос (CreateQuestionDto -> Question).
+        /// </summary>
         public async Task<Question> CreateQuestion(CreateQuestionDto questionDto)
         {
             _logger.LogInformation("CreateQuestion(Text={Text})", questionDto.Text);
             try
             {
-                var question = new Question
-                {
-                    Text = questionDto.Text,
-                    TopicId = questionDto.TopicId,
-                    AnswerOptions = questionDto.AnswerOptions
-                        .Select(a => new AnswerOption { Text = a.Text, IsCorrect = a.IsCorrect })
-                        .ToList()
-                };
+                // Маппим DTO -> сущность Question
+                var question = _mapper.Map<Question>(questionDto);
 
                 await _repository.AddAsync(question);
                 await _repository.SaveChangesAsync();
@@ -97,21 +92,18 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto)
+        /// <summary>
+        /// Обновить вопрос (UpdateQuestionDto -> Question).
+        /// </summary>
+        public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto dto)
         {
             _logger.LogInformation("UpdateQuestion(Id={Id})", id);
             try
             {
                 var question = await GetQuestion(id);
-                question.Text = questionDto.Text;
-                question.AnswerOptions = questionDto.AnswerOptions
-                    .Select(a => new AnswerOption
-                    {
-                        Text = a.Text,
-                        IsCorrect = a.IsCorrect,
-                        QuestionId = id
-                    })
-                    .ToList();
+
+                // Обновляем поля question из dto
+                _mapper.Map(dto, question);
 
                 await _repository.UpdateAsync(question);
                 await _repository.SaveChangesAsync();
@@ -124,6 +116,9 @@ namespace QuizMasterAPI.Services
             }
         }
 
+        /// <summary>
+        /// Удалить вопрос.
+        /// </summary>
         public async Task<bool> DeleteQuestion(int id)
         {
             _logger.LogInformation("DeleteQuestion(Id={Id})", id);
@@ -141,6 +136,9 @@ namespace QuizMasterAPI.Services
             }
         }
 
+        /// <summary>
+        /// Проверить один вариант ответа
+        /// </summary>
         public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
         {
             _logger.LogInformation("CheckAnswer(QuestionId={Qid}, AnswerId={Aid})", questionId, selectedAnswerId);
@@ -162,18 +160,8 @@ namespace QuizMasterAPI.Services
             try
             {
                 var questions = await _repository.GetRandomQuestionsAsync(count);
-                return questions.Select(q => new QuestionDto
-                {
-                    Id = q.Id,
-                    Text = q.Text,
-                    HasMultipleCorrectAnswers = q.AnswerOptions.Count(a => a.IsCorrect) > 1,
-                    AnswerOptions = q.AnswerOptions.Select(a => new AnswerOptionDto
-                    {
-                        Id = a.Id,
-                        Text = a.Text,
-                        IsCorrect = a.IsCorrect
-                    }).ToList()
-                });
+                
+                return _mapper.Map<IEnumerable<QuestionDto>>(questions);
             }
             catch (Exception ex)
             {
@@ -187,36 +175,41 @@ namespace QuizMasterAPI.Services
             _logger.LogInformation("CheckAnswers для {Count} вопросов", answers.Count);
             try
             {
+                // Загружаем сущности Question
                 var questionIds = answers.Select(a => a.QuestionId).ToList();
                 var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+
+                var questionDtos = _mapper.Map<List<QuestionDto>>(questions);
 
                 var response = new AnswerValidationResponseDto();
 
                 foreach (var answer in answers)
                 {
-                    var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
-                    if (question == null)
-                    {
+                    // Ищем QuestionDto
+                    var questionDto = questionDtos.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (questionDto == null)
                         throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
-                    }
 
-                    var correctAnswers = question.AnswerOptions
+                    // Собираем ID правильных ответов
+                    var correctAnswerIds = questionDto.AnswerOptions
                         .Where(a => a.IsCorrect)
                         .Select(a => a.Id)
                         .ToList();
 
+                    // Сравниваем
                     var isCorrect =
-                        !correctAnswers.Except(answer.SelectedAnswerIds).Any() &&
-                        !answer.SelectedAnswerIds.Except(correctAnswers).Any();
+                        !correctAnswerIds.Except(answer.SelectedAnswerIds).Any() &&
+                        !answer.SelectedAnswerIds.Except(correctAnswerIds).Any();
 
+                    // Заполняем результаты
                     response.Results.Add(new QuestionValidationResultDto
                     {
-                        QuestionText = question.Text,
-                        CorrectAnswers = question.AnswerOptions
+                        QuestionText = questionDto.Text,
+                        CorrectAnswers = questionDto.AnswerOptions
                             .Where(a => a.IsCorrect)
                             .Select(a => a.Text)
                             .ToList(),
-                        SelectedAnswers = question.AnswerOptions
+                        SelectedAnswers = questionDto.AnswerOptions
                             .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
                             .Select(a => a.Text)
                             .ToList()
@@ -224,7 +217,6 @@ namespace QuizMasterAPI.Services
 
                     if (isCorrect)
                     {
-                        response.Score += (correctAnswers.Count > 1) ? 2 : 2;
                         response.CorrectCount++;
                     }
                 }

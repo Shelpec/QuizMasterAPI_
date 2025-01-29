@@ -4,7 +4,8 @@
     {
         public int Id { get; set; }
         public string Text { get; set; } = string.Empty;
-        public bool HasMultipleCorrectAnswers { get; set; } // Новый флаг
+        public int? TopicId { get; set; } // Include Topic ID
+        public string? Topic { get; set; } // Include Topic Name
         public List<AnswerOptionDto> AnswerOptions { get; set; } = new();
     }
 }

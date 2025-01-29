@@ -1,4 +1,5 @@
-﻿using QuizMasterAPI.Models.Entities;
+﻿using QuizMasterAPI.Models.DTOs;
+using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Interfaces
 {
@@ -8,14 +9,14 @@ namespace QuizMasterAPI.Interfaces
     public interface ITestService
     {
         // Создать шаблон
-        Task<Test> CreateTemplateAsync(string name, int countOfQuestions, int? topicId);
+        Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId);
 
         // Получить шаблон
-        Task<Test?> GetTestByIdAsync(int id);
-        Task<IEnumerable<Test>> GetAllTestsAsync();
+        Task<TestDto?> GetTestByIdAsync(int id);
+        Task<IEnumerable<TestDto>> GetAllTestsAsync();
 
         // Обновить шаблон (например, изменить количество вопросов, тему и т.д.)
-        Task<Test> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId);
+        Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId);
 
         // Удалить
         Task DeleteTestAsync(int id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
@@ -13,19 +14,22 @@ namespace QuizMasterAPI.Services
         private readonly IQuestionRepository _questionRepository;
         private readonly QuizDbContext _context;
         private readonly ILogger<UserTestAnswerService> _logger;
+        private readonly IMapper _mapper;
 
         public UserTestAnswerService(
             IUserTestAnswerRepository userTestAnswerRepo,
             IUserTestRepository userTestRepository,
             IQuestionRepository questionRepository,
             QuizDbContext context,
-            ILogger<UserTestAnswerService> logger)
+            ILogger<UserTestAnswerService> logger,
+            IMapper mapper)
         {
             _userTestAnswerRepo = userTestAnswerRepo;
             _userTestRepository = userTestRepository;
             _questionRepository = questionRepository;
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async Task SaveAnswersAsync(int userTestId, List<UserAnswerSubmitDto> answers, string userId)
@@ -47,8 +51,10 @@ namespace QuizMasterAPI.Services
                     if (utq == null)
                         continue;
 
-                    utq.UserTestAnswers.Clear(); // очистка старых
+                    // Очищаем предыдущие ответы
+                    utq.UserTestAnswers.Clear();
 
+                    // Добавляем новые
                     foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
                     {
                         var userTestAnswer = new UserTestAnswer
