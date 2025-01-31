@@ -1031,6 +1031,10 @@
             "format": "int32",
             "nullable": true
           },
+          "topicName": {
+            "type": "string",
+            "nullable": true
+          },
           "topic": {
             "type": "string",
             "nullable": true

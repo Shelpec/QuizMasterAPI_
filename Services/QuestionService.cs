@@ -28,7 +28,7 @@ namespace QuizMasterAPI.Services
             _logger.LogInformation("GetAllQuestions()");
             try
             {
-                return await _repository.GetAllAsync();
+                return await _repository.GetAllQuestionsAsync();
             }
             catch (Exception ex)
             {

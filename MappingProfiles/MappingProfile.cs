@@ -15,6 +15,7 @@ namespace QuizMasterAPI.MappingProfiles
 
             // Question -> QuestionDto (если нужно)
             CreateMap<Question, QuestionDto>()
+                .ForMember(dest => dest.TopicName, opt => opt.MapFrom(src => src.Topic.Name))
                 .ReverseMap();
 
             // =========================================

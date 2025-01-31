@@ -18,7 +18,7 @@ namespace QuizMasterAPI.Controllers
             _service = service;
             _logger = logger;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllQuestions()
         {

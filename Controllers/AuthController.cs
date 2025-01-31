@@ -60,7 +60,7 @@ namespace QuizMasterAPI.Controllers
                 }
 
                 _logger.LogInformation("Пользователь {Email} успешно зарегистрирован", model.Email);
-                return Ok("User registered successfully!");
+                return Ok(new { message = "User registered successfully!" });
             }
             catch (Exception ex)
             {

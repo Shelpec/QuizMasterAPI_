@@ -53,7 +53,7 @@ namespace QuizMasterAPI.Services
             _logger.LogInformation("GetByIdAsync(UserTestId={Id})", id);
             try
             {
-                return await _userTestRepository.GetUserTestWithQuestionsAsync(id);
+                return await _userTestRepository.GetUserTestAsync(id);
             }
             catch (Exception ex)
             {

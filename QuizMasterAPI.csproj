@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ClientApp\**" />
     <Compile Remove="Models\Новая папка\**" />
+    <Content Remove="ClientApp\**" />
     <Content Remove="Models\Новая папка\**" />
+    <EmbeddedResource Remove="ClientApp\**" />
     <EmbeddedResource Remove="Models\Новая папка\**" />
+    <None Remove="ClientApp\**" />
     <None Remove="Models\Новая папка\**" />
   </ItemGroup>
 

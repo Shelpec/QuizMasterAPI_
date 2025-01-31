@@ -81,6 +81,15 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.AllowAnyOrigin() // или https
+              .AllowAnyHeader()
+              .AllowAnyMethod(); // <-- важно, чтобы DELETE тоже был
+    });
+});
 // Добавляем AutoMapper, указав любой класс-профиль:
 //builder.Services.AddAutoMapper(typeof(QuizMasterAPI.MappingProfiles.MappingProfile));
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -135,6 +144,7 @@ builder.Services.AddSwaggerGen(c =>
 
 
 
+
 var app = builder.Build();
 
 // Middleware для глобального перехвата исключений
@@ -147,6 +157,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+// Применить политику
+app.UseCors("AllowAngular");
 
 // Аутентификация + авторизация
 app.UseAuthentication();
