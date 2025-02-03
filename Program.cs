@@ -108,6 +108,8 @@ builder.Services.AddScoped<IUserTestService, UserTestService>();
 builder.Services.AddScoped<IUserTestAnswerRepository, UserTestAnswerRepository>();
 builder.Services.AddScoped<IUserTestAnswerService, UserTestAnswerService>();
 
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<ITopicService, TopicService>();
 // Swagger (документация)
 builder.Services.AddEndpointsApiExplorer();
 

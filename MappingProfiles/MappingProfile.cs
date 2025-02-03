@@ -62,6 +62,12 @@ namespace QuizMasterAPI.MappingProfiles
                 .ForMember(dest => dest.TopicId, opt => opt.MapFrom(src => src.TopicId))
                 .ForMember(dest => dest.AnswerOptions, opt => opt.MapFrom(src => src.AnswerOptions));
 
+            
+            CreateMap<Topic, TopicDto>().ReverseMap();
+            CreateMap<CreateTopicDto, Topic>().ReverseMap();
+            CreateMap<UpdateTopicDto, Topic>().ReverseMap();
+
+
         }
     }
 }
