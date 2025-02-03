@@ -20,11 +20,12 @@ namespace QuizMasterAPI.Repositories
             return await _ctx.Tests
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
-
         public async Task<IEnumerable<Test>> GetAllTestsAsync()
         {
             return await _ctx.Tests
+                .Include(t => t.Topic)              // <-- Подгружаем Topic
                 .ToListAsync();
         }
+
     }
 }

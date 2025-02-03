@@ -529,7 +529,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Test"
+                    "$ref": "#/components/schemas/TestDto"
                   }
                 }
               },
@@ -537,7 +537,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Test"
+                    "$ref": "#/components/schemas/TestDto"
                   }
                 }
               },
@@ -545,7 +545,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Test"
+                    "$ref": "#/components/schemas/TestDto"
                   }
                 }
               }
@@ -1349,6 +1349,9 @@
             "format": "int32",
             "nullable": true
           },
+          "topic": {
+            "$ref": "#/components/schemas/Topic"
+          },
           "countOfQuestions": {
             "type": "integer",
             "format": "int32"
@@ -1377,6 +1380,37 @@
               "$ref": "#/components/schemas/QuestionCheckResultDto"
             },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TestDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "countOfQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "topicId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "topicName": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

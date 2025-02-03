@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
+using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 
 namespace QuizMasterAPI.Controllers
@@ -60,13 +61,13 @@ namespace QuizMasterAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Test>>> GetAllTests()
+        public async Task<ActionResult<IEnumerable<TestDto>>> GetAllTests()
         {
             _logger.LogInformation("Вход в GetAllTests");
             try
             {
                 var tests = await _testService.GetAllTestsAsync();
-                return Ok(tests);
+                return Ok(tests); // теперь это List<TestDto>
             }
             catch (Exception ex)
             {
@@ -74,6 +75,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Test>> UpdateTest(int id, [FromQuery] string newName, [FromQuery] int countOfQuestions, [FromQuery] int? topicId)

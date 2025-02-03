@@ -43,7 +43,11 @@ namespace QuizMasterAPI.MappingProfiles
             //// ReverseMap() значит можно и QuestionDto -> Question.
 
             // Test <-> TestDto
-            CreateMap<Test, TestDto>().ReverseMap();
+            // MappingProfiles/MappingProfile.cs
+
+            CreateMap<Test, TestDto>()
+                .ForMember(dest => dest.TopicName, opt => opt.MapFrom(src => src.Topic != null ? src.Topic.Name : null))
+                .ReverseMap();
 
             // UserTest <-> UserTestDto
             CreateMap<UserTest, UserTestDto>().ReverseMap();

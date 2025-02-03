@@ -16,9 +16,9 @@ namespace QuizMasterAPI.Models.Entities
         // Название теста (например, "Тест по математике")
         public string Name { get; set; } = string.Empty;
 
-        // Тема (если есть отдельная таблица Topics, то можно сделать TopicId)
+        [ForeignKey(nameof(Topic))]
         public int? TopicId { get; set; }
-        // public Topic? Topic { get; set; } // Если нужна навигация
+        public Topic? Topic { get; set; }
 
         // Количество вопросов, которые нужно сгенерировать при прохождении
         public int CountOfQuestions { get; set; }

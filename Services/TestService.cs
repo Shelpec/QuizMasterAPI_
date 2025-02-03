@@ -68,6 +68,7 @@ namespace QuizMasterAPI.Services
             try
             {
                 var tests = await _testRepository.GetAllTestsAsync();
+                // tests уже со связанным Topic
                 return _mapper.Map<IEnumerable<TestDto>>(tests);
             }
             catch (Exception ex)
