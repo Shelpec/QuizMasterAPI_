@@ -20,20 +20,21 @@ namespace QuizMasterAPI.Controllers
         }
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllQuestions()
+        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAllQuestions()
         {
-            _logger.LogInformation("Вход в GetAllQuestions");
+            _logger.LogInformation("Вход в GetAllQuestionsDto()");
             try
             {
-                var questions = await _service.GetAllQuestions();
-                return Ok(questions);
+                var dtos = await _service.GetAllQuestionsDto();
+                return Ok(dtos);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка в GetAllQuestions");
+                _logger.LogError(ex, "Ошибка в GetAllQuestionsDto()");
                 throw;
             }
         }
+
 
         [Authorize]
         [HttpGet("{id}")]
@@ -57,6 +58,7 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
         {

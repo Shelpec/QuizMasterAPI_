@@ -6,6 +6,7 @@ namespace QuizMasterAPI.Interfaces
     public interface IQuestionService
     {
         Task<IEnumerable<Question>> GetAllQuestions();
+        Task<IEnumerable<QuestionDto>> GetAllQuestionsDto();
         Task<Question> GetQuestion(int id);
         Task<Question> CreateQuestion(CreateQuestionDto questionDto);
         Task<Question> UpdateQuestion(int id, UpdateQuestionDto questionDto);

@@ -29,6 +29,7 @@ namespace QuizMasterAPI.Services
             try
             {
                 return await _repository.GetAllQuestionsAsync();
+
             }
             catch (Exception ex)
             {
@@ -36,6 +37,14 @@ namespace QuizMasterAPI.Services
                 throw;
             }
         }
+
+        // QuestionService.cs
+        public async Task<IEnumerable<QuestionDto>> GetAllQuestionsDto()
+        {
+            var allQuestions = await _repository.GetAllQuestionsAsync();
+            return allQuestions.Select(q => _mapper.Map<QuestionDto>(q));
+        }
+
 
         /// <summary>
         /// Получить сущность Question по Id
