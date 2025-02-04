@@ -869,17 +869,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestHistoryDto"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestHistoryDto"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserTest"
+                  "$ref": "#/components/schemas/UserTestHistoryDto"
                 }
               }
             }
@@ -1036,6 +1036,91 @@
         }
       }
     },
+    "/api/UserTests/all-full": {
+      "get": {
+        "tags": [
+          "UserTests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/UserTests/by-userEmail": {
+      "get": {
+        "tags": [
+          "UserTests"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -1078,6 +1163,26 @@
   },
   "components": {
     "schemas": {
+      "AnswerHistoryDto": {
+        "type": "object",
+        "properties": {
+          "answerOptionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "isCorrect": {
+            "type": "boolean"
+          },
+          "isChosen": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "AnswerOption": {
         "type": "object",
         "properties": {
@@ -1281,6 +1386,31 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AnswerOptionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionHistoryDto": {
+        "type": "object",
+        "properties": {
+          "userTestQuestionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "answers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AnswerHistoryDto"
             },
             "nullable": true
           }
@@ -1650,6 +1780,66 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserTestQuestionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserTestHistoryDto": {
+        "type": "object",
+        "properties": {
+          "userTestId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dateCreated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isPassed": {
+            "type": "boolean"
+          },
+          "correctAnswers": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "userEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "userFullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "testId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "testName": {
+            "type": "string",
+            "nullable": true
+          },
+          "testCountOfQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "topicName": {
+            "type": "string",
+            "nullable": true
+          },
+          "questions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuestionHistoryDto"
             },
             "nullable": true
           }

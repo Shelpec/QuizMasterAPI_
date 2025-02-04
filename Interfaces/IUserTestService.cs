@@ -20,5 +20,10 @@ namespace QuizMasterAPI.Interfaces
         // Дополнительно: "Старт теста" — 
         // метод, генерирующий UserTestQuestions, если хотите 
         Task<UserTestDto> StartTestAsync(int testId, string userId);
+
+        Task<UserTestHistoryDto?> GetFullUserTestAsync(int userTestId);
+        Task<List<UserTestHistoryDto>> GetAllFullAsync();
+        Task<List<UserTestHistoryDto>> GetAllByUserEmailFullAsync(string email);
+
     }
 }

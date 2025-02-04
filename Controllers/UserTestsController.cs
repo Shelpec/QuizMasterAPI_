@@ -20,14 +20,14 @@ public class UserTestsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserTest>> GetUserTest(int id)
+    public async Task<ActionResult<UserTestHistoryDto>> GetUserTest(int id)
     {
         _logger.LogInformation("Вход в GetUserTest(Id={Id})", id);
         try
         {
-            var ut = await _userTestService.GetByIdAsync(id);
+            var ut = await _userTestService.GetFullUserTestAsync(id);
             if (ut == null)
-                return NotFound();
+                return NotFound($"UserTest with id={id} not found.");
             return Ok(ut);
         }
         catch (Exception ex)
@@ -115,4 +115,37 @@ public class UserTestsController : ControllerBase
             throw;
         }
     }
+
+    [HttpGet("all-full")]
+    public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllFull()
+    {
+        _logger.LogInformation("Вход в GetAllFull (UserTests)");
+        try
+        {
+            var result = await _userTestService.GetAllFullAsync();
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в GetAllFull()");
+            throw;
+        }
+    }
+
+    [HttpGet("by-userEmail")]
+    public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllByUserEmail([FromQuery] string email)
+    {
+        _logger.LogInformation("Вход в GetAllByUserEmail: {Email}", email);
+        try
+        {
+            var result = await _userTestService.GetAllByUserEmailFullAsync(email);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в GetAllByUserEmail({Email})", email);
+            throw;
+        }
+    }
+
 }
