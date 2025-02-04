@@ -29,7 +29,7 @@ public class UserTestAnswersController : ControllerBase
         try
         {
             await _answerService.SaveAnswersAsync(userTestId, answers, userId);
-            return Ok("Answers saved!");
+            return Ok(new { message = "Answers saved!" });
         }
         catch (Exception ex)
         {
