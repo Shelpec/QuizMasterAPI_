@@ -19,6 +19,8 @@ public class UserTestsController : ControllerBase
         _logger = logger;
     }
 
+    // Допустим, только Admin может смотреть историю конкретного UserTest
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<ActionResult<UserTestHistoryDto>> GetUserTest(int id)
     {
@@ -37,6 +39,8 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Создание UserTest — авторизованный пользователь начинает прохождение теста
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<UserTest>> CreateUserTest([FromBody] UserTest model)
     {
@@ -53,6 +57,8 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Редактирование UserTest (не всегда нужно), пусть Admin
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUserTest(int id, [FromBody] UserTest model)
     {
@@ -70,6 +76,8 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Удаление UserTest — только Admin
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteUserTest(int id)
     {
@@ -86,6 +94,7 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Пользователь начинает прохождение теста
     [Authorize]
     [HttpPost("start/{testId}")]
     public async Task<ActionResult<UserTestDto>> StartTest(int testId)
@@ -116,6 +125,8 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Просмотр истории ВСЕХ пользователей — только Admin
+    [Authorize(Roles = "Admin")]
     [HttpGet("all-full")]
     public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllFull()
     {
@@ -132,10 +143,24 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    // Просмотр истории конкретного пользователя — если нужен общий доступ, 
+    // можно сделать проверку, что email в клейме совпадает с запрошенным, или Admin
+    [Authorize]
     [HttpGet("by-userEmail")]
     public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllByUserEmail([FromQuery] string email)
     {
         _logger.LogInformation("Вход в GetAllByUserEmail: {Email}", email);
+
+        // Если хотим, чтобы пользователь мог просматривать ТОЛЬКО свою почту,
+        // можно проверить:
+        var currentEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+        var isAdmin = User.IsInRole("Admin");
+
+        if (!isAdmin && email != currentEmail)
+        {
+            return Forbid("Вы не можете смотреть чужую историю");
+        }
+
         try
         {
             var result = await _userTestService.GetAllByUserEmailFullAsync(email);
@@ -147,5 +172,4 @@ public class UserTestsController : ControllerBase
             throw;
         }
     }
-
 }

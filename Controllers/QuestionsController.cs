@@ -18,6 +18,9 @@ namespace QuizMasterAPI.Controllers
             _service = service;
             _logger = logger;
         }
+
+        // [Authorize] - Чтобы только авторизованные видели вопросы. 
+        // Или [AllowAnonymous], если хотите показывать всем.
         [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAllQuestions()
@@ -34,7 +37,6 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
-
 
         [Authorize]
         [HttpGet("{id}")]
@@ -58,7 +60,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        [Authorize]
+        // Создание вопроса - только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateQuestion([FromBody] CreateQuestionDto dto)
         {
@@ -75,6 +78,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Редактирование вопроса - только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateQuestion(int id, [FromBody] UpdateQuestionDto dto)
         {
@@ -91,6 +96,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Удаление вопроса - только Admin
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuestion(int id)
         {
@@ -107,6 +114,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Дополнительные методы:
+        // Авторизация не обязательна, измените при необходимости
         [HttpGet("random")]
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetRandomQuestions([FromQuery] int count)
         {

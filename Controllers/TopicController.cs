@@ -1,5 +1,4 @@
-﻿// Controllers/TopicController.cs
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
@@ -9,7 +8,6 @@ namespace QuizMasterAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // При желании
     public class TopicController : ControllerBase
     {
         private readonly ITopicService _service;
@@ -21,6 +19,8 @@ namespace QuizMasterAPI.Controllers
             _logger = logger;
         }
 
+        // Просмотр всех топиков — допустим, только авторизованные
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TopicDto>>> GetAll()
         {
@@ -29,6 +29,8 @@ namespace QuizMasterAPI.Controllers
             return Ok(topics);
         }
 
+        // Просмотр конкретного топика
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<TopicDto>> GetById(int id)
         {
@@ -43,6 +45,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Создание — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<TopicDto>> Create([FromBody] CreateTopicDto dto)
         {
@@ -50,6 +54,8 @@ namespace QuizMasterAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        // Редактирование — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<TopicDto>> Update(int id, [FromBody] UpdateTopicDto dto)
         {
@@ -64,6 +70,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Удаление — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

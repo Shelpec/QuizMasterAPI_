@@ -10,11 +10,26 @@ using QuizMasterAPI.Models.Entities;
 using QuizMasterAPI.Repositories;
 using QuizMasterAPI.Services;
 using System.Text;
-
 using Serilog;
 using Serilog.Events;
 using Microsoft.OpenApi.Models;
 using QuizMasterAPI.MappingProfiles;
+
+
+async Task SeedRolesAsync(WebApplication app)
+{
+    // Создаем scope, чтобы получить нужные сервисы
+    using var scope = app.Services.CreateScope();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+    // Создадим роли, если они ещё не созданы
+    if (!await roleManager.RoleExistsAsync("Admin"))
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+    if (!await roleManager.RoleExistsAsync("User"))
+        await roleManager.CreateAsync(new IdentityRole("User"));
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -151,6 +166,11 @@ var app = builder.Build();
 
 // Middleware для глобального перехвата исключений
 app.UseMiddleware<ExceptionMiddleware>();
+
+
+// Вызовем метод для создания ролей
+await SeedRolesAsync(app);
+
 
 if (app.Environment.IsDevelopment())
 {

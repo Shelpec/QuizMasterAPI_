@@ -20,7 +20,8 @@ namespace QuizMasterAPI.Controllers
             _logger = logger;
         }
 
-        [Authorize]
+        // Создание теста (шаблона) — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPost("create-template")]
         public async Task<ActionResult<Test>> CreateTemplate([FromQuery] string name, [FromQuery] int countOfQuestions, [FromQuery] int? topicId)
         {
@@ -41,6 +42,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Просмотр одного теста
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<Test>> GetTest(int id)
         {
@@ -60,6 +63,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Просмотр всех тестов
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestDto>>> GetAllTests()
         {
@@ -67,7 +72,7 @@ namespace QuizMasterAPI.Controllers
             try
             {
                 var tests = await _testService.GetAllTestsAsync();
-                return Ok(tests); // теперь это List<TestDto>
+                return Ok(tests);
             }
             catch (Exception ex)
             {
@@ -76,7 +81,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-
+        // Редактирование — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Test>> UpdateTest(int id, [FromQuery] string newName, [FromQuery] int countOfQuestions, [FromQuery] int? topicId)
         {
@@ -98,6 +104,8 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Удаление — только Admin
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTest(int id)
         {

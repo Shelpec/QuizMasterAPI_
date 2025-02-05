@@ -7,6 +7,7 @@ using QuizMasterAPI.Configurations;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace QuizMasterAPI.Controllers
@@ -16,15 +17,18 @@ namespace QuizMasterAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager; // Для ручного назначения ролей
         private readonly JwtSettings _jwtSettings;
         private readonly ILogger<AuthController> _logger; // Логгер
 
         public AuthController(
             UserManager<User> userManager,
+            RoleManager<IdentityRole> roleManager,
             IOptions<JwtSettings> jwtSettings,
             ILogger<AuthController> logger) // Внедряем логгер
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
             _logger = logger;
         }
@@ -59,6 +63,9 @@ namespace QuizMasterAPI.Controllers
                     return BadRequest(result.Errors);
                 }
 
+                // **Назначаем роль "User" по умолчанию**
+                await _userManager.AddToRoleAsync(user, "User");
+
                 _logger.LogInformation("Пользователь {Email} успешно зарегистрирован", model.Email);
                 return Ok(new { message = "User registered successfully!" });
             }
@@ -90,7 +97,7 @@ namespace QuizMasterAPI.Controllers
                     return Unauthorized("Invalid credentials");
                 }
 
-                var token = GenerateJwtToken(user);
+                var token = await GenerateJwtToken(user);
                 _logger.LogInformation("Пользователь {Email} успешно залогинился", model.Email);
 
                 return Ok(new { token });
@@ -102,17 +109,25 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        private string GenerateJwtToken(User user)
+        private async Task<string> GenerateJwtToken(User user)
         {
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            // Собираем стандартные клеймы
+            var claims = new List<Claim>
             {
-                new System.Security.Claims.Claim(JwtRegisteredClaimNames.Sub, user.Id),
-                new System.Security.Claims.Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-                new System.Security.Claims.Claim("FullName", user.FullName)
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+                new Claim("FullName", user.FullName)
             };
+
+            // Получаем роли пользователя и добавляем их в клеймы
+            var userRoles = await _userManager.GetRolesAsync(user);
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
