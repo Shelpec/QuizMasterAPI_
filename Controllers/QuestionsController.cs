@@ -23,17 +23,20 @@ namespace QuizMasterAPI.Controllers
         // Или [AllowAnonymous], если хотите показывать всем.
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<QuestionDto>>> GetAllQuestions()
+        public async Task<ActionResult<PaginatedResponse<QuestionDto>>> GetAllQuestions(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            _logger.LogInformation("Вход в GetAllQuestionsDto()");
+            _logger.LogInformation("Вход в GetAllQuestions() c пагинацией: page={Page}, pageSize={Size}", page, pageSize);
+
             try
             {
-                var dtos = await _service.GetAllQuestionsDto();
-                return Ok(dtos);
+                var result = await _service.GetAllQuestionsPaginatedAsync(page, pageSize);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Ошибка в GetAllQuestionsDto()");
+                _logger.LogError(ex, "Ошибка в GetAllQuestions()");
                 throw;
             }
         }

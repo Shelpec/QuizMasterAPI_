@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
@@ -11,12 +12,18 @@ namespace QuizMasterAPI.Services
         private readonly ITestRepository _testRepository;
         private readonly ILogger<TestService> _logger;
         private readonly IMapper _mapper;
+        private readonly QuizDbContext _ctx; // для LINQ-запроса
 
-        public TestService(ITestRepository testRepository, ILogger<TestService> logger, IMapper mapper)
+        public TestService(
+            ITestRepository testRepository,
+            ILogger<TestService> logger,
+            IMapper mapper,
+            QuizDbContext ctx)
         {
             _testRepository = testRepository;
             _logger = logger;
             _mapper = mapper;
+            _ctx = ctx;
         }
 
         public async Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId)
@@ -119,6 +126,37 @@ namespace QuizMasterAPI.Services
                 _logger.LogError(ex, "Ошибка в DeleteTestAsync(Id={Id})", id);
                 throw;
             }
+        }
+
+        public async Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(int page, int pageSize)
+        {
+            _logger.LogInformation("GetAllTestsPaginatedAsync(page={Page}, pageSize={Size})", page, pageSize);
+
+            var query = _ctx.Tests
+                .Include(t => t.Topic)
+                .AsQueryable();
+
+            var totalItems = await query.CountAsync();
+
+            var skip = (page - 1) * pageSize;
+            var tests = await query
+                .OrderBy(t => t.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var dtos = tests.Select(t => _mapper.Map<TestDto>(t)).ToList();
+
+            return new PaginatedResponse<TestDto>
+            {
+                Items = dtos,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
         }
     }
 }

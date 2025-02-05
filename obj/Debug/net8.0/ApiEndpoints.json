@@ -38,10 +38,21 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -189,10 +200,21 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -583,10 +605,21 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserTestHistoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuizMasterAPI.Models.DTOs.UserTestHistoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -608,11 +641,21 @@
         "Name": "email",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserTestHistoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuizMasterAPI.Models.DTOs.UserTestHistoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

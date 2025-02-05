@@ -16,5 +16,9 @@ namespace QuizMasterAPI.Interfaces
         Task<QuestionDto> GetQuestionDto(int id);
         Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count);
         Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers);
+
+        // -- Добавляем новый метод для пагинации --
+        Task<PaginatedResponse<QuestionDto>> GetAllQuestionsPaginatedAsync(int page, int pageSize);
+
     }
 }

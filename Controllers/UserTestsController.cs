@@ -126,14 +126,17 @@ public class UserTestsController : ControllerBase
     }
 
     // Просмотр истории ВСЕХ пользователей — только Admin
+    // Просмотр истории ВСЕХ пользователей — только Admin
     [Authorize(Roles = "Admin")]
     [HttpGet("all-full")]
-    public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllFull()
+    public async Task<ActionResult<PaginatedResponse<UserTestHistoryDto>>> GetAllFull(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 10)
     {
-        _logger.LogInformation("Вход в GetAllFull (UserTests)");
+        _logger.LogInformation("Вход в GetAllFull (UserTests) c пагинацией: page={Page}, size={Size}", page, pageSize);
         try
         {
-            var result = await _userTestService.GetAllFullAsync();
+            var result = await _userTestService.GetAllFullPaginatedAsync(page, pageSize);
             return Ok(result);
         }
         catch (Exception ex)
@@ -143,17 +146,19 @@ public class UserTestsController : ControllerBase
         }
     }
 
+
     // Просмотр истории конкретного пользователя — если нужен общий доступ, 
     // можно сделать проверку, что email в клейме совпадает с запрошенным, или Admin
     [Authorize]
     [HttpGet("by-userEmail")]
-    public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllByUserEmail([FromQuery] string email)
+    public async Task<ActionResult<PaginatedResponse<UserTestHistoryDto>>> GetAllByUserEmail(
+    [FromQuery] string email,
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
     {
-        _logger.LogInformation("Вход в GetAllByUserEmail: {Email}", email);
+        _logger.LogInformation("Вход в GetAllByUserEmail: {Email}, page={Page}, size={Size}", email, page, pageSize);
 
-        // Если хотим, чтобы пользователь мог просматривать ТОЛЬКО свою почту,
-        // можно проверить:
-        var currentEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+        var currentEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
         var isAdmin = User.IsInRole("Admin");
 
         if (!isAdmin && email != currentEmail)
@@ -163,7 +168,7 @@ public class UserTestsController : ControllerBase
 
         try
         {
-            var result = await _userTestService.GetAllByUserEmailFullAsync(email);
+            var result = await _userTestService.GetAllByUserEmailPaginatedAsync(email, page, pageSize);
             return Ok(result);
         }
         catch (Exception ex)
@@ -172,4 +177,5 @@ public class UserTestsController : ControllerBase
             throw;
         }
     }
+
 }

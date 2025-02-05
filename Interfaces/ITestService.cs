@@ -20,5 +20,9 @@ namespace QuizMasterAPI.Interfaces
 
         // Удалить
         Task DeleteTestAsync(int id);
+
+        // -- Добавляем метод для постраничного получения тестов --
+        Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(int page, int pageSize);
+
     }
 }

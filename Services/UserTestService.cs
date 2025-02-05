@@ -343,5 +343,85 @@ namespace QuizMasterAPI.Services
         }
 
 
+        public async Task<PaginatedResponse<UserTestHistoryDto>> GetAllFullPaginatedAsync(int page, int pageSize)
+        {
+            // 1) Берем полный список из _ctx (вместо GetAllUserTestFullAsync())
+            var query = _context.UserTests
+                .Include(ut => ut.User)
+                .Include(ut => ut.Test).ThenInclude(t => t.Topic)
+                .Include(ut => ut.UserTestQuestions)
+                    .ThenInclude(utq => utq.UserTestAnswers)
+                .Include(ut => ut.UserTestQuestions)
+                    .ThenInclude(utq => utq.Question)
+                        .ThenInclude(q => q.AnswerOptions)
+                .AsQueryable();
+
+            var totalItems = await query.CountAsync();
+
+            var skip = (page - 1) * pageSize;
+            var subset = await query
+                .OrderBy(ut => ut.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            // Собираем UserTestHistoryDto для каждого:
+            var items = new List<UserTestHistoryDto>();
+            foreach (var userTest in subset)
+            {
+                var dto = BuildUserTestHistoryDto(userTest);
+                items.Add(dto);
+            }
+
+            return new PaginatedResponse<UserTestHistoryDto>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
+        }
+
+        public async Task<PaginatedResponse<UserTestHistoryDto>> GetAllByUserEmailPaginatedAsync(string email, int page, int pageSize)
+        {
+            var query = _context.UserTests
+                .Include(ut => ut.User)
+                .Include(ut => ut.Test).ThenInclude(t => t.Topic)
+                .Include(ut => ut.UserTestQuestions).ThenInclude(utq => utq.UserTestAnswers)
+                .Include(ut => ut.UserTestQuestions).ThenInclude(utq => utq.Question).ThenInclude(q => q.AnswerOptions)
+                .Where(ut => ut.User.Email == email);
+
+            var totalItems = await query.CountAsync();
+
+            var skip = (page - 1) * pageSize;
+            var subset = await query
+                .OrderBy(ut => ut.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            var items = new List<UserTestHistoryDto>();
+            foreach (var userTest in subset)
+            {
+                var dto = BuildUserTestHistoryDto(userTest);
+                items.Add(dto);
+            }
+
+            return new PaginatedResponse<UserTestHistoryDto>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
+        }
+
+
     }
 }

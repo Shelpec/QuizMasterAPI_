@@ -63,16 +63,18 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        // Просмотр всех тестов
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TestDto>>> GetAllTests()
+        public async Task<ActionResult<PaginatedResponse<TestDto>>> GetAllTests(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10)
         {
-            _logger.LogInformation("Вход в GetAllTests");
+            _logger.LogInformation("Вход в GetAllTests c пагинацией: page={Page}, pageSize={Size}", page, pageSize);
+
             try
             {
-                var tests = await _testService.GetAllTestsAsync();
-                return Ok(tests);
+                var result = await _testService.GetAllTestsPaginatedAsync(page, pageSize);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -80,6 +82,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
         // Редактирование — только Admin
         [Authorize(Roles = "Admin")]

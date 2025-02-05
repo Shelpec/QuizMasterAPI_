@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
@@ -11,12 +12,17 @@ namespace QuizMasterAPI.Services
         private readonly IQuestionRepository _repository;
         private readonly ILogger<QuestionService> _logger;
         private readonly IMapper _mapper;
-
-        public QuestionService(IQuestionRepository repository, ILogger<QuestionService> logger, IMapper mapper)
+        private readonly QuizDbContext _ctx; // <-- нужно, чтобы формировать query
+        public QuestionService(
+            IQuestionRepository repository,
+            ILogger<QuestionService> logger,
+            IMapper mapper,
+            QuizDbContext ctx)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _ctx = ctx;
         }
 
         /// <summary>
@@ -237,6 +243,48 @@ namespace QuizMasterAPI.Services
                 _logger.LogError(ex, "Ошибка в CheckAnswers");
                 throw;
             }
+        }
+
+
+        // =========================================
+        // Реализация пагинации
+        // =========================================
+        public async Task<PaginatedResponse<QuestionDto>> GetAllQuestionsPaginatedAsync(int page, int pageSize)
+        {
+            _logger.LogInformation("GetAllQuestionsPaginatedAsync(page={Page}, pageSize={PageSize})", page, pageSize);
+
+            // 1) Формируем базовый запрос с Include:
+            var query = _ctx.Questions
+                .Include(q => q.AnswerOptions)
+                .Include(q => q.Topic)
+                .AsQueryable();
+
+            // 2) Считаем общее кол-во:
+            var totalItems = await query.CountAsync();
+
+            // 3) "Вырезаем" нужный кусок:
+            var skip = (page - 1) * pageSize;
+            var questions = await query
+                .OrderBy(q => q.Id)          // Желательно отсортировать
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            // 4) Вычисляем общее кол-во страниц
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+            // 5) Маппим в DTO
+            var dtos = questions.Select(q => _mapper.Map<QuestionDto>(q)).ToList();
+
+            // 6) Формируем PaginatedResponse
+            return new PaginatedResponse<QuestionDto>
+            {
+                Items = dtos,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
         }
     }
 }
