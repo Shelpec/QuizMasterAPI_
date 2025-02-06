@@ -13,6 +13,7 @@ public class QuizDbContext : IdentityDbContext<User>
     public DbSet<UserTestQuestion> UserTestQuestions { get; set; } = null!;
     public DbSet<UserTestAnswer> UserTestAnswers { get; set; } = null!;
     public DbSet<Topic> Topics { get; set; } = null!;
+    public DbSet<TestAccess> TestAccesses { get; set; } = null!;
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,6 +61,13 @@ public class QuizDbContext : IdentityDbContext<User>
             .WithMany()  // если у Topic нет списка вопросов
             .HasForeignKey(q => q.TopicId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        modelBuilder.Entity<TestAccess>()
+            .HasOne(ta => ta.Test)
+            .WithMany()  // либо .WithMany(t => t.AllowedUsers) если хотите двустороннюю связь
+            .HasForeignKey(ta => ta.TestId)
+            .OnDelete(DeleteBehavior.Cascade);
+
 
     }
 }

@@ -26,9 +26,10 @@ namespace QuizMasterAPI.Services
             _ctx = ctx;
         }
 
-        public async Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId)
+        public async Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId, bool isPrivate)
         {
-            _logger.LogInformation("CreateTemplateAsync(Name={Name}, count={Count}, topic={Topic})", name, countOfQuestions, topicId);
+            _logger.LogInformation("CreateTemplateAsync(Name={Name}, count={Count}, topic={Topic}, isPrivate={Priv})",
+                name, countOfQuestions, topicId, isPrivate);
             try
             {
                 var test = new Test
@@ -36,7 +37,8 @@ namespace QuizMasterAPI.Services
                     Name = name,
                     TopicId = topicId,
                     CountOfQuestions = countOfQuestions,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    IsPrivate = isPrivate // <-- назначаем
                 };
 
                 await _testRepository.AddAsync(test);
@@ -50,6 +52,7 @@ namespace QuizMasterAPI.Services
                 throw;
             }
         }
+
 
         public async Task<TestDto?> GetTestByIdAsync(int id)
         {
@@ -85,9 +88,16 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId)
+        public async Task<TestDto> UpdateTestAsync(
+            int id,
+            string newName,
+            int countOfQuestions,
+            int? topicId,
+            bool isPrivate
+        )
         {
-            _logger.LogInformation("UpdateTestAsync(Id={Id}, Name={Name}, Count={Count})", id, newName, countOfQuestions);
+            _logger.LogInformation("UpdateTestAsync(Id={Id}, Name={Name}, Count={Count}, isPrivate={Priv})",
+                                   id, newName, countOfQuestions, isPrivate);
             try
             {
                 var test = await _testRepository.GetTestByIdAsync(id);
@@ -97,9 +107,11 @@ namespace QuizMasterAPI.Services
                 test.Name = newName;
                 test.CountOfQuestions = countOfQuestions;
                 test.TopicId = topicId;
+                test.IsPrivate = isPrivate; // <-- ВАЖНО!
 
                 await _testRepository.UpdateAsync(test);
                 await _testRepository.SaveChangesAsync();
+
                 return _mapper.Map<TestDto>(test);
             }
             catch (Exception ex)
@@ -108,6 +120,7 @@ namespace QuizMasterAPI.Services
                 throw;
             }
         }
+
 
         public async Task DeleteTestAsync(int id)
         {
@@ -128,13 +141,34 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        public async Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(int page, int pageSize)
+        public async Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(
+            int page,
+            int pageSize,
+            string? currentUserId,
+            bool isAdmin)
         {
-            _logger.LogInformation("GetAllTestsPaginatedAsync(page={Page}, pageSize={Size})", page, pageSize);
+            _logger.LogInformation("GetAllTestsPaginatedAsync(page={Page}, pageSize={Size}, userId={User}, isAdmin={Admin})", page, pageSize, currentUserId, isAdmin);
 
+            // Базовый запрос
             var query = _ctx.Tests
                 .Include(t => t.Topic)
                 .AsQueryable();
+
+            if (!isAdmin && !string.IsNullOrEmpty(currentUserId))
+            {
+                // Фильтруем:
+                //  1) берем публичные  (IsPrivate == false)
+                //  2) ИЛИ те, где в TestAccess есть currentUserId
+                // Нам нужен Join с TestAccess.
+                // Решение: делаем left join, но проще через subquery
+                var testIdsWithAccess = _ctx.TestAccesses
+                    .Where(ta => ta.UserId == currentUserId)
+                    .Select(ta => ta.TestId)
+                    .Distinct();
+
+                query = query.Where(t => t.IsPrivate == false || testIdsWithAccess.Contains(t.Id));
+            }
+            // Если user is Admin => ничего не фильтруем.
 
             var totalItems = await query.CountAsync();
 
@@ -158,5 +192,7 @@ namespace QuizMasterAPI.Services
                 PageSize = pageSize
             };
         }
+
+
     }
 }

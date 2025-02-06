@@ -351,6 +351,112 @@
         }
       }
     },
+    "/api/TestAccess/add-access": {
+      "post": {
+        "tags": [
+          "TestAccess"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TestAccess/remove-access": {
+      "delete": {
+        "tags": [
+          "TestAccess"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/TestAccess/get-users": {
+      "get": {
+        "tags": [
+          "TestAccess"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccessUserDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccessUserDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccessUserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Tests/create-template": {
       "post": {
         "tags": [
@@ -378,6 +484,14 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "isPrivate",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           }
         ],
@@ -479,6 +593,14 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          },
+          {
+            "name": "isPrivate",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           }
         ],
@@ -768,6 +890,27 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -1205,6 +1348,24 @@
   },
   "components": {
     "schemas": {
+      "AccessUserDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AnswerHistoryDto": {
         "type": "object",
         "properties": {
@@ -1560,6 +1721,9 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "isPrivate": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1596,10 +1760,6 @@
             "type": "string",
             "nullable": true
           },
-          "countOfQuestions": {
-            "type": "integer",
-            "format": "int32"
-          },
           "topicId": {
             "type": "integer",
             "format": "int32",
@@ -1609,9 +1769,16 @@
             "type": "string",
             "nullable": true
           },
+          "countOfQuestions": {
+            "type": "integer",
+            "format": "int32"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "isPublic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

@@ -5,24 +5,28 @@ namespace QuizMasterAPI.Models.Entities
 {
     /// <summary>
     /// Шаблон теста.
-    /// Хранит тему (TopicId) и количество вопросов.
-    /// Пользователь может выбрать этот шаблон, чтобы пройти тест.
+    /// Может быть публичным (IsPrivate=false) или приватным (IsPrivate=true).
+    /// Если приватный — доступ имеют только пользователи из таблицы TestAccess.
     /// </summary>
     public class Test
     {
         [Key]
         public int Id { get; set; }
 
-        // Название теста (например, "Тест по математике")
         public string Name { get; set; } = string.Empty;
 
         [ForeignKey(nameof(Topic))]
         public int? TopicId { get; set; }
         public Topic? Topic { get; set; }
 
-        // Количество вопросов, которые нужно сгенерировать при прохождении
         public int CountOfQuestions { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        /// <summary>
+        /// Признак приватности. Если true — тест невидим всем, кроме тех, кто в TestAccess.
+        /// Если false — тест публичен, виден всем (или хотя бы всем залогиненным).
+        /// </summary>
+        public bool IsPrivate { get; set; } = false;
     }
 }

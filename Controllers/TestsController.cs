@@ -20,19 +20,22 @@ namespace QuizMasterAPI.Controllers
             _logger = logger;
         }
 
-        // Создание теста (шаблона) — только Admin
         [Authorize(Roles = "Admin")]
         [HttpPost("create-template")]
-        public async Task<ActionResult<Test>> CreateTemplate([FromQuery] string name, [FromQuery] int countOfQuestions, [FromQuery] int? topicId)
+        public async Task<ActionResult<Test>> CreateTemplate(
+            [FromQuery] string name,
+            [FromQuery] int countOfQuestions,
+            [FromQuery] int? topicId,
+            [FromQuery] bool isPrivate = false)
         {
-            _logger.LogInformation("Вход в CreateTemplate: {Name}, count={Count}, topic={Topic}", name, countOfQuestions, topicId);
+            _logger.LogInformation("Вход в CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={IsPrivate}", name, countOfQuestions, topicId, isPrivate);
 
             if (countOfQuestions <= 0)
                 return BadRequest("Количество вопросов должно быть > 0.");
 
             try
             {
-                var test = await _testService.CreateTemplateAsync(name, countOfQuestions, topicId);
+                var test = await _testService.CreateTemplateAsync(name, countOfQuestions, topicId, isPrivate);
                 return Ok(test);
             }
             catch (Exception ex)
@@ -41,6 +44,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
         // Просмотр одного теста
         [Authorize]
@@ -73,7 +77,15 @@ namespace QuizMasterAPI.Controllers
 
             try
             {
-                var result = await _testService.GetAllTestsPaginatedAsync(page, pageSize);
+                // Определяем пользователя
+                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                bool isAdmin = User.IsInRole("Admin");
+
+                var result = await _testService.GetAllTestsPaginatedAsync(page, pageSize, userId, isAdmin);
+                //  ^
+                //  |
+                // Добавим перегрузку, куда передаем userId, isAdmin
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -84,15 +96,22 @@ namespace QuizMasterAPI.Controllers
         }
 
 
-        // Редактирование — только Admin
+
+
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Test>> UpdateTest(int id, [FromQuery] string newName, [FromQuery] int countOfQuestions, [FromQuery] int? topicId)
+        public async Task<ActionResult<Test>> UpdateTest(
+            int id,
+            [FromQuery] string newName,
+            [FromQuery] int countOfQuestions,
+            [FromQuery] int? topicId,
+            [FromQuery] bool isPrivate = false // <-- Добавили
+        )
         {
             _logger.LogInformation("Вход в UpdateTest(Id={Id})", id);
             try
             {
-                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId);
+                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate);
                 return Ok(updated);
             }
             catch (KeyNotFoundException ex)
@@ -106,6 +125,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
         // Удаление — только Admin
         [Authorize(Roles = "Admin")]

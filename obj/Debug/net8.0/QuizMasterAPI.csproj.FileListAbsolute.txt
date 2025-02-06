@@ -178,7 +178,6 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Auto
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Binder.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
@@ -192,3 +191,4 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Seri
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Serilog.Sinks.Console.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Serilog.Sinks.File.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

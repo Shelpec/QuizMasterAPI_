@@ -48,6 +48,8 @@ namespace QuizMasterAPI.MappingProfiles
             CreateMap<Test, TestDto>()
                 .ForMember(dest => dest.TopicName, opt => opt.MapFrom(src => src.Topic != null ? src.Topic.Name : null))
                 .ReverseMap();
+            // IsPublic будет маппиться автоматически, так как поля совпадают
+
 
             // UserTest <-> UserTestDto
             CreateMap<UserTest, UserTestDto>().ReverseMap();
