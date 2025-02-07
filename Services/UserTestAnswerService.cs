@@ -96,6 +96,7 @@ namespace QuizMasterAPI.Services
                     CorrectCount = 0,
                     Results = new List<QuestionCheckResultDto>()
                 };
+                    // формируем QuestionCheckResultDto
 
                 int correctCount = 0;
 
