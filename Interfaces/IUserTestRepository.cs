@@ -10,6 +10,8 @@ namespace QuizMasterAPI.Interfaces
         Task<UserTest?> GetUserTestFullAsync(int userTestId);
         Task<List<UserTest>> GetAllUserTestFullAsync();
         Task<List<UserTest>> GetAllByUserEmailFullAsync(string email);
+        Task<UserTest?> GetUserTestWithEverythingAsync(int userTestId);
+
 
     }
 }

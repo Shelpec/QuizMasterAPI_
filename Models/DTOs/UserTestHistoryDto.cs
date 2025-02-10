@@ -21,6 +21,8 @@ namespace QuizMasterAPI.Models.DTOs
         public string? TestName { get; set; }
         public int TestCountOfQuestions { get; set; }
         public string? TopicName { get; set; }
+        public bool TopicIsSurvey { get; set; }
+
 
         // Детализация по вопросам и выбранным ответам
         public List<QuestionHistoryDto> Questions { get; set; } = new();

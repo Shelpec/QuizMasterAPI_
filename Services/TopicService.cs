@@ -34,10 +34,13 @@ namespace QuizMasterAPI.Services
 
             return _mapper.Map<TopicDto>(topic);
         }
-
         public async Task<TopicDto> CreateTopicAsync(CreateTopicDto dto)
         {
-            var topic = _mapper.Map<Topic>(dto);
+            var topic = new Topic
+            {
+                Name = dto.Name,
+                IsSurveyTopic = dto.IsSurveyTopic
+            };
             await _repo.AddAsync(topic);
             await _repo.SaveChangesAsync();
             return _mapper.Map<TopicDto>(topic);
@@ -49,7 +52,9 @@ namespace QuizMasterAPI.Services
             if (topic == null)
                 throw new KeyNotFoundException($"Topic with ID={id} not found");
 
-            _mapper.Map(dto, topic); // Переносим поля dto -> topic
+            topic.Name = dto.Name;
+            topic.IsSurveyTopic = dto.IsSurveyTopic;
+
             await _repo.UpdateAsync(topic);
             await _repo.SaveChangesAsync();
             return _mapper.Map<TopicDto>(topic);

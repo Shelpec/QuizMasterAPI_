@@ -33,7 +33,9 @@ namespace QuizMasterAPI.MappingProfiles
 
             // UserTest -> UserTestDto
             CreateMap<UserTest, UserTestDto>()
-                .ReverseMap();
+              .ForMember(dest => dest.IsSurveyTopic,
+                         opt => opt.MapFrom(src => src.Test.Topic.IsSurveyTopic));
+
 
             //// Question <-> QuestionDto
             //CreateMap<Question, QuestionDto>()

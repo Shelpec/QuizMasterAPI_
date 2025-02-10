@@ -3,11 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuizMasterAPI.Models.Entities
 {
-    /// <summary>
-    /// Шаблон теста.
-    /// Может быть публичным (IsPrivate=false) или приватным (IsPrivate=true).
-    /// Если приватный — доступ имеют только пользователи из таблицы TestAccess.
-    /// </summary>
     public class Test
     {
         [Key]
@@ -23,10 +18,11 @@ namespace QuizMasterAPI.Models.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        /// <summary>
-        /// Признак приватности. Если true — тест невидим всем, кроме тех, кто в TestAccess.
-        /// Если false — тест публичен, виден всем (или хотя бы всем залогиненным).
-        /// </summary>
         public bool IsPrivate { get; set; } = false;
+
+        /// <summary>
+        /// Новое поле: Если true, то это «опросник», не оцениваем правильность.
+        /// </summary>
+        public bool IsSurvey { get; set; } = false;
     }
 }

@@ -8,14 +8,13 @@ namespace QuizMasterAPI.Interfaces
     /// </summary>
     public interface ITestService
     {
-        Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId, bool isPrivate);
+        Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int topicId, bool isPrivate);
+        Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId, bool isPrivate);
 
         // Получить шаблон
         Task<TestDto?> GetTestByIdAsync(int id);
         Task<IEnumerable<TestDto>> GetAllTestsAsync();
 
-        // Обновить шаблон (например, изменить количество вопросов, тему и т.д.)
-        Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId, bool isPrivate);
 
         // Удалить
         Task DeleteTestAsync(int id);

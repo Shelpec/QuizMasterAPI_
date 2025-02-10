@@ -149,6 +149,7 @@ namespace QuizMasterAPI.Services
                 // Благодаря настройке в MappingProfile, 
                 // userTestQuestions[].answerOptions будет заполняться из question.AnswerOptions
                 var dto = _mapper.Map<UserTestDto>(createdUserTest);
+                dto.IsSurveyTopic = userTest.Test.IsSurvey;
 
                 _logger.LogInformation("Тест успешно создан: UserTestId={UserTestId}", dto.Id);
                 return dto;
@@ -275,19 +276,24 @@ namespace QuizMasterAPI.Services
         // Можно вынести в отдельный приватный метод:
         private UserTestHistoryDto BuildUserTestHistoryDto(UserTest userTest)
         {
-            // Считаем кол-во правильных
+            bool isSurveyTopic = userTest.Test?.Topic?.IsSurveyTopic == true;
             int correctCount = 0;
-            foreach (var utq in userTest.UserTestQuestions)
-            {
-                var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToList();
-                var correctIds = utq.Question.AnswerOptions
-                    .Where(a => a.IsCorrect)
-                    .Select(a => a.Id)
-                    .ToList();
 
-                bool isCorrect = !correctIds.Except(chosenIds).Any() &&
-                                 !chosenIds.Except(correctIds).Any();
-                if (isCorrect) correctCount++;
+            if (!isSurveyTopic)
+            {
+                // Обычная логика подсчёта
+                foreach (var utq in userTest.UserTestQuestions)
+                {
+                    var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToList();
+                    var correctIds = utq.Question.AnswerOptions
+                        .Where(a => a.IsCorrect)
+                        .Select(a => a.Id)
+                        .ToList();
+
+                    bool isCorrect = !correctIds.Except(chosenIds).Any()
+                                     && !chosenIds.Except(correctIds).Any();
+                    if (isCorrect) correctCount++;
+                }
             }
 
             var dto = new UserTestHistoryDto
@@ -295,28 +301,29 @@ namespace QuizMasterAPI.Services
                 UserTestId = userTest.Id,
                 DateCreated = userTest.DateCreated,
                 IsPassed = userTest.IsPassed,
-                CorrectAnswers = correctCount,
+                CorrectAnswers = isSurveyTopic ? 0 : correctCount,
                 TotalQuestions = userTest.TotalQuestions,
 
-                // инфо о пользователе
+                // User info
                 UserId = userTest.UserId,
                 UserEmail = userTest.User?.Email,
                 UserFullName = userTest.User?.FullName,
 
-                // инфо о тесте
+                // Test info
                 TestId = userTest.TestId,
                 TestName = userTest.Test?.Name,
                 TestCountOfQuestions = userTest.Test?.CountOfQuestions ?? 0,
                 TopicName = userTest.Test?.Topic?.Name,
 
+                // Новое поле — отправим на фронт
+                TopicIsSurvey = isSurveyTopic,
+
                 Questions = new List<QuestionHistoryDto>()
             };
 
-            // Собираем детали вопросов
+            // Заполняем вопросы
             foreach (var utq in userTest.UserTestQuestions)
             {
-                var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToHashSet();
-
                 var qDto = new QuestionHistoryDto
                 {
                     UserTestQuestionId = utq.Id,
@@ -325,22 +332,27 @@ namespace QuizMasterAPI.Services
                     Answers = new List<AnswerHistoryDto>()
                 };
 
+                var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToHashSet();
+
                 foreach (var ans in utq.Question.AnswerOptions)
                 {
+                    // Если isSurveyTopic => принудительно ставим isCorrect=true
+                    bool finalIsCorrect = isSurveyTopic ? true : ans.IsCorrect;
+
                     qDto.Answers.Add(new AnswerHistoryDto
                     {
                         AnswerOptionId = ans.Id,
                         Text = ans.Text,
-                        IsCorrect = ans.IsCorrect,
+                        IsCorrect = finalIsCorrect,
                         IsChosen = chosenIds.Contains(ans.Id)
                     });
                 }
-
                 dto.Questions.Add(qDto);
             }
 
             return dto;
         }
+
 
 
         public async Task<PaginatedResponse<UserTestHistoryDto>> GetAllFullPaginatedAsync(int page, int pageSize)

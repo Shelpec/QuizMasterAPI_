@@ -18,6 +18,7 @@ namespace QuizMasterAPI.Repositories
         {
             // Если нужно подгружать Topic, добавляйте .Include(t => t.Topic)
             return await _ctx.Tests
+                .Include(t => t.Topic)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
         public async Task<IEnumerable<Test>> GetAllTestsAsync()

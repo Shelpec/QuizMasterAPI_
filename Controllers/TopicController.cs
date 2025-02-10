@@ -45,7 +45,6 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        // Создание — только Admin
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<TopicDto>> Create([FromBody] CreateTopicDto dto)
@@ -54,7 +53,6 @@ namespace QuizMasterAPI.Controllers
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
-        // Редактирование — только Admin
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<TopicDto>> Update(int id, [FromBody] UpdateTopicDto dto)

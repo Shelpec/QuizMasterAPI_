@@ -10,48 +10,57 @@ namespace QuizMasterAPI.Services
     public class TestService : ITestService
     {
         private readonly ITestRepository _testRepository;
+        private readonly ITopicRepository _topicRepository;
         private readonly ILogger<TestService> _logger;
         private readonly IMapper _mapper;
         private readonly QuizDbContext _ctx; // для LINQ-запроса
 
         public TestService(
             ITestRepository testRepository,
+            ITopicRepository topicRepository,
             ILogger<TestService> logger,
             IMapper mapper,
             QuizDbContext ctx)
         {
             _testRepository = testRepository;
+            _topicRepository = topicRepository;
             _logger = logger;
             _mapper = mapper;
             _ctx = ctx;
         }
 
-        public async Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int? topicId, bool isPrivate)
+        public async Task<TestDto> CreateTemplateAsync(
+            string name,
+            int countOfQuestions,
+            int topicId,
+            bool isPrivate
+        )
         {
-            _logger.LogInformation("CreateTemplateAsync(Name={Name}, count={Count}, topic={Topic}, isPrivate={Priv})",
-                name, countOfQuestions, topicId, isPrivate);
-            try
-            {
-                var test = new Test
-                {
-                    Name = name,
-                    TopicId = topicId,
-                    CountOfQuestions = countOfQuestions,
-                    CreatedAt = DateTime.UtcNow,
-                    IsPrivate = isPrivate // <-- назначаем
-                };
+            var topic = await _topicRepository.GetTopicByIdAsync(topicId);
+            if (topic == null)
+                throw new KeyNotFoundException($"Topic with ID={topicId} not found");
 
-                await _testRepository.AddAsync(test);
-                await _testRepository.SaveChangesAsync();
 
-                return _mapper.Map<TestDto>(test);
-            }
-            catch (Exception ex)
+
+            _logger.LogInformation("CreateTemplateAsync(Name={Name}, isPrivate={Priv})", name, isPrivate);
+            var test = new Test
             {
-                _logger.LogError(ex, "Ошибка в CreateTemplateAsync(Name={Name})", name);
-                throw;
-            }
+                Name = name,
+                TopicId = topicId,
+                Topic = topic,
+                CountOfQuestions = countOfQuestions,
+                CreatedAt = DateTime.UtcNow,
+                IsPrivate = isPrivate,
+                IsSurvey = topic.IsSurveyTopic
+
+            };
+
+            await _testRepository.AddAsync(test);
+            await _testRepository.SaveChangesAsync();
+
+            return _mapper.Map<TestDto>(test);
         }
+
 
 
         public async Task<TestDto?> GetTestByIdAsync(int id)
@@ -96,30 +105,22 @@ namespace QuizMasterAPI.Services
             bool isPrivate
         )
         {
-            _logger.LogInformation("UpdateTestAsync(Id={Id}, Name={Name}, Count={Count}, isPrivate={Priv})",
-                                   id, newName, countOfQuestions, isPrivate);
-            try
-            {
-                var test = await _testRepository.GetTestByIdAsync(id);
-                if (test == null)
-                    throw new KeyNotFoundException($"Шаблон теста с ID={id} не найден.");
+            _logger.LogInformation("UpdateTestAsync(Id={Id}, isPrivate={Priv}, isSurvey={Surv})", id, isPrivate);
+            var test = await _testRepository.GetTestByIdAsync(id);
+            if (test == null)
+                throw new KeyNotFoundException($"Test with ID={id} not found.");
 
-                test.Name = newName;
-                test.CountOfQuestions = countOfQuestions;
-                test.TopicId = topicId;
-                test.IsPrivate = isPrivate; // <-- ВАЖНО!
+            test.Name = newName;
+            test.CountOfQuestions = countOfQuestions;
+            test.TopicId = topicId;
+            test.IsPrivate = isPrivate;
 
-                await _testRepository.UpdateAsync(test);
-                await _testRepository.SaveChangesAsync();
+            await _testRepository.UpdateAsync(test);
+            await _testRepository.SaveChangesAsync();
 
-                return _mapper.Map<TestDto>(test);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка в UpdateTestAsync(Id={Id})", id);
-                throw;
-            }
+            return _mapper.Map<TestDto>(test);
         }
+
 
 
         public async Task DeleteTestAsync(int id)

@@ -20,7 +20,7 @@ public class UserTestAnswersController : ControllerBase
     [HttpPost("{userTestId}/save")]
     public async Task<IActionResult> SaveAnswers(int userTestId, [FromBody] List<UserAnswerSubmitDto> answers)
     {
-        _logger.LogInformation("Вход в SaveAnswers(UserTestId={Id}), Count={Count}", userTestId, answers?.Count);
+        _logger.LogInformation("SaveAnswers(UserTestId={Id}), Count={Count}", userTestId, answers?.Count);
 
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))
@@ -41,7 +41,7 @@ public class UserTestAnswersController : ControllerBase
     [HttpGet("{userTestId}/check")]
     public async Task<ActionResult<TestCheckResultDto>> CheckAnswers(int userTestId)
     {
-        _logger.LogInformation("Вход в CheckAnswers(UserTestId={Id})", userTestId);
+        _logger.LogInformation("CheckAnswers(UserTestId={Id})", userTestId);
 
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))

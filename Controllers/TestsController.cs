@@ -25,10 +25,12 @@ namespace QuizMasterAPI.Controllers
         public async Task<ActionResult<Test>> CreateTemplate(
             [FromQuery] string name,
             [FromQuery] int countOfQuestions,
-            [FromQuery] int? topicId,
-            [FromQuery] bool isPrivate = false)
+            [FromQuery] int topicId,
+            [FromQuery] bool isPrivate = false
+        )
         {
-            _logger.LogInformation("Вход в CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={IsPrivate}", name, countOfQuestions, topicId, isPrivate);
+            _logger.LogInformation("CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={Priv}",
+                name, countOfQuestions, topicId, isPrivate);
 
             if (countOfQuestions <= 0)
                 return BadRequest("Количество вопросов должно быть > 0.");
@@ -44,6 +46,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
 
         // Просмотр одного теста
@@ -105,10 +108,10 @@ namespace QuizMasterAPI.Controllers
             [FromQuery] string newName,
             [FromQuery] int countOfQuestions,
             [FromQuery] int? topicId,
-            [FromQuery] bool isPrivate = false // <-- Добавили
+            [FromQuery] bool isPrivate = false
         )
         {
-            _logger.LogInformation("Вход в UpdateTest(Id={Id})", id);
+            _logger.LogInformation("UpdateTest(Id={Id}), isPrivate={Priv}", id, isPrivate);
             try
             {
                 var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate);
@@ -125,6 +128,7 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
 
 
         // Удаление — только Admin

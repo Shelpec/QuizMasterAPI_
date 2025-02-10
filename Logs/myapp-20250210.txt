@@ -1,0 +1,370 @@
+2025-02-10 10:53:48.272 +05:00 [INF] Executed DbCommand (48ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 10:53:48.373 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 10:53:48.501 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 10:53:48.697 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 10:53:48.775 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 10:53:48.775 +05:00 [INF] Hosting environment: Development
+2025-02-10 10:53:48.775 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 10:53:49.425 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 10:53:49.424 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 735.081ms
+2025-02-10 10:53:49.437 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 7.2849ms
+2025-02-10 10:53:49.489 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 10:53:49.540 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 50.6814ms
+2025-02-10 10:53:49.574 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 10:53:49.603 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 28.4799ms
+2025-02-10 10:53:51.128 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:51.137 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:51.141 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - 204 null null 13.5792ms
+2025-02-10 10:53:51.144 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:51.147 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:51.229 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '08.02.2025 15:59:32', Current time (UTC): '10.02.2025 05:53:51'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2025-02-10 10:53:51.251 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '08.02.2025 15:59:32', Current time (UTC): '10.02.2025 05:53:51'.
+2025-02-10 10:53:51.255 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-02-10 10:53:51.258 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-02-10 10:53:51.259 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 401 null null 114.9679ms
+2025-02-10 10:53:51.993 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:51.994 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:51.998 +05:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2025-02-10 10:53:51.998 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-02-10 10:53:51.999 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 401 null null 6.5083ms
+2025-02-10 10:53:53.556 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/auth/login - null null
+2025-02-10 10:53:53.557 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:53.557 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/auth/login - 204 null null 1.084ms
+2025-02-10 10:53:53.559 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/auth/login - application/json 49
+2025-02-10 10:53:53.561 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:53.562 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 10:53:53.580 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-10 10:53:53.615 +05:00 [INF] Запрос на логин пользователя: admin@gmail.com
+2025-02-10 10:53:53.678 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-10 10:53:53.820 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-10 10:53:53.828 +05:00 [INF] Пользователь admin@gmail.com успешно залогинился
+2025-02-10 10:53:53.832 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-10 10:53:53.838 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 255.1252ms
+2025-02-10 10:53:53.838 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 10:53:53.842 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/auth/login - 200 null application/json; charset=utf-8 282.4762ms
+2025-02-10 10:53:53.851 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:53.851 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:53.864 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 10:53:53.870 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-10 10:53:53.977 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=5
+2025-02-10 10:53:53.979 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=5)
+2025-02-10 10:53:54.007 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-10 10:53:54.065 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-10 10:53:54.108 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 10:53:54.114 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 243.5734ms
+2025-02-10 10:53:54.114 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 10:53:54.114 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 200 null application/json; charset=utf-8 263.1055ms
+2025-02-10 10:53:56.271 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 10:53:56.272 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:56.272 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - 204 null null 1.265ms
+2025-02-10 10:53:56.275 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 10:53:56.276 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:56.277 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 10:53:56.281 +05:00 [INF] Route matched with {action = "GetAllTests", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.TestDto]]] GetAllTests(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-10 10:53:56.284 +05:00 [INF] Вход в GetAllTests c пагинацией: page=1, pageSize=5
+2025-02-10 10:53:56.285 +05:00 [INF] GetAllTestsPaginatedAsync(page=1, pageSize=5, userId=0b2c8b40-ca96-446f-999f-1281c3589515, isAdmin=true)
+2025-02-10 10:53:56.292 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tests] AS [t]
+2025-02-10 10:53:56.304 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsSurvey], [t1].[Name], [t1].[TopicId], [t0].[Id], [t0].[IsSurveyTopic], [t0].[Name]
+FROM (
+    SELECT [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsSurvey], [t].[Name], [t].[TopicId]
+    FROM [Tests] AS [t]
+    ORDER BY [t].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t1]
+LEFT JOIN [Topics] AS [t0] ON [t1].[TopicId] = [t0].[Id]
+ORDER BY [t1].[Id]
+2025-02-10 10:53:56.318 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 10:53:56.323 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI) in 42.2234ms
+2025-02-10 10:53:56.323 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 10:53:56.324 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - 200 null application/json; charset=utf-8 48.2412ms
+2025-02-10 10:53:57.228 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:57.228 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:57.229 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - 204 null null 0.6753ms
+2025-02-10 10:53:57.231 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 10:53:57.231 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:57.232 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 10:53:57.233 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-10 10:53:57.235 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=5
+2025-02-10 10:53:57.235 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=5)
+2025-02-10 10:53:57.237 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-10 10:53:57.240 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-10 10:53:57.242 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 10:53:57.242 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 9.3066ms
+2025-02-10 10:53:57.242 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 10:53:57.242 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 200 null application/json; charset=utf-8 11.845ms
+2025-02-10 10:53:58.228 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 10:53:58.228 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:58.228 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.5344ms
+2025-02-10 10:53:58.231 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 10:53:58.232 +05:00 [INF] CORS policy execution successful.
+2025-02-10 10:53:58.232 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 10:53:58.235 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 10:53:58.237 +05:00 [INF] GetAll Topics
+2025-02-10 10:53:58.255 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 10:53:58.261 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 10:53:58.262 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 27.2481ms
+2025-02-10 10:53:58.262 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 10:53:58.263 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 31.5201ms
+2025-02-10 11:03:15.962 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 11:03:15.965 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 34.7398ms
+2025-02-10 11:03:16.066 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 11:03:16.086 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 19.5006ms
+2025-02-10 11:08:38.159 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 11:08:38.161 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:08:38.161 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - 204 null null 3.7112ms
+2025-02-10 11:08:38.167 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 11:08:38.168 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:08:38.168 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 11:08:38.168 +05:00 [INF] Route matched with {action = "GetAllTests", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.TestDto]]] GetAllTests(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-10 11:08:38.172 +05:00 [INF] Вход в GetAllTests c пагинацией: page=1, pageSize=5
+2025-02-10 11:08:38.174 +05:00 [INF] GetAllTestsPaginatedAsync(page=1, pageSize=5, userId=0b2c8b40-ca96-446f-999f-1281c3589515, isAdmin=true)
+2025-02-10 11:08:38.669 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tests] AS [t]
+2025-02-10 11:08:38.673 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsSurvey], [t1].[Name], [t1].[TopicId], [t0].[Id], [t0].[IsSurveyTopic], [t0].[Name]
+FROM (
+    SELECT [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsSurvey], [t].[Name], [t].[TopicId]
+    FROM [Tests] AS [t]
+    ORDER BY [t].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t1]
+LEFT JOIN [Topics] AS [t0] ON [t1].[TopicId] = [t0].[Id]
+ORDER BY [t1].[Id]
+2025-02-10 11:08:38.673 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:08:38.674 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI) in 505.7236ms
+2025-02-10 11:08:38.674 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 11:08:38.674 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - 200 null application/json; charset=utf-8 507.2148ms
+2025-02-10 11:08:43.536 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 11:08:43.536 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:08:43.536 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.535ms
+2025-02-10 11:08:43.539 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 11:08:43.539 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:08:43.540 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:08:43.540 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 11:08:43.541 +05:00 [INF] GetAll Topics
+2025-02-10 11:08:43.542 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 11:08:43.543 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:08:43.544 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 3.9249ms
+2025-02-10 11:08:43.544 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:08:43.544 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 5.4016ms
+2025-02-10 11:15:20.660 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 11:15:20.660 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:15:20.660 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - 204 null null 0.6284ms
+2025-02-10 11:15:20.672 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 11:15:20.672 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:15:20.673 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 11:15:20.673 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-10 11:15:20.676 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=5
+2025-02-10 11:15:20.676 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=5)
+2025-02-10 11:15:20.682 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-10 11:15:20.685 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-10 11:15:20.687 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:15:20.687 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 13.8639ms
+2025-02-10 11:15:20.687 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 11:15:20.687 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 200 null application/json; charset=utf-8 16.0903ms
+2025-02-10 11:15:21.887 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 11:15:21.888 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:15:21.888 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.6054ms
+2025-02-10 11:15:21.890 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 11:15:21.890 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:15:21.891 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:15:21.891 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 11:15:21.893 +05:00 [INF] GetAll Topics
+2025-02-10 11:15:21.896 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 11:15:21.899 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:15:21.900 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 8.6347ms
+2025-02-10 11:15:21.900 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:15:21.900 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 9.7775ms
+2025-02-10 11:30:52.029 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 11:30:52.029 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:30:52.030 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.7934ms
+2025-02-10 11:30:52.031 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 11:30:52.031 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:30:52.032 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:30:52.032 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 11:30:52.033 +05:00 [INF] GetAll Topics
+2025-02-10 11:30:52.643 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 11:30:52.643 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:30:52.644 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 611.9673ms
+2025-02-10 11:30:52.644 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:30:52.644 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 613.0077ms
+2025-02-10 11:34:05.439 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 11:34:05.439 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:34:05.440 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/tests?page=1&pageSize=5 - 204 null null 1.0435ms
+2025-02-10 11:34:05.451 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - null null
+2025-02-10 11:34:05.452 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:34:05.452 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 11:34:05.452 +05:00 [INF] Route matched with {action = "GetAllTests", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.TestDto]]] GetAllTests(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-10 11:34:05.454 +05:00 [INF] Вход в GetAllTests c пагинацией: page=1, pageSize=5
+2025-02-10 11:34:05.455 +05:00 [INF] GetAllTestsPaginatedAsync(page=1, pageSize=5, userId=0b2c8b40-ca96-446f-999f-1281c3589515, isAdmin=true)
+2025-02-10 11:34:05.461 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Tests] AS [t]
+2025-02-10 11:34:05.464 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsSurvey], [t1].[Name], [t1].[TopicId], [t0].[Id], [t0].[IsSurveyTopic], [t0].[Name]
+FROM (
+    SELECT [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsSurvey], [t].[Name], [t].[TopicId]
+    FROM [Tests] AS [t]
+    ORDER BY [t].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t1]
+LEFT JOIN [Topics] AS [t0] ON [t1].[TopicId] = [t0].[Id]
+ORDER BY [t1].[Id]
+2025-02-10 11:34:05.465 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.TestDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:34:05.466 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI) in 13.3381ms
+2025-02-10 11:34:05.466 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
+2025-02-10 11:34:05.466 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - 200 null application/json; charset=utf-8 14.9047ms
+2025-02-10 11:34:06.442 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 11:34:06.442 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:34:06.442 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.5992ms
+2025-02-10 11:34:06.444 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 11:34:06.444 +05:00 [INF] CORS policy execution successful.
+2025-02-10 11:34:06.445 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:34:06.445 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 11:34:06.446 +05:00 [INF] GetAll Topics
+2025-02-10 11:34:06.448 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 11:34:06.450 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 11:34:06.452 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 6.8287ms
+2025-02-10 11:34:06.452 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 11:34:06.452 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 7.7334ms
+2025-02-10 12:10:32.352 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 12:10:32.352 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:32.352 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.765ms
+2025-02-10 12:10:32.354 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 12:10:32.355 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:32.355 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:10:32.355 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 12:10:32.357 +05:00 [INF] GetAll Topics
+2025-02-10 12:10:32.993 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 12:10:32.994 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:10:32.994 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 638.9326ms
+2025-02-10 12:10:32.994 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:10:32.995 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 640.3064ms
+2025-02-10 12:10:38.041 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 12:10:38.042 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:38.042 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/questions?page=1&pageSize=5 - 204 null null 1.0042ms
+2025-02-10 12:10:38.046 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - null null
+2025-02-10 12:10:38.047 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:38.047 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 12:10:38.048 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-10 12:10:38.049 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=5
+2025-02-10 12:10:38.049 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=5)
+2025-02-10 12:10:38.063 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-10 12:10:38.067 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-10 12:10:38.068 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:10:38.069 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 21.2439ms
+2025-02-10 12:10:38.069 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-10 12:10:38.069 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/questions?page=1&pageSize=5 - 200 null application/json; charset=utf-8 23.3695ms
+2025-02-10 12:10:39.599 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 12:10:39.600 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:39.600 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.5799ms
+2025-02-10 12:10:39.602 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 12:10:39.602 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:10:39.602 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:10:39.602 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 12:10:39.603 +05:00 [INF] GetAll Topics
+2025-02-10 12:10:39.605 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 12:10:39.608 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:10:39.610 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 7.5173ms
+2025-02-10 12:10:39.610 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:10:39.610 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 8.8594ms
+2025-02-10 12:14:22.089 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/topic - null null
+2025-02-10 12:14:22.089 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:14:22.089 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/topic - 204 null null 0.5501ms
+2025-02-10 12:14:22.092 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/topic - null null
+2025-02-10 12:14:22.092 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:14:22.092 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:14:22.092 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 12:14:22.093 +05:00 [INF] GetAll Topics
+2025-02-10 12:14:22.099 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 12:14:22.133 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:14:22.134 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 42.0996ms
+2025-02-10 12:14:22.135 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 12:14:22.135 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 43.3015ms

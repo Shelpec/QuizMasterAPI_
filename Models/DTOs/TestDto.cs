@@ -11,5 +11,6 @@
 
         // Новое поле
         public bool IsPublic { get; set; }
+        public bool IsSurvey { get; set; }
     }
 }

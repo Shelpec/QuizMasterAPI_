@@ -5,6 +5,7 @@
     /// </summary>
     public class TestCheckResultDto
     {
+        public bool IsSurvey { get; set; }  // ← Новое поле
         public int CorrectCount { get; set; }
         public int TotalQuestions { get; set; }
         public List<QuestionCheckResultDto> Results { get; set; } = new();

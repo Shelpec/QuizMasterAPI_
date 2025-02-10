@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using QuizMasterAPI.Data;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
@@ -32,71 +33,106 @@ namespace QuizMasterAPI.Services
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Сохранение ответов пользователя
+        /// </summary>
         public async Task SaveAnswersAsync(int userTestId, List<UserAnswerSubmitDto> answers, string userId)
         {
             _logger.LogInformation("SaveAnswersAsync(UserTestId={Id}, CountAnswers={Count})", userTestId, answers.Count);
-            try
+
+            var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
+            if (userTest == null)
+                throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
+
+            if (userTest.UserId != userId)
+                throw new UnauthorizedAccessException("This UserTest belongs to another user.");
+
+            // Перебираем, сохраняем
+            foreach (var dto in answers)
             {
-                var userTest = await _userTestRepository.GetUserTestWithQuestionsAsync(userTestId);
-                if (userTest == null)
-                    throw new KeyNotFoundException($"UserTest with ID={userTestId} not found");
+                var utq = userTest.UserTestQuestions
+                    .FirstOrDefault(x => x.Id == dto.UserTestQuestionId);
+                if (utq == null) continue;
 
-                if (userTest.UserId != userId)
-                    throw new UnauthorizedAccessException("Этот UserTest принадлежит другому пользователю.");
+                // Удаляем все прежние ответы
+                utq.UserTestAnswers.Clear();
 
-                foreach (var dto in answers)
+                // Добавляем новые
+                foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
                 {
-                    var utq = userTest.UserTestQuestions
-                        .FirstOrDefault(x => x.Id == dto.UserTestQuestionId);
-                    if (utq == null)
-                        continue;
-
-                    // Очищаем предыдущие ответы
-                    utq.UserTestAnswers.Clear();
-
-                    // Добавляем новые
-                    foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
+                    var userTestAnswer = new UserTestAnswer
                     {
-                        var userTestAnswer = new UserTestAnswer
-                        {
-                            UserTestQuestionId = utq.Id,
-                            AnswerOptionId = answerOptionId
-                        };
-                        await _userTestAnswerRepo.AddAsync(userTestAnswer);
-                    }
+                        UserTestQuestionId = utq.Id,
+                        AnswerOptionId = answerOptionId
+                    };
+                    await _userTestAnswerRepo.AddAsync(userTestAnswer);
                 }
+            }
 
-                await _userTestAnswerRepo.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка в SaveAnswersAsync(UserTestId={Id})", userTestId);
-                throw;
-            }
+            await _userTestAnswerRepo.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Проверка ответов. Если test.Topic.IsSurveyTopic == true, считаем опросником
+        /// </summary>
         public async Task<TestCheckResultDto> CheckAnswersAsync(int userTestId, string userId)
         {
             _logger.LogInformation("CheckAnswersAsync(UserTestId={Id})", userTestId);
-            try
+
+            var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
+            if (userTest == null)
+                throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
+
+            if (userTest.UserId != userId)
+                throw new UnauthorizedAccessException("Not your test.");
+
+            var isSurvey = userTest.Test.Topic?.IsSurveyTopic == true; // ← признак опросника
+
+            // Создаём результат
+            var result = new TestCheckResultDto
             {
-                var userTest = await _userTestRepository.GetUserTestWithQuestionsAsync(userTestId);
-                if (userTest == null)
-                    throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
+                IsSurvey = isSurvey, // <-- теперь фронт будет видеть, что это опрос
+                TotalQuestions = userTest.TotalQuestions,
+                CorrectCount = 0, // по умолчанию
+                Results = new List<QuestionCheckResultDto>()
+            };
 
-                if (userTest.UserId != userId)
-                    throw new UnauthorizedAccessException("Not your test.");
+            if (isSurvey)
+            {
+                // Если это ОПРОСНИК
+                result.CorrectCount = userTest.TotalQuestions; // всё считаем «верным»
 
+                // Перебираем все вопросы
+                foreach (var utq in userTest.UserTestQuestions)
+                {
+                    var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToList();
+                    var question = utq.Question;
+                    if (question == null) continue;
+
+                    // Соберём тексты выбранных вариантов
+                    var selectedTexts = question.AnswerOptions
+                        .Where(a => chosenIds.Contains(a.Id))
+                        .Select(a => a.Text)
+                        .ToList();
+
+                    // формируем QuestionCheckResultDto
+                    var qDto = new QuestionCheckResultDto
+                    {
+                        QuestionId = question.Id,
+                        IsCorrect = true,  // всё верно
+                        CorrectAnswers = new List<string>(), // не отображаем «правильные»,
+                                                             // или можно SelectedAnswers = ...
+                        SelectedAnswers = selectedTexts
+                    };
+
+                    result.Results.Add(qDto);
+                }
+            }
+            else
+            {
+                // Обычная логика теста
                 var questionIds = userTest.UserTestQuestions.Select(q => q.QuestionId).ToList();
                 var questions = await _questionRepository.GetQuestionsWithAnswersByIdsAsync(questionIds);
-
-                var result = new TestCheckResultDto
-                {
-                    TotalQuestions = userTest.TotalQuestions,
-                    CorrectCount = 0,
-                    Results = new List<QuestionCheckResultDto>()
-                };
-                    // формируем QuestionCheckResultDto
 
                 int correctCount = 0;
 
@@ -113,8 +149,8 @@ namespace QuizMasterAPI.Services
 
                     bool isCorrect = !correctOptions.Except(userChosen).Any()
                                      && !userChosen.Except(correctOptions).Any();
-                    if (isCorrect)
-                        correctCount++;
+
+                    if (isCorrect) correctCount++;
 
                     var detail = new QuestionCheckResultDto
                     {
@@ -129,17 +165,14 @@ namespace QuizMasterAPI.Services
                             .Select(a => a.Text)
                             .ToList()
                     };
+
                     result.Results.Add(detail);
                 }
 
                 result.CorrectCount = correctCount;
-                return result;
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка в CheckAnswersAsync(UserTestId={Id})", userTestId);
-                throw;
-            }
+
+            return result;
         }
     }
 }

@@ -83,5 +83,18 @@ namespace QuizMasterAPI.Repositories
                 .ToListAsync();
         }
 
+        public async Task<UserTest?> GetUserTestWithEverythingAsync(int userTestId)
+        {
+            return await _ctx.UserTests
+                .Include(ut => ut.Test) // чтобы видеть IsSurvey
+                .Include(ut => ut.UserTestQuestions)
+                    .ThenInclude(utq => utq.UserTestAnswers)
+                .Include(ut => ut.UserTestQuestions)
+                    .ThenInclude(utq => utq.Question)
+                        .ThenInclude(q => q.AnswerOptions)
+                .FirstOrDefaultAsync(ut => ut.Id == userTestId);
+        }
+
+
     }
 }

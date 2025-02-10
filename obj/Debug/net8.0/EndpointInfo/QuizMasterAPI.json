@@ -1487,6 +1487,9 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "isSurveyTopic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1724,6 +1727,9 @@
           },
           "isPrivate": {
             "type": "boolean"
+          },
+          "isSurvey": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1731,6 +1737,9 @@
       "TestCheckResultDto": {
         "type": "object",
         "properties": {
+          "isSurvey": {
+            "type": "boolean"
+          },
           "correctCount": {
             "type": "integer",
             "format": "int32"
@@ -1779,6 +1788,9 @@
           },
           "isPublic": {
             "type": "boolean"
+          },
+          "isSurvey": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1822,6 +1834,9 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "isSurveyTopic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1836,6 +1851,9 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "isSurveyTopic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -1868,6 +1886,9 @@
           "name": {
             "type": "string",
             "nullable": true
+          },
+          "isSurveyTopic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -2049,6 +2070,9 @@
               "$ref": "#/components/schemas/UserTestQuestionDto"
             },
             "nullable": true
+          },
+          "isSurveyTopic": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -2102,6 +2126,9 @@
           "topicName": {
             "type": "string",
             "nullable": true
+          },
+          "topicIsSurvey": {
+            "type": "boolean"
           },
           "questions": {
             "type": "array",
