@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using QuizMasterAPI.Models.Enums;
+using System.Collections.Generic;
 
 namespace QuizMasterAPI.Models.Entities
 {
@@ -7,7 +9,6 @@ namespace QuizMasterAPI.Models.Entities
     {
         [Key]
         public int Id { get; set; }
-
         public string Name { get; set; } = string.Empty;
 
         [ForeignKey(nameof(Topic))]
@@ -15,14 +16,17 @@ namespace QuizMasterAPI.Models.Entities
         public Topic? Topic { get; set; }
 
         public int CountOfQuestions { get; set; }
-
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
         public bool IsPrivate { get; set; } = false;
 
         /// <summary>
-        /// Новое поле: Если true, то это «опросник», не оцениваем правильность.
+        /// Если true, то тест при старте выбирает вопросы рандомно.
         /// </summary>
-        public bool IsSurvey { get; set; } = false;
+        public bool IsRandom { get; set; } = false;
+
+        public TestTypeEnum TestType { get; set; } = TestTypeEnum.QuestionsOnly;
+
+        // Связь с TestQuestion
+        public ICollection<TestQuestion> TestQuestions { get; set; } = new List<TestQuestion>();
     }
 }

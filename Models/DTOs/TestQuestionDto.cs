@@ -1,10 +1,10 @@
-﻿using QuizMasterAPI.Models.DTOs;
-
-public class TestQuestionDto
+﻿namespace QuizMasterAPI.Models.DTOs
 {
-    public int Id { get; set; }
-
-    // Вместо отдельных полей QuestionId / QuestionText,
-    // используем полноценный QuestionDto:
-    public QuestionDto Question { get; set; } = new();
+    public class TestQuestionDto
+    {
+        public int Id { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
+        public QuestionDto Question { get; set; } = new();
+    }
 }

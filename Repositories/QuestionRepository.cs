@@ -17,19 +17,18 @@ namespace QuizMasterAPI.Repositories
         public async Task<List<Question>> GetAllQuestionsAsync()
         {
             return await _ctx.Questions
-                .Include(q => q.AnswerOptions) // Подгружаем связанные варианты ответов
-                .Include(q => q.Topic)
+                .Include(q => q.AnswerOptions) // Подгружаем варианты ответов
+                .Include(q => q.Topic)        // Подгружаем Topic (если нужно)
                 .ToListAsync();
         }
 
         public async Task<Question?> GetQuestionByIdAsync(int id)
         {
             return await _ctx.Questions
-                .Include(q => q.AnswerOptions) // Подгружаем связанные варианты ответов
+                .Include(q => q.AnswerOptions)
                 .Include(q => q.Topic)
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
-
 
         public async Task<List<Question>> GetQuestionsWithAnswersByIdsAsync(List<int> questionIds)
         {
@@ -43,10 +42,12 @@ namespace QuizMasterAPI.Repositories
         {
             return await _ctx.Questions
                 .Include(q => q.AnswerOptions)
-                .OrderBy(q => Guid.NewGuid())
+                .OrderBy(_ => Guid.NewGuid()) // простой способ рандомизировать
                 .Take(count)
                 .ToListAsync();
         }
+
+        // Перегрузка, если надо ещё и по Topic
         public async Task<List<Question>> GetRandomQuestionsAsync(int count, int? topicId)
         {
             var query = _ctx.Questions
@@ -63,7 +64,5 @@ namespace QuizMasterAPI.Repositories
                 .Take(count)
                 .ToListAsync();
         }
-
-
     }
 }

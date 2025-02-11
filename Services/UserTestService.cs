@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
+using QuizMasterAPI.Models.Enums;
+using QuizMasterAPI.Repositories;
 
 namespace QuizMasterAPI.Services
 {
@@ -12,6 +14,7 @@ namespace QuizMasterAPI.Services
         private readonly IUserTestRepository _userTestRepository;
         private readonly ITestRepository _testRepository;
         private readonly IQuestionRepository _questionRepository;
+        private readonly ITestQuestionRepository _testQuestionRepository;
         private readonly QuizDbContext _context;
         private readonly ILogger<UserTestService> _logger;
         private readonly IMapper _mapper; // <-- AutoMapper
@@ -20,6 +23,7 @@ namespace QuizMasterAPI.Services
             IUserTestRepository userTestRepository,
             ITestRepository testRepository,
             IQuestionRepository questionRepository,
+            ITestQuestionRepository testQuestionRepository,
             QuizDbContext context,
             ILogger<UserTestService> logger,
             IMapper mapper) // <-- получаем из DI
@@ -27,6 +31,7 @@ namespace QuizMasterAPI.Services
             _userTestRepository = userTestRepository;
             _testRepository = testRepository;
             _questionRepository = questionRepository;
+            _testQuestionRepository = testQuestionRepository;
             _context = context;
             _logger = logger;
             _mapper = mapper;
@@ -98,69 +103,53 @@ namespace QuizMasterAPI.Services
 
         public async Task<UserTestDto> StartTestAsync(int testId, string userId)
         {
-            _logger.LogInformation("StartTestAsync(TestId={TestId}, UserId={UserId})", testId, userId);
-            try
+            _logger.LogInformation("Старт теста {TestId} для пользователя {UserId}", testId, userId);
+
+            var test = await _testRepository.GetTestByIdAsync(testId);
+            if (test == null)
+                throw new KeyNotFoundException($"Тест ID={testId} не найден.");
+
+            List<Question> questions;
+
+            if (test.IsRandom)
             {
-                // 1) Шаблон теста
-                var template = await _testRepository.GetTestByIdAsync(testId);
-                if (template == null)
-                    throw new KeyNotFoundException($"Тест-шаблон с ID={testId} не найден.");
-
-                var count = template.CountOfQuestions;
-                var topicId = template.TopicId;
-
-                // 2) Рандомные вопросы
-                var questions = await _questionRepository.GetRandomQuestionsAsync(count, topicId);
-
-                // 3) Создаём UserTest
-                var userTest = new UserTest
-                {
-                    UserId = userId,
-                    TestId = template.Id,
-                    TotalQuestions = questions.Count,
-                    CorrectAnswers = 0,
-                    IsPassed = false,
-                    DateCreated = DateTime.UtcNow
-                };
-
-                await _userTestRepository.AddAsync(userTest);
-                await _userTestRepository.SaveChangesAsync();
-
-                var userTestQuestions = questions.Select(q => new UserTestQuestion
-                {
-                    UserTestId = userTest.Id,
-                    QuestionId = q.Id
-                }).ToList();
-
-                _context.UserTestQuestions.AddRange(userTestQuestions);
-                await _context.SaveChangesAsync();
-
-                // Грузим созданный UserTest + Questions + AnswerOptions
-                var createdUserTest = await _context.UserTests
-                    .Include(ut => ut.UserTestQuestions)
-                        .ThenInclude(utq => utq.Question)
-                            .ThenInclude(q => q.AnswerOptions)
-                    .FirstOrDefaultAsync(ut => ut.Id == userTest.Id);
-
-                if (createdUserTest == null)
-                    throw new Exception("Не удалось загрузить созданный UserTest.");
-
-                // 4) Маппим в UserTestDto
-                // Благодаря настройке в MappingProfile, 
-                // userTestQuestions[].answerOptions будет заполняться из question.AnswerOptions
-                var dto = _mapper.Map<UserTestDto>(createdUserTest);
-                dto.IsSurveyTopic = userTest.Test.IsSurvey;
-
-                _logger.LogInformation("Тест успешно создан: UserTestId={UserTestId}", dto.Id);
-                return dto;
+                // Выбираем случайные вопросы
+                questions = await _questionRepository.GetRandomQuestionsAsync(test.CountOfQuestions, test.TopicId);
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "Ошибка в StartTestAsync(TestId={TestId}, UserId={UserId})", testId, userId);
-                throw;
+                // Берем вопросы из TestQuestions
+                questions = test.TestQuestions.Select(tq => tq.Question).ToList();
             }
 
+            if (!questions.Any())
+                throw new Exception($"В тесте ID={testId} нет доступных вопросов.");
 
+            var userTest = new UserTest
+            {
+                UserId = userId,
+                TestId = test.Id,
+                TotalQuestions = questions.Count,
+                CorrectAnswers = 0,
+                IsPassed = false,
+                DateCreated = DateTime.UtcNow
+            };
+
+            await _userTestRepository.AddAsync(userTest);
+            await _userTestRepository.SaveChangesAsync();
+
+            var userTestQuestions = questions.Select(q => new UserTestQuestion
+            {
+                UserTestId = userTest.Id,
+                QuestionId = q.Id
+            }).ToList();
+
+            _context.UserTestQuestions.AddRange(userTestQuestions);
+            await _context.SaveChangesAsync();
+
+            var createdUserTest = await _userTestRepository.GetUserTestWithQuestionsAsync(userTest.Id);
+
+            return _mapper.Map<UserTestDto>(createdUserTest);
         }
 
         // UserTestService.cs

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QuizMasterAPI.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    partial class QuizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250210112507_AddIsRandomAndTestTypeToTest")]
+    partial class AddIsRandomAndTestTypeToTest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,6 +157,28 @@ namespace QuizMasterAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TopicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("Questions");
+                });
+
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.AnswerOption", b =>
                 {
                     b.Property<int>("Id")
@@ -194,28 +219,6 @@ namespace QuizMasterAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Question", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TopicId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
-
-                    b.ToTable("Questions");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Test", b =>
@@ -276,29 +279,6 @@ namespace QuizMasterAPI.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("TestAccesses");
-                });
-
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.TestQuestion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("TestQuestions");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Topic", b =>
@@ -529,16 +509,7 @@ namespace QuizMasterAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.AnswerOption", b =>
-                {
-                    b.HasOne("QuizMasterAPI.Models.Entities.Question", null)
-                        .WithMany("AnswerOptions")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Question", b =>
+            modelBuilder.Entity("Question", b =>
                 {
                     b.HasOne("QuizMasterAPI.Models.Entities.Topic", "Topic")
                         .WithMany()
@@ -546,6 +517,15 @@ namespace QuizMasterAPI.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("QuizMasterAPI.Models.Entities.AnswerOption", b =>
+                {
+                    b.HasOne("Question", null)
+                        .WithMany("AnswerOptions")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Test", b =>
@@ -564,25 +544,6 @@ namespace QuizMasterAPI.Migrations
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Test");
-                });
-
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.TestQuestion", b =>
-                {
-                    b.HasOne("QuizMasterAPI.Models.Entities.Question", "Question")
-                        .WithMany()
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("QuizMasterAPI.Models.Entities.Test", "Test")
-                        .WithMany("TestQuestions")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
 
                     b.Navigation("Test");
                 });
@@ -630,7 +591,7 @@ namespace QuizMasterAPI.Migrations
 
             modelBuilder.Entity("UserTestQuestion", b =>
                 {
-                    b.HasOne("QuizMasterAPI.Models.Entities.Question", "Question")
+                    b.HasOne("Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -647,19 +608,14 @@ namespace QuizMasterAPI.Migrations
                     b.Navigation("UserTest");
                 });
 
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Category", b =>
-                {
-                    b.Navigation("Topics");
-                });
-
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Question", b =>
+            modelBuilder.Entity("Question", b =>
                 {
                     b.Navigation("AnswerOptions");
                 });
 
-            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Test", b =>
+            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Category", b =>
                 {
-                    b.Navigation("TestQuestions");
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.UserTest", b =>

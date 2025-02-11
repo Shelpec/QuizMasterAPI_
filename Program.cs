@@ -129,6 +129,8 @@ builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<ITestAccessRepository, TestAccessRepository>();
 builder.Services.AddScoped<ITestAccessService, TestAccessService>();
 
+builder.Services.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
+
 // Swagger (документация)
 builder.Services.AddEndpointsApiExplorer();
 

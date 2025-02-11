@@ -19,7 +19,7 @@ namespace QuizMasterAPI.Controllers
             _logger = logger;
         }
 
-        // [Authorize] - Чтобы только авторизованные видели вопросы. 
+        // [Authorize] - Чтобы только авторизованные видели вопросы.
         // Или [AllowAnonymous], если хотите показывать всем.
         [Authorize]
         [HttpGet]
@@ -117,8 +117,7 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        // Дополнительные методы:
-        // Авторизация не обязательна, измените при необходимости
+        // Получить случайные вопросы
         [HttpGet("random")]
         public async Task<ActionResult<IEnumerable<QuestionDto>>> GetRandomQuestions([FromQuery] int count)
         {
@@ -138,6 +137,7 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
+        // Проверка ответов (пример)
         [HttpPost("check-answers")]
         public async Task<ActionResult<AnswerValidationResponseDto>> CheckAnswers([FromBody] List<AnswerValidationDto> answers)
         {

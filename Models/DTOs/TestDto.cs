@@ -1,4 +1,6 @@
-﻿namespace QuizMasterAPI.Models.DTOs
+﻿using QuizMasterAPI.Models.Enums;
+
+namespace QuizMasterAPI.Models.DTOs
 {
     public class TestDto
     {
@@ -9,8 +11,10 @@
         public int CountOfQuestions { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        // Новое поле
-        public bool IsPublic { get; set; }
-        public bool IsSurvey { get; set; }
+        public bool IsPrivate { get; set; }
+        public bool IsRandom { get; set; }
+        public TestTypeEnum TestType { get; set; }
+
+        public List<TestQuestionDto> TestQuestions { get; set; } = new();
     }
 }

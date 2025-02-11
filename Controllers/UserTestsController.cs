@@ -94,7 +94,6 @@ public class UserTestsController : ControllerBase
         }
     }
 
-    // Пользователь начинает прохождение теста
     [Authorize]
     [HttpPost("start/{testId}")]
     public async Task<ActionResult<UserTestDto>> StartTest(int testId)
@@ -124,6 +123,7 @@ public class UserTestsController : ControllerBase
             throw;
         }
     }
+
 
     // Просмотр истории ВСЕХ пользователей — только Admin
     // Просмотр истории ВСЕХ пользователей — только Admin

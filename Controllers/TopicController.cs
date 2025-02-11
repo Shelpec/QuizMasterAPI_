@@ -45,14 +45,15 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<TopicDto>> Create([FromBody] CreateTopicDto dto)
         {
+            // dto содержит: Name, IsSurveyTopic, CategoryId
             var created = await _service.CreateTopicAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        // Обновление — только Admin
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<TopicDto>> Update(int id, [FromBody] UpdateTopicDto dto)

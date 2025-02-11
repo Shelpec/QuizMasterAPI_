@@ -3,6 +3,6 @@
     public class AnswerValidationDto
     {
         public int QuestionId { get; set; }
-        public List<int> SelectedAnswerIds { get; set; } = new(); // Поддержка нескольких вариантов
+        public List<int> SelectedAnswerIds { get; set; } = new();
     }
 }

@@ -8,8 +8,23 @@ namespace QuizMasterAPI.Interfaces
     /// </summary>
     public interface ITestService
     {
-        Task<TestDto> CreateTemplateAsync(string name, int countOfQuestions, int topicId, bool isPrivate);
-        Task<TestDto> UpdateTestAsync(int id, string newName, int countOfQuestions, int? topicId, bool isPrivate);
+        Task<TestDto> CreateTemplateAsync(
+            string name,
+            int countOfQuestions,
+            int topicId,
+            bool isPrivate,
+            bool isRandom,
+            string? testType
+        );
+        Task<TestDto> UpdateTestAsync(
+            int id,
+            string newName,
+            int countOfQuestions,
+            int? topicId,
+            bool isPrivate,
+            bool isRandom,
+            string? testType
+        );
 
         // Получить шаблон
         Task<TestDto?> GetTestByIdAsync(int id);
@@ -21,6 +36,10 @@ namespace QuizMasterAPI.Interfaces
 
         Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(int page, int pageSize, string? currentUserId, bool isAdmin);
 
-
+        Task<TestDto> AddQuestionToTest(int testId, int questionId);
+        Task<TestDto> RemoveQuestionFromTest(int testId, int questionId);
+        Task<List<QuestionDto>> GetQuestionsByTestId(int testId);
+        Task<List<QuestionDto>> GetTestQuestionsAsync(int testId);
     }
 }
+

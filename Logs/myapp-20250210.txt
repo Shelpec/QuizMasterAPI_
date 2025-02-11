@@ -368,3 +368,643 @@ FROM [Topics] AS [t]
 2025-02-10 12:14:22.134 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 42.0996ms
 2025-02-10 12:14:22.135 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
 2025-02-10 12:14:22.135 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/topic - 200 null application/json; charset=utf-8 43.3015ms
+2025-02-10 12:45:25.456 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 12:45:25.481 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 12:45:25.502 +05:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 12:45:25.549 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 12:45:25.565 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 12:45:25.570 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 12:45:25.580 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 12:45:25.589 +05:00 [INF] Applying migration '20250210074505_AddCategoryEntity'.
+2025-02-10 12:45:25.619 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] ADD [CategoryId] int NULL;
+2025-02-10 12:45:25.630 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Categories] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Categories] PRIMARY KEY ([Id])
+);
+2025-02-10 12:45:25.638 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Topics_CategoryId] ON [Topics] ([CategoryId]);
+2025-02-10 12:45:25.647 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] ADD CONSTRAINT [FK_Topics_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]);
+2025-02-10 12:45:25.654 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250210074505_AddCategoryEntity', N'9.0.1');
+2025-02-10 12:45:25.666 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 12:51:25.627 +05:00 [INF] Executed DbCommand (38ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 12:51:25.710 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 12:51:25.810 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 12:51:25.931 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 12:51:26.019 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 12:51:26.019 +05:00 [INF] Hosting environment: Development
+2025-02-10 12:51:26.019 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 12:51:26.131 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 209.8374ms
+2025-02-10 12:51:26.195 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 12:51:26.197 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 12:51:26.200 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 4.1502ms
+2025-02-10 12:51:26.232 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 36.5737ms
+2025-02-10 12:51:26.277 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 12:51:26.303 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 25.5095ms
+2025-02-10 12:51:47.813 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Categories - null null
+2025-02-10 12:51:47.866 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI)'
+2025-02-10 12:51:47.881 +05:00 [INF] Route matched with {action = "GetAll", controller = "Categories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.Dto.CategoryDto]]] GetAll() on controller QuizMasterAPI.Controllers.CategoriesController (QuizMasterAPI).
+2025-02-10 12:51:47.935 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+2025-02-10 12:51:47.946 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.Dto.CategoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:51:47.953 +05:00 [INF] Executed action QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI) in 67.1235ms
+2025-02-10 12:51:47.953 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI)'
+2025-02-10 12:51:47.958 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Categories - 200 null application/json; charset=utf-8 145.0041ms
+2025-02-10 12:52:05.255 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Categories - application/json 36
+2025-02-10 12:52:05.258 +05:00 [INF] CORS policy execution successful.
+2025-02-10 12:52:05.260 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.CategoriesController.Create (QuizMasterAPI)'
+2025-02-10 12:52:05.267 +05:00 [INF] Route matched with {action = "Create", controller = "Categories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Dto.CategoryDto]] Create(QuizMasterAPI.Models.Dto.CategoryDto) on controller QuizMasterAPI.Controllers.CategoriesController (QuizMasterAPI).
+2025-02-10 12:52:05.390 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Categories] ([Name])
+OUTPUT INSERTED.[Id]
+VALUES (@p0);
+2025-02-10 12:52:05.411 +05:00 [INF] Executing CreatedAtActionResult, writing value of type 'QuizMasterAPI.Models.Dto.CategoryDto'.
+2025-02-10 12:52:05.424 +05:00 [INF] Executed action QuizMasterAPI.Controllers.CategoriesController.Create (QuizMasterAPI) in 156.9769ms
+2025-02-10 12:52:05.425 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.CategoriesController.Create (QuizMasterAPI)'
+2025-02-10 12:52:05.426 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Categories - 201 null application/json; charset=utf-8 170.8401ms
+2025-02-10 12:52:14.294 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Categories/0 - null null
+2025-02-10 12:52:14.297 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI)'
+2025-02-10 12:52:14.302 +05:00 [INF] Route matched with {action = "GetById", controller = "Categories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Dto.CategoryDto]] GetById(Int32) on controller QuizMasterAPI.Controllers.CategoriesController (QuizMasterAPI).
+2025-02-10 12:52:14.346 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+WHERE [c].[Id] = @__p_0
+2025-02-10 12:52:14.349 +05:00 [INF] Executing ObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ProblemDetails'.
+2025-02-10 12:52:14.367 +05:00 [INF] Executed action QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI) in 64.8971ms
+2025-02-10 12:52:14.367 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI)'
+2025-02-10 12:52:14.368 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Categories/0 - 404 null application/problem+json; charset=utf-8 73.1251ms
+2025-02-10 12:52:29.731 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Categories - null null
+2025-02-10 12:52:29.731 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI)'
+2025-02-10 12:52:29.732 +05:00 [INF] Route matched with {action = "GetAll", controller = "Categories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.Dto.CategoryDto]]] GetAll() on controller QuizMasterAPI.Controllers.CategoriesController (QuizMasterAPI).
+2025-02-10 12:52:29.735 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+2025-02-10 12:52:29.741 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.Dto.CategoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 12:52:29.741 +05:00 [INF] Executed action QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI) in 9.6531ms
+2025-02-10 12:52:29.742 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetAll (QuizMasterAPI)'
+2025-02-10 12:52:29.742 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Categories - 200 null application/json; charset=utf-8 11.3471ms
+2025-02-10 12:52:47.380 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Categories/1 - null null
+2025-02-10 12:52:47.381 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI)'
+2025-02-10 12:52:47.381 +05:00 [INF] Route matched with {action = "GetById", controller = "Categories"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.Dto.CategoryDto]] GetById(Int32) on controller QuizMasterAPI.Controllers.CategoriesController (QuizMasterAPI).
+2025-02-10 12:52:47.386 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [c].[Id], [c].[Name]
+FROM [Categories] AS [c]
+WHERE [c].[Id] = @__p_0
+2025-02-10 12:52:47.389 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.Dto.CategoryDto'.
+2025-02-10 12:52:47.391 +05:00 [INF] Executed action QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI) in 9.2139ms
+2025-02-10 12:52:47.391 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.CategoriesController.GetById (QuizMasterAPI)'
+2025-02-10 12:52:47.392 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Categories/1 - 200 null application/json; charset=utf-8 11.3164ms
+2025-02-10 14:14:04.129 +05:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:14:04.154 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 14:14:04.176 +05:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 14:14:04.223 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 14:14:04.236 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:14:04.244 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 14:14:04.251 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 14:14:04.261 +05:00 [INF] Applying migration '20250210091348_AddCategoryIdToTopic'.
+2025-02-10 14:14:04.294 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] DROP CONSTRAINT [FK_Topics_Categories_CategoryId];
+2025-02-10 14:14:04.334 +05:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP INDEX [IX_Topics_CategoryId] ON [Topics];
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Topics]') AND [c].[name] = N'CategoryId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Topics] DROP CONSTRAINT [' + @var0 + '];');
+UPDATE [Topics] SET [CategoryId] = 0 WHERE [CategoryId] IS NULL;
+ALTER TABLE [Topics] ALTER COLUMN [CategoryId] int NOT NULL;
+ALTER TABLE [Topics] ADD DEFAULT 0 FOR [CategoryId];
+CREATE INDEX [IX_Topics_CategoryId] ON [Topics] ([CategoryId]);
+2025-02-10 14:14:04.346 +05:00 [ERR] Failed executing DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] ADD CONSTRAINT [FK_Topics_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE CASCADE;
+2025-02-10 14:14:04.357 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 14:45:20.195 +05:00 [INF] Executed DbCommand (29ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 14:45:20.274 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 14:45:20.350 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 14:45:20.405 +05:00 [INF] Now listening on: http://localhost:5109
+2025-02-10 14:45:20.407 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 14:45:20.408 +05:00 [INF] Hosting environment: Development
+2025-02-10 14:45:20.408 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 14:49:46.091 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:49:46.115 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 14:49:46.136 +05:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 14:49:46.182 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 14:49:46.194 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:49:46.202 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 14:49:46.209 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 14:49:46.220 +05:00 [INF] Applying migration '20250210091348_AddCategoryIdToTopic'.
+2025-02-10 14:49:46.253 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] DROP CONSTRAINT [FK_Topics_Categories_CategoryId];
+2025-02-10 14:49:46.295 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP INDEX [IX_Topics_CategoryId] ON [Topics];
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Topics]') AND [c].[name] = N'CategoryId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Topics] DROP CONSTRAINT [' + @var0 + '];');
+UPDATE [Topics] SET [CategoryId] = 0 WHERE [CategoryId] IS NULL;
+ALTER TABLE [Topics] ALTER COLUMN [CategoryId] int NOT NULL;
+ALTER TABLE [Topics] ADD DEFAULT 0 FOR [CategoryId];
+CREATE INDEX [IX_Topics_CategoryId] ON [Topics] ([CategoryId]);
+2025-02-10 14:49:46.306 +05:00 [ERR] Failed executing DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] ADD CONSTRAINT [FK_Topics_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE CASCADE;
+2025-02-10 14:49:46.316 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 14:53:30.282 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:53:30.307 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 14:53:30.321 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 14:53:30.367 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 14:53:30.381 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 14:53:30.388 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 14:53:30.395 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 14:53:30.403 +05:00 [INF] Applying migration '20250210091348_AddCategoryIdToTopic'.
+2025-02-10 14:53:30.443 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+        IF NOT EXISTS (SELECT 1 FROM Categories WHERE Id = 1)
+        BEGIN
+            INSERT INTO Categories (Id, Name)
+            VALUES (1, 'Default Category')
+        END
+2025-02-10 14:53:30.454 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+        UPDATE Topics
+        SET CategoryId = 1
+        WHERE CategoryId IS NULL
+2025-02-10 14:53:30.460 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] DROP CONSTRAINT [FK_Topics_Categories_CategoryId];
+2025-02-10 14:53:30.473 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DROP INDEX [IX_Topics_CategoryId] ON [Topics];
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Topics]') AND [c].[name] = N'CategoryId');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Topics] DROP CONSTRAINT [' + @var0 + '];');
+UPDATE [Topics] SET [CategoryId] = 0 WHERE [CategoryId] IS NULL;
+ALTER TABLE [Topics] ALTER COLUMN [CategoryId] int NOT NULL;
+ALTER TABLE [Topics] ADD DEFAULT 0 FOR [CategoryId];
+CREATE INDEX [IX_Topics_CategoryId] ON [Topics] ([CategoryId]);
+2025-02-10 14:53:30.480 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Topics] ADD CONSTRAINT [FK_Topics_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id]) ON DELETE CASCADE;
+2025-02-10 14:53:30.488 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250210091348_AddCategoryIdToTopic', N'9.0.1');
+2025-02-10 14:53:30.494 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 14:57:22.452 +05:00 [INF] Executed DbCommand (35ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 14:57:22.523 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 14:57:22.623 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 14:57:22.743 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 14:57:22.817 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 14:57:22.817 +05:00 [INF] Hosting environment: Development
+2025-02-10 14:57:22.817 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 14:57:22.914 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 174.8759ms
+2025-02-10 14:57:22.915 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 14:57:22.936 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 17.9093ms
+2025-02-10 14:57:22.975 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 14:57:23.007 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 32.2542ms
+2025-02-10 14:57:23.046 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 14:57:23.069 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 23.275ms
+2025-02-10 14:58:14.248 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Topic - application/json 74
+2025-02-10 14:58:14.260 +05:00 [INF] CORS policy execution successful.
+2025-02-10 14:58:14.320 +05:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2025-02-10 14:58:14.322 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2025-02-10 14:58:14.323 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Topic - 401 null null 75.2046ms
+2025-02-10 14:58:39.227 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-10 14:58:39.229 +05:00 [INF] CORS policy execution successful.
+2025-02-10 14:58:39.232 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 14:58:39.252 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-10 14:58:39.293 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-10 14:58:39.338 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-10 14:58:39.471 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-10 14:58:39.491 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-10 14:58:39.496 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-10 14:58:39.503 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 247.8782ms
+2025-02-10 14:58:39.504 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 14:58:39.510 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 283.1323ms
+2025-02-10 14:58:55.920 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Topic - application/json 74
+2025-02-10 14:58:55.921 +05:00 [INF] CORS policy execution successful.
+2025-02-10 14:58:55.959 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.Create (QuizMasterAPI)'
+2025-02-10 14:58:55.962 +05:00 [INF] Route matched with {action = "Create", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TopicDto]] Create(QuizMasterAPI.Models.DTOs.CreateTopicDto) on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 14:58:56.149 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Topics] ([CategoryId], [IsSurveyTopic], [Name])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2);
+2025-02-10 14:58:56.183 +05:00 [INF] Executing CreatedAtActionResult, writing value of type 'QuizMasterAPI.Models.DTOs.TopicDto'.
+2025-02-10 14:58:56.202 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.Create (QuizMasterAPI) in 239.9748ms
+2025-02-10 14:58:56.202 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.Create (QuizMasterAPI)'
+2025-02-10 14:58:56.203 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Topic - 201 null application/json; charset=utf-8 283.4124ms
+2025-02-10 15:11:13.975 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 15:11:14.001 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 15:11:14.024 +05:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 15:11:14.073 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 15:11:14.089 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 15:11:14.095 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 15:11:14.102 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 15:11:14.113 +05:00 [INF] Applying migration '20250210101103_AddIsRandomAndTestTypeToTest'.
+2025-02-10 15:11:14.130 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250210101103_AddIsRandomAndTestTypeToTest', N'9.0.1');
+2025-02-10 15:11:14.141 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 15:17:29.355 +05:00 [INF] Executed DbCommand (35ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 15:17:29.425 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 15:17:29.520 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 15:17:29.633 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 15:17:29.738 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 15:17:29.738 +05:00 [INF] Hosting environment: Development
+2025-02-10 15:17:29.738 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 15:17:29.830 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 15:17:29.829 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 204.7961ms
+2025-02-10 15:17:29.837 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 5.361ms
+2025-02-10 15:17:29.884 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 15:17:29.913 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 28.9304ms
+2025-02-10 15:17:29.953 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 15:17:29.983 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.7139ms
+2025-02-10 15:19:36.621 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 15:19:36.657 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 15:19:36.673 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 15:22:36.736 +05:00 [INF] Executed DbCommand (34ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 15:22:36.810 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 15:22:36.929 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 15:22:37.089 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 15:22:37.173 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 15:22:37.174 +05:00 [INF] Hosting environment: Development
+2025-02-10 15:22:37.174 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 15:22:37.279 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 199.7997ms
+2025-02-10 15:22:37.287 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 15:22:37.298 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 8.9048ms
+2025-02-10 15:22:37.344 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 15:22:37.379 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.3617ms
+2025-02-10 15:22:37.419 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 15:22:37.448 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 29.6641ms
+2025-02-10 16:10:41.049 +05:00 [INF] Executed DbCommand (40ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 16:10:41.127 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 16:10:41.248 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 16:10:41.449 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 16:10:41.449 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger - null null
+2025-02-10 16:10:41.449 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 16:10:41.538 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 16:10:41.538 +05:00 [INF] Hosting environment: Development
+2025-02-10 16:10:41.538 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 16:10:42.087 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger - 499 null null 646.401ms
+2025-02-10 16:10:42.141 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 700.8391ms
+2025-02-10 16:10:42.141 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 700.8386ms
+2025-02-10 16:12:11.780 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 16:12:11.816 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 16:12:11.833 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 16:25:28.984 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 16:25:29.010 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 16:25:29.024 +05:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 16:25:29.070 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 16:25:29.085 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 16:25:29.092 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 16:25:29.098 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 16:25:29.109 +05:00 [INF] Applying migration '20250210112507_AddIsRandomAndTestTypeToTest'.
+2025-02-10 16:25:29.208 +05:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+EXEC sp_rename N'[Tests].[IsSurvey]', N'IsRandom', 'COLUMN';
+2025-02-10 16:25:29.217 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Tests] ADD [TestType] nvarchar(max) NOT NULL DEFAULT N'';
+2025-02-10 16:25:29.223 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250210112507_AddIsRandomAndTestTypeToTest', N'9.0.1');
+2025-02-10 16:25:29.230 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 16:25:37.681 +05:00 [INF] Executed DbCommand (33ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 16:25:37.750 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 16:25:37.838 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 16:25:37.966 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger - null null
+2025-02-10 16:25:38.047 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 16:25:38.047 +05:00 [INF] Hosting environment: Development
+2025-02-10 16:25:38.047 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 16:25:38.088 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 16:25:38.099 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger - 301 null null 146.1322ms
+2025-02-10 16:25:38.178 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 90.4557ms
+2025-02-10 16:25:38.214 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/swagger-ui.css - null null
+2025-02-10 16:25:38.214 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/swagger-ui-bundle.js - null null
+2025-02-10 16:25:38.214 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/swagger-ui-standalone-preset.js - null null
+2025-02-10 16:25:38.214 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 16:25:38.223 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 5.2139ms
+2025-02-10 16:25:38.241 +05:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-02-10 16:25:38.243 +05:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-02-10 16:25:38.243 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/swagger-ui.css - 200 152034 text/css 28.488ms
+2025-02-10 16:25:38.246 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 31.8323ms
+2025-02-10 16:25:38.251 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 16:25:38.252 +05:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-02-10 16:25:38.280 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 66.1433ms
+2025-02-10 16:25:38.313 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 61.6508ms
+2025-02-10 16:25:38.451 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 16:25:38.489 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 37.4649ms
+2025-02-10 16:25:56.929 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 16:25:56.932 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 2.0518ms
+2025-02-10 16:25:57.085 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 16:25:57.104 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 19.0011ms
+2025-02-10 16:26:15.711 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-10 16:26:15.719 +05:00 [INF] CORS policy execution successful.
+2025-02-10 16:26:15.767 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 16:26:15.782 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-10 16:26:15.810 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-10 16:26:15.858 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-10 16:26:15.986 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-10 16:26:16.005 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-10 16:26:16.010 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-10 16:26:16.016 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 230.5199ms
+2025-02-10 16:26:16.017 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-10 16:26:16.021 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 310.5652ms
+2025-02-10 16:27:23.258 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Topic - null null
+2025-02-10 16:27:23.311 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 16:27:23.314 +05:00 [INF] Route matched with {action = "GetAll", controller = "Topic"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[QuizMasterAPI.Models.DTOs.TopicDto]]] GetAll() on controller QuizMasterAPI.Controllers.TopicController (QuizMasterAPI).
+2025-02-10 16:27:23.393 +05:00 [INF] GetAll Topics
+2025-02-10 16:27:23.403 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+2025-02-10 16:27:23.427 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-10 16:27:23.430 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI) in 114.9371ms
+2025-02-10 16:27:23.430 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TopicController.GetAll (QuizMasterAPI)'
+2025-02-10 16:27:23.430 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Topic - 200 null application/json; charset=utf-8 171.8985ms
+2025-02-10 16:28:26.259 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=Test__1&countOfQuestions=3&topicId=3007&isPrivate=false&isRandom=true&testType=QuestionsOnly - null 0
+2025-02-10 16:28:26.296 +05:00 [INF] CORS policy execution successful.
+2025-02-10 16:28:26.304 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-10 16:28:26.307 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-10 16:28:26.316 +05:00 [INF] CreateTemplate: Test__1, count=3, topic=3007, isPrivate=false, isRandom=true, testType=QuestionsOnly
+2025-02-10 16:28:26.339 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-10 16:28:26.344 +05:00 [INF] CreateTemplateAsync(Name=Test__1, isPrivate=false, isRandom=true, testType="QuestionsOnly")
+2025-02-10 16:28:26.444 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-10 16:28:26.465 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-10 16:28:26.474 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 166.3605ms
+2025-02-10 16:28:26.474 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-10 16:28:26.474 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=Test__1&countOfQuestions=3&topicId=3007&isPrivate=false&isRandom=true&testType=QuestionsOnly - 200 null application/json; charset=utf-8 228.3871ms
+2025-02-10 16:28:56.929 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/10018 - null null
+2025-02-10 16:28:56.931 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-10 16:28:56.933 +05:00 [INF] Route matched with {action = "GetTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] GetTest(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-10 16:28:56.937 +05:00 [INF] Вход в GetTest(Id=10018)
+2025-02-10 16:28:56.938 +05:00 [INF] GetTestByIdAsync(Id=10018)
+2025-02-10 16:28:56.966 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name]
+FROM [Tests] AS [t]
+LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+WHERE [t].[Id] = @__id_0
+2025-02-10 16:28:56.971 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-10 16:28:56.972 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI) in 38.1214ms
+2025-02-10 16:28:56.972 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-10 16:28:56.972 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/10018 - 200 null application/json; charset=utf-8 43.0451ms
+2025-02-10 17:02:58.023 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 17:02:58.059 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 17:02:58.075 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 17:03:31.026 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 17:03:31.051 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-10 17:03:31.067 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-10 17:03:31.115 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-10 17:03:31.129 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-10 17:03:31.136 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-10 17:03:31.143 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-10 17:03:31.152 +05:00 [INF] No migrations were applied. The database is already up to date.
+2025-02-10 17:03:31.158 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-10 17:03:43.415 +05:00 [INF] Executed DbCommand (32ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 17:03:43.485 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-10 17:03:43.577 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-10 17:03:43.704 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-10 17:03:43.777 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-10 17:03:43.777 +05:00 [INF] Hosting environment: Development
+2025-02-10 17:03:43.777 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-10 17:03:43.873 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-10 17:03:43.871 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 176.2418ms
+2025-02-10 17:03:43.883 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 7.2216ms
+2025-02-10 17:03:43.929 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-10 17:03:43.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.4123ms
+2025-02-10 17:03:44.010 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-10 17:03:44.041 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.8132ms

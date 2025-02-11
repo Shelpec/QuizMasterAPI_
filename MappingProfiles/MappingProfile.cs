@@ -16,6 +16,7 @@ namespace QuizMasterAPI.MappingProfiles
             // Question -> QuestionDto (если нужно)
             CreateMap<Question, QuestionDto>()
                 .ForMember(dest => dest.TopicName, opt => opt.MapFrom(src => src.Topic.Name))
+                .ForMember(dest => dest.AnswerOptions, opt => opt.MapFrom(src => src.AnswerOptions))
                 .ReverseMap();
 
             // =========================================
@@ -46,11 +47,12 @@ namespace QuizMasterAPI.MappingProfiles
 
             // Test <-> TestDto
             // MappingProfiles/MappingProfile.cs
-
             CreateMap<Test, TestDto>()
                 .ForMember(dest => dest.TopicName, opt => opt.MapFrom(src => src.Topic != null ? src.Topic.Name : null))
                 .ReverseMap();
-            // IsPublic будет маппиться автоматически, так как поля совпадают
+
+            CreateMap<TestQuestion, TestQuestionDto>().ReverseMap();
+
 
 
             // UserTest <-> UserTestDto
@@ -70,10 +72,12 @@ namespace QuizMasterAPI.MappingProfiles
                 .ForMember(dest => dest.TopicId, opt => opt.MapFrom(src => src.TopicId))
                 .ForMember(dest => dest.AnswerOptions, opt => opt.MapFrom(src => src.AnswerOptions));
 
-            
+
             CreateMap<Topic, TopicDto>().ReverseMap();
             CreateMap<CreateTopicDto, Topic>().ReverseMap();
             CreateMap<UpdateTopicDto, Topic>().ReverseMap();
+
+
 
 
         }

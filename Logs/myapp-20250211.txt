@@ -1,0 +1,1332 @@
+2025-02-11 10:38:22.506 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-11 10:38:22.536 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-11 10:38:22.557 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-11 10:38:22.606 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-11 10:38:22.621 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-11 10:38:22.626 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-11 10:38:22.635 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-11 10:38:22.643 +05:00 [INF] Applying migration '20250211053802_AddTestQuestionsTable'.
+2025-02-11 10:38:22.678 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [TestQuestions] (
+    [Id] int NOT NULL IDENTITY,
+    [TestId] int NOT NULL,
+    [QuestionId] int NOT NULL,
+    CONSTRAINT [PK_TestQuestions] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TestQuestions_Questions_QuestionId] FOREIGN KEY ([QuestionId]) REFERENCES [Questions] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_TestQuestions_Tests_TestId] FOREIGN KEY ([TestId]) REFERENCES [Tests] ([Id]) ON DELETE CASCADE
+);
+2025-02-11 10:38:22.684 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_TestQuestions_QuestionId] ON [TestQuestions] ([QuestionId]);
+2025-02-11 10:38:22.689 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_TestQuestions_TestId] ON [TestQuestions] ([TestId]);
+2025-02-11 10:38:22.698 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250211053802_AddTestQuestionsTable', N'9.0.1');
+2025-02-11 10:38:22.706 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-11 10:38:43.965 +05:00 [INF] Executed DbCommand (35ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:38:44.034 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:38:44.147 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 10:38:44.322 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 10:38:44.388 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 10:38:44.388 +05:00 [INF] Hosting environment: Development
+2025-02-11 10:38:44.388 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 10:38:45.020 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 703.8894ms
+2025-02-11 10:38:45.021 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:38:45.030 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 6.2145ms
+2025-02-11 10:38:45.080 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 10:38:45.123 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 44.034ms
+2025-02-11 10:38:45.152 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:38:45.165 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/favicon-32x32.png - null null
+2025-02-11 10:38:45.179 +05:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-02-11 10:38:45.181 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/favicon-32x32.png - 200 628 image/png 15.1071ms
+2025-02-11 10:38:45.187 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 34.3007ms
+2025-02-11 10:42:49.038 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:42:49.040 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 2.3765ms
+2025-02-11 10:42:49.142 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:42:49.167 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.7897ms
+2025-02-11 10:42:49.777 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:42:49.779 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 2.229ms
+2025-02-11 10:42:49.886 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:42:49.898 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 12.0858ms
+2025-02-11 10:42:54.153 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:42:54.157 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 4.0102ms
+2025-02-11 10:42:54.261 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:42:54.274 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 12.5723ms
+2025-02-11 10:53:09.337 +05:00 [INF] Executed DbCommand (36ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:53:09.406 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:53:09.502 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 10:53:09.614 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 10:53:09.687 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 10:53:09.687 +05:00 [INF] Hosting environment: Development
+2025-02-11 10:53:09.687 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 10:53:09.779 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:53:09.779 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 174.3516ms
+2025-02-11 10:53:09.790 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 5.4778ms
+2025-02-11 10:53:09.833 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 10:53:09.863 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 30.5181ms
+2025-02-11 10:53:09.900 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:53:09.933 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 32.9718ms
+2025-02-11 10:54:00.048 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-11 10:54:00.073 +05:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-02-11 10:54:00.107 +05:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_getapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session', @LockMode = 'Exclusive';
+SELECT @result
+2025-02-11 10:54:00.153 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+2025-02-11 10:54:00.167 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2025-02-11 10:54:00.175 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2025-02-11 10:54:00.182 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2025-02-11 10:54:00.190 +05:00 [INF] Applying migration '20250211055343_AddTestQuestionsRelation'.
+2025-02-11 10:54:00.207 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20250211055343_AddTestQuestionsRelation', N'9.0.1');
+2025-02-11 10:54:00.215 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DECLARE @result int;
+EXEC @result = sp_releaseapplock @Resource = '__EFMigrationsLock', @LockOwner = 'Session';
+SELECT @result
+2025-02-11 10:55:30.401 +05:00 [INF] Executed DbCommand (34ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:55:30.481 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 10:55:30.584 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 10:55:30.696 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 10:55:30.775 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 10:55:30.775 +05:00 [INF] Hosting environment: Development
+2025-02-11 10:55:30.775 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 10:55:30.913 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 226.0569ms
+2025-02-11 10:55:30.918 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 10:55:30.928 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 7.0969ms
+2025-02-11 10:55:30.980 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 10:55:31.007 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 26.8464ms
+2025-02-11 10:55:31.046 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 10:55:31.071 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 25.1957ms
+2025-02-11 10:55:46.538 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-11 10:55:46.549 +05:00 [INF] CORS policy execution successful.
+2025-02-11 10:55:46.607 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 10:55:46.624 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-11 10:55:46.653 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-11 10:55:46.700 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-11 10:55:46.866 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-11 10:55:46.889 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-11 10:55:46.894 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-11 10:55:46.902 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 274.033ms
+2025-02-11 10:55:46.902 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 10:55:46.907 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 368.7737ms
+2025-02-11 10:58:46.808 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T1&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - null 0
+2025-02-11 10:58:46.812 +05:00 [INF] CORS policy execution successful.
+2025-02-11 10:58:46.855 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 10:58:46.860 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 10:58:46.948 +05:00 [INF] CreateTemplate: T1, count=5, topic=1, isPrivate=false, isRandom=true, testType=QuestionsOnly
+2025-02-11 10:58:46.977 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 10:58:46.996 +05:00 [INF] CreateTemplateAsync(Name=T1, isPrivate=false, isRandom=true, testType="QuestionsOnly")
+2025-02-11 10:58:47.101 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 10:58:47.131 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 10:58:47.140 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 280.0119ms
+2025-02-11 10:58:47.140 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 10:58:47.143 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T1&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - 200 null application/json; charset=utf-8 334.0813ms
+2025-02-11 10:59:14.694 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T2&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - null 0
+2025-02-11 10:59:14.697 +05:00 [INF] CORS policy execution successful.
+2025-02-11 10:59:14.701 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 10:59:14.702 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 10:59:14.707 +05:00 [INF] CreateTemplate: T2, count=5, topic=1, isPrivate=false, isRandom=false, testType=QuestionsOnly
+2025-02-11 10:59:14.711 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 10:59:14.739 +05:00 [INF] CreateTemplateAsync(Name=T2, isPrivate=false, isRandom=false, testType="QuestionsOnly")
+2025-02-11 10:59:14.753 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 10:59:14.755 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 10:59:14.756 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 51.2038ms
+2025-02-11 10:59:14.756 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 10:59:14.756 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T2&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - 200 null application/json; charset=utf-8 69.9961ms
+2025-02-11 10:59:45.589 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11019 - null null
+2025-02-11 10:59:45.592 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 10:59:45.594 +05:00 [INF] Route matched with {action = "GetTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] GetTest(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 10:59:45.600 +05:00 [INF] Вход в GetTest(Id=11019)
+2025-02-11 10:59:45.600 +05:00 [INF] GetTestByIdAsync(Id=11019)
+2025-02-11 10:59:45.668 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 10:59:45.679 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 10:59:45.679 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI) in 84.7373ms
+2025-02-11 10:59:45.679 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 10:59:45.680 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11019 - 200 null application/json; charset=utf-8 90.4375ms
+2025-02-11 10:59:53.698 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11019/questions - null null
+2025-02-11 10:59:53.699 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 10:59:53.701 +05:00 [INF] Route matched with {action = "GetQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 10:59:53.704 +05:00 [INF] Получаем вопросы для теста 11019
+2025-02-11 10:59:53.707 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 10:59:53.722 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__testId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[QuestionId], [t].[TestId], [q].[Id], [q].[Text], [q].[TopicId]
+FROM [TestQuestions] AS [t]
+INNER JOIN [Questions] AS [q] ON [t].[QuestionId] = [q].[Id]
+WHERE [t].[TestId] = @__testId_0
+2025-02-11 10:59:53.727 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 10:59:53.728 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI) in 26.0614ms
+2025-02-11 10:59:53.728 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 10:59:53.728 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11019/questions - 200 null application/json; charset=utf-8 29.9857ms
+2025-02-11 11:00:11.998 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11018/questions - null null
+2025-02-11 11:00:11.999 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 11:00:11.999 +05:00 [INF] Route matched with {action = "GetQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:00:12.000 +05:00 [INF] Получаем вопросы для теста 11018
+2025-02-11 11:00:12.002 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:00:12.040 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-02-11 11:00:12.056 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 11:00:12.058 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI) in 58.5062ms
+2025-02-11 11:00:12.058 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 11:00:12.058 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11018/questions - 200 null application/json; charset=utf-8 60.2303ms
+2025-02-11 11:10:01.423 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T3&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - null 0
+2025-02-11 11:10:01.424 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:10:01.425 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 11:10:01.425 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:10:01.428 +05:00 [INF] CreateTemplate: T3, count=5, topic=1, isPrivate=false, isRandom=true, testType=QuestionsOnly
+2025-02-11 11:10:01.446 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 11:10:01.447 +05:00 [INF] CreateTemplateAsync(Name=T3, isPrivate=false, isRandom=true, testType="QuestionsOnly")
+2025-02-11 11:10:01.457 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 11:10:01.458 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:10:01.459 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 32.9441ms
+2025-02-11 11:10:01.459 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 11:10:01.459 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T3&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - 200 null application/json; charset=utf-8 36.2155ms
+2025-02-11 11:16:51.724 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T4&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - null 0
+2025-02-11 11:16:51.725 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:16:51.725 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 11:16:51.725 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:16:51.730 +05:00 [INF] CreateTemplate: T4, count=5, topic=1, isPrivate=false, isRandom=false, testType=QuestionsOnly
+2025-02-11 11:16:51.732 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 11:16:51.737 +05:00 [INF] CreateTemplateAsync(Name=T4, isPrivate=false, isRandom=false, testType="QuestionsOnly")
+2025-02-11 11:16:51.745 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 11:16:51.746 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:16:51.746 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 20.8068ms
+2025-02-11 11:16:51.746 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 11:16:51.747 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T4&countOfQuestions=5&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - 200 null application/json; charset=utf-8 25.3388ms
+2025-02-11 11:17:56.503 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Questions?page=1&pageSize=10 - null null
+2025-02-11 11:17:56.509 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-11 11:17:56.514 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-11 11:17:56.522 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=10
+2025-02-11 11:17:56.533 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=10)
+2025-02-11 11:17:56.546 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-11 11:17:56.575 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-11 11:17:56.580 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 11:17:56.583 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 68.8019ms
+2025-02-11 11:17:56.583 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-11 11:17:56.583 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Questions?page=1&pageSize=10 - 200 null application/json; charset=utf-8 80.2003ms
+2025-02-11 11:18:16.864 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/11021/questions/1001 - null 0
+2025-02-11 11:18:16.865 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:18:16.865 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 11:18:16.867 +05:00 [INF] Route matched with {action = "AddQuestionToTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] AddQuestionToTest(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:18:16.869 +05:00 [INF] Добавляем вопрос 1001 в тест 11021
+2025-02-11 11:18:16.870 +05:00 [INF] Добавляем вопрос 1001 в тест 11021
+2025-02-11 11:18:16.873 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:18:16.914 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [q].[Id], [q].[Text], [q].[TopicId]
+FROM [Questions] AS [q]
+WHERE [q].[Id] = @__p_0
+2025-02-11 11:18:16.935 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [TestQuestions] ([QuestionId], [TestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-02-11 11:18:16.943 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:18:16.946 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:18:16.947 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI) in 79.5454ms
+2025-02-11 11:18:16.947 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 11:18:16.947 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/11021/questions/1001 - 200 null application/json; charset=utf-8 83.1906ms
+2025-02-11 11:18:54.735 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/11021/questions/1002 - null 0
+2025-02-11 11:18:54.736 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:18:54.736 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 11:18:54.736 +05:00 [INF] Route matched with {action = "AddQuestionToTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] AddQuestionToTest(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:18:54.738 +05:00 [INF] Добавляем вопрос 1002 в тест 11021
+2025-02-11 11:18:54.738 +05:00 [INF] Добавляем вопрос 1002 в тест 11021
+2025-02-11 11:18:54.740 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:18:54.752 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [q].[Id], [q].[Text], [q].[TopicId]
+FROM [Questions] AS [q]
+WHERE [q].[Id] = @__p_0
+2025-02-11 11:18:54.765 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [TestQuestions] ([QuestionId], [TestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-02-11 11:18:54.768 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:18:54.770 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:18:54.771 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI) in 34.9723ms
+2025-02-11 11:18:54.772 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 11:18:54.772 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/11021/questions/1002 - 200 null application/json; charset=utf-8 36.5887ms
+2025-02-11 11:23:57.810 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - null null
+2025-02-11 11:23:57.838 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 11:23:57.838 +05:00 [INF] Route matched with {action = "GetQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:23:57.867 +05:00 [INF] Получаем вопросы для теста 11021
+2025-02-11 11:23:57.871 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id]
+2025-02-11 11:23:57.878 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__testId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[QuestionId], [t].[TestId], [q].[Id], [q].[Text], [q].[TopicId]
+FROM [TestQuestions] AS [t]
+INNER JOIN [Questions] AS [q] ON [t].[QuestionId] = [q].[Id]
+WHERE [t].[TestId] = @__testId_0
+2025-02-11 11:23:57.879 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 11:23:57.879 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI) in 40.7473ms
+2025-02-11 11:23:57.879 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetQuestions (QuizMasterAPI)'
+2025-02-11 11:23:57.879 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - 200 null application/json; charset=utf-8 69.6639ms
+2025-02-11 11:36:38.569 +05:00 [INF] Executed DbCommand (31ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 11:36:38.641 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 11:36:38.746 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 11:36:38.862 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 11:36:38.940 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 11:36:38.940 +05:00 [INF] Hosting environment: Development
+2025-02-11 11:36:38.940 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 11:36:39.034 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 180.8958ms
+2025-02-11 11:36:39.036 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 11:36:39.047 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 7.6299ms
+2025-02-11 11:36:39.089 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 11:36:39.118 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 29.8359ms
+2025-02-11 11:36:39.153 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 11:36:39.177 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.0495ms
+2025-02-11 11:36:55.893 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-11 11:36:55.900 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:36:55.939 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 11:36:55.954 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-11 11:36:55.983 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-11 11:36:56.027 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-11 11:36:56.157 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-11 11:36:56.180 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-11 11:36:56.186 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-11 11:36:56.194 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 235.4303ms
+2025-02-11 11:36:56.195 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 11:36:56.202 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 308.8586ms
+2025-02-11 11:37:24.184 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - null null
+2025-02-11 11:37:24.215 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:37:24.219 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:37:24.318 +05:00 [INF] Запрос вопросов для теста 11021
+2025-02-11 11:37:24.318 +05:00 [INF] Получаем вопросы для теста 11021
+2025-02-11 11:37:24.395 +05:00 [ERR] Ошибка при получении вопросов теста 11021
+System.InvalidOperationException: Cannot apply the 'Include' operation with argument 'q => q.AnswerOptions'. Either the source is not a queryable of a known entity type or 'Include' has been applied after 'Select' method which projects a different entity type through navigation. Consider applying 'Include' before 'Select' method call.
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.ProcessInclude(NavigationExpansionExpression source, Expression expression, Boolean thenInclude, Boolean setLoaded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.Expand(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryTranslationPreprocessor.Process(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutorExpression[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass11_0`1.<ExecuteCore>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.ExecuteAsync[TResult](Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IncludableQueryable`2.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.GetAsyncEnumerator()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.TestRepository.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\TestRepository.cs:line 39
+   at QuizMasterAPI.Services.TestService.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\TestService.cs:line 286
+   at QuizMasterAPI.Controllers.TestsController.GetTestQuestions(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\TestsController.cs:line 208
+2025-02-11 11:37:24.419 +05:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2025-02-11 11:37:24.420 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 200.0152ms
+2025-02-11 11:37:24.420 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:37:24.420 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - 500 null text/plain; charset=utf-8 235.8326ms
+2025-02-11 11:37:49.413 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - null null
+2025-02-11 11:37:49.416 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:37:49.417 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:37:49.427 +05:00 [INF] Запрос вопросов для теста 11021
+2025-02-11 11:37:49.429 +05:00 [INF] Получаем вопросы для теста 11021
+2025-02-11 11:37:49.473 +05:00 [ERR] Ошибка при получении вопросов теста 11021
+System.InvalidOperationException: Cannot apply the 'Include' operation with argument 'q => q.AnswerOptions'. Either the source is not a queryable of a known entity type or 'Include' has been applied after 'Select' method which projects a different entity type through navigation. Consider applying 'Include' before 'Select' method call.
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.ProcessInclude(NavigationExpansionExpression source, Expression expression, Boolean thenInclude, Boolean setLoaded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.Expand(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryTranslationPreprocessor.Process(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutorExpression[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass11_0`1.<ExecuteCore>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.ExecuteAsync[TResult](Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IncludableQueryable`2.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.GetAsyncEnumerator()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.TestRepository.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\TestRepository.cs:line 39
+   at QuizMasterAPI.Services.TestService.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\TestService.cs:line 286
+   at QuizMasterAPI.Controllers.TestsController.GetTestQuestions(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\TestsController.cs:line 208
+2025-02-11 11:37:49.475 +05:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2025-02-11 11:37:49.476 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 59.0271ms
+2025-02-11 11:37:49.476 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:37:49.476 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - 500 null text/plain; charset=utf-8 62.8017ms
+2025-02-11 11:38:28.713 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11020/questions - null null
+2025-02-11 11:38:28.714 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:38:28.714 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:38:28.722 +05:00 [INF] Запрос вопросов для теста 11020
+2025-02-11 11:38:28.722 +05:00 [INF] Получаем вопросы для теста 11020
+2025-02-11 11:38:28.768 +05:00 [ERR] Ошибка при получении вопросов теста 11020
+System.InvalidOperationException: Cannot apply the 'Include' operation with argument 'q => q.AnswerOptions'. Either the source is not a queryable of a known entity type or 'Include' has been applied after 'Select' method which projects a different entity type through navigation. Consider applying 'Include' before 'Select' method call.
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.ProcessInclude(NavigationExpansionExpression source, Expression expression, Boolean thenInclude, Boolean setLoaded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at Microsoft.EntityFrameworkCore.Query.Internal.NavigationExpandingExpressionVisitor.Expand(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryTranslationPreprocessor.Process(Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutorExpression[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass11_0`1.<ExecuteCore>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.ExecuteAsync[TResult](Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.IncludableQueryable`2.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.GetAsyncEnumerator()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at QuizMasterAPI.Repositories.TestRepository.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Repositories\TestRepository.cs:line 39
+   at QuizMasterAPI.Services.TestService.GetTestQuestionsAsync(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Services\TestService.cs:line 286
+   at QuizMasterAPI.Controllers.TestsController.GetTestQuestions(Int32 testId) in C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\Controllers\TestsController.cs:line 208
+2025-02-11 11:38:28.769 +05:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2025-02-11 11:38:28.769 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 54.8035ms
+2025-02-11 11:38:28.769 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:38:28.770 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11020/questions - 500 null text/plain; charset=utf-8 56.2625ms
+2025-02-11 11:39:42.709 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021 - null null
+2025-02-11 11:39:42.749 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 11:39:42.752 +05:00 [INF] Route matched with {action = "GetTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] GetTest(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:39:42.758 +05:00 [INF] Вход в GetTest(Id=11021)
+2025-02-11 11:39:42.758 +05:00 [INF] GetTestByIdAsync(Id=11021)
+2025-02-11 11:39:42.805 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 11:39:42.845 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 11:39:42.917 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:39:42.930 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI) in 177.6642ms
+2025-02-11 11:39:42.930 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 11:39:42.930 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021 - 200 null application/json; charset=utf-8 221.4057ms
+2025-02-11 11:48:58.493 +05:00 [INF] Executed DbCommand (32ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 11:48:58.564 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 11:48:58.661 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 11:48:58.790 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 11:48:58.867 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 11:48:58.867 +05:00 [INF] Hosting environment: Development
+2025-02-11 11:48:58.867 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 11:48:58.964 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 183.7514ms
+2025-02-11 11:48:58.975 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 11:48:58.986 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 6.4517ms
+2025-02-11 11:48:59.024 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 11:48:59.059 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.4104ms
+2025-02-11 11:48:59.098 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 11:48:59.126 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 27.884ms
+2025-02-11 11:49:20.866 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-11 11:49:20.885 +05:00 [INF] CORS policy execution successful.
+2025-02-11 11:49:20.926 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 11:49:20.943 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-11 11:49:20.972 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-11 11:49:21.017 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-11 11:49:21.146 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-11 11:49:21.167 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-11 11:49:21.173 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-11 11:49:21.181 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 234.633ms
+2025-02-11 11:49:21.182 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 11:49:21.185 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 319.5649ms
+2025-02-11 11:49:55.979 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - null null
+2025-02-11 11:49:56.015 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:49:56.020 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:49:56.113 +05:00 [INF] Запрос вопросов для теста 11021
+2025-02-11 11:49:56.114 +05:00 [INF] Получаем вопросы для теста 11021
+2025-02-11 11:49:56.171 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 11:49:56.207 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__testId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsRandom], [t1].[Name], [t1].[TestType], [t1].[TopicId], [s].[Id], [s].[QuestionId], [s].[TestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId]
+    FROM [Tests] AS [t]
+    WHERE [t].[Id] = @__testId_0
+) AS [t1]
+LEFT JOIN (
+    SELECT [t0].[Id], [t0].[QuestionId], [t0].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t0]
+    INNER JOIN [Questions] AS [q] ON [t0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [t1].[Id] = [s].[TestId]
+ORDER BY [t1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 11:49:56.277 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 11:49:56.283 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 262.1299ms
+2025-02-11 11:49:56.283 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 11:49:56.283 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - 200 null application/json; charset=utf-8 304.1659ms
+2025-02-11 11:50:13.137 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021 - null null
+2025-02-11 11:50:13.143 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 11:50:13.146 +05:00 [INF] Route matched with {action = "GetTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] GetTest(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 11:50:13.153 +05:00 [INF] Вход в GetTest(Id=11021)
+2025-02-11 11:50:13.154 +05:00 [INF] GetTestByIdAsync(Id=11021)
+2025-02-11 11:50:13.164 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 11:50:13.197 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 11:50:13.215 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 11:50:13.222 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI) in 75.6132ms
+2025-02-11 11:50:13.222 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 11:50:13.223 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021 - 200 null application/json; charset=utf-8 86.1336ms
+2025-02-11 12:12:48.965 +05:00 [INF] Executed DbCommand (32ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 12:12:49.036 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-11 12:12:49.145 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-11 12:12:49.269 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-11 12:12:49.346 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-11 12:12:49.346 +05:00 [INF] Hosting environment: Development
+2025-02-11 12:12:49.346 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-11 12:12:49.439 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 179.5099ms
+2025-02-11 12:12:49.440 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-11 12:12:49.451 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 5.3345ms
+2025-02-11 12:12:49.498 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-11 12:12:49.524 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 26.0135ms
+2025-02-11 12:12:49.561 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-11 12:12:49.585 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.1496ms
+2025-02-11 12:13:17.324 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-11 12:13:17.340 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:13:17.378 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 12:13:17.394 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-11 12:13:17.422 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-11 12:13:17.466 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-11 12:13:17.595 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-11 12:13:17.614 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-11 12:13:17.619 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-11 12:13:17.626 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 228.4513ms
+2025-02-11 12:13:17.626 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-11 12:13:17.630 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 306.351ms
+2025-02-11 12:14:48.675 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T5&countOfQuestions=3&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - null 0
+2025-02-11 12:14:48.685 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:14:48.748 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 12:14:48.753 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:14:48.840 +05:00 [INF] CreateTemplate: T5, count=3, topic=1, isPrivate=false, isRandom=true, testType=QuestionsOnly
+2025-02-11 12:14:48.867 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 12:14:48.885 +05:00 [INF] CreateTemplateAsync(Name=T5, isPrivate=false, isRandom=true, testType="QuestionsOnly")
+2025-02-11 12:14:48.995 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 12:14:49.025 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 12:14:49.034 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 281.4593ms
+2025-02-11 12:14:49.035 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 12:14:49.035 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T5&countOfQuestions=3&topicId=1&isPrivate=false&isRandom=true&testType=QuestionsOnly - 200 null application/json; charset=utf-8 360.0021ms
+2025-02-11 12:15:01.467 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11022 - null null
+2025-02-11 12:15:01.471 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 12:15:01.474 +05:00 [INF] Route matched with {action = "GetTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] GetTest(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:15:01.476 +05:00 [INF] Вход в GetTest(Id=11022)
+2025-02-11 12:15:01.477 +05:00 [INF] GetTestByIdAsync(Id=11022)
+2025-02-11 12:15:01.519 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 12:15:01.559 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:15:01.569 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 12:15:01.570 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI) in 95.6551ms
+2025-02-11 12:15:01.570 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTest (QuizMasterAPI)'
+2025-02-11 12:15:01.570 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11022 - 200 null application/json; charset=utf-8 103.6495ms
+2025-02-11 12:15:16.506 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - null 0
+2025-02-11 12:15:16.507 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:15:16.509 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:16.515 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-02-11 12:15:16.520 +05:00 [INF] Вход в StartTest(TestId=11022)
+2025-02-11 12:15:16.523 +05:00 [INF] Старт теста 11022 для пользователя 0ab40610-2629-4627-b313-6a207691ba1a
+2025-02-11 12:15:16.527 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:15:16.578 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-02-11 12:15:16.627 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-02-11 12:15:16.651 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:15:16.660 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 12:15:16.689 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:15:16.697 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-02-11 12:15:16.700 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 184.9702ms
+2025-02-11 12:15:16.700 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:16.701 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - 200 null application/json; charset=utf-8 194.577ms
+2025-02-11 12:15:29.327 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - null 0
+2025-02-11 12:15:29.328 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:15:29.328 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:29.328 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-02-11 12:15:29.330 +05:00 [INF] Вход в StartTest(TestId=11022)
+2025-02-11 12:15:29.330 +05:00 [INF] Старт теста 11022 для пользователя 0ab40610-2629-4627-b313-6a207691ba1a
+2025-02-11 12:15:29.336 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:15:29.341 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-02-11 12:15:29.356 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-02-11 12:15:29.361 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:15:29.366 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:15:29.367 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-02-11 12:15:29.367 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 38.4896ms
+2025-02-11 12:15:29.367 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:29.367 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - 200 null application/json; charset=utf-8 40.7702ms
+2025-02-11 12:15:44.572 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - null 0
+2025-02-11 12:15:44.572 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:15:44.572 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:44.573 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-02-11 12:15:44.576 +05:00 [INF] Вход в StartTest(TestId=11022)
+2025-02-11 12:15:44.576 +05:00 [INF] Старт теста 11022 для пользователя 0ab40610-2629-4627-b313-6a207691ba1a
+2025-02-11 12:15:44.590 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:15:44.595 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_1='?' (DbType = Int32), @__topicId_Value_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[Text], [q0].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM (
+    SELECT TOP(@__p_1) [q].[Id], [q].[Text], [q].[TopicId], NEWID() AS [c]
+    FROM [Questions] AS [q]
+    WHERE [q].[TopicId] = @__topicId_Value_0
+    ORDER BY NEWID()
+) AS [q0]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[c], [q0].[Id]
+2025-02-11 12:15:44.610 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-02-11 12:15:44.616 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1),
+(@p4, @p5, 2)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:15:44.621 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:15:44.621 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-02-11 12:15:44.622 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 49.0888ms
+2025-02-11 12:15:44.622 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:15:44.622 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/11022 - 200 null application/json; charset=utf-8 50.6173ms
+2025-02-11 12:16:14.636 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - null null
+2025-02-11 12:16:14.637 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 12:16:14.639 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:16:14.642 +05:00 [INF] Запрос вопросов для теста 11021
+2025-02-11 12:16:14.643 +05:00 [INF] Получаем вопросы для теста 11021
+2025-02-11 12:16:14.648 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 12:16:14.675 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__testId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsRandom], [t1].[Name], [t1].[TestType], [t1].[TopicId], [s].[Id], [s].[QuestionId], [s].[TestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId]
+    FROM [Tests] AS [t]
+    WHERE [t].[Id] = @__testId_0
+) AS [t1]
+LEFT JOIN (
+    SELECT [t0].[Id], [t0].[QuestionId], [t0].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t0]
+    INNER JOIN [Questions] AS [q] ON [t0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [t1].[Id] = [s].[TestId]
+ORDER BY [t1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:16:14.687 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-11 12:16:14.689 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 49.6679ms
+2025-02-11 12:16:14.689 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-11 12:16:14.689 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Tests/11021/questions - 200 null application/json; charset=utf-8 53.0888ms
+2025-02-11 12:16:51.494 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/11021 - null 0
+2025-02-11 12:16:51.494 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:16:51.495 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:16:51.495 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-02-11 12:16:51.496 +05:00 [INF] Вход в StartTest(TestId=11021)
+2025-02-11 12:16:51.496 +05:00 [INF] Старт теста 11021 для пользователя 0ab40610-2629-4627-b313-6a207691ba1a
+2025-02-11 12:16:51.503 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:16:51.513 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-02-11 12:16:51.518 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:16:51.524 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:16:51.525 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-02-11 12:16:51.526 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 30.7217ms
+2025-02-11 12:16:51.526 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:16:51.526 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/11021 - 200 null application/json; charset=utf-8 32.0077ms
+2025-02-11 12:22:52.731 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T6&countOfQuestions=2&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - null 0
+2025-02-11 12:22:52.732 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:22:52.733 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 12:22:52.733 +05:00 [INF] Route matched with {action = "CreateTemplate", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] CreateTemplate(System.String, Int32, Int32, Boolean, Boolean, System.String) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:22:52.742 +05:00 [INF] CreateTemplate: T6, count=2, topic=1, isPrivate=false, isRandom=false, testType=QuestionsOnly
+2025-02-11 12:22:52.753 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM [Topics] AS [t]
+WHERE [t].[Id] = @__p_0
+2025-02-11 12:22:52.754 +05:00 [INF] CreateTemplateAsync(Name=T6, isPrivate=false, isRandom=false, testType="QuestionsOnly")
+2025-02-11 12:22:52.757 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Tests] ([CountOfQuestions], [CreatedAt], [IsPrivate], [IsRandom], [Name], [TestType], [TopicId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2025-02-11 12:22:52.757 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 12:22:52.757 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI) in 24.096ms
+2025-02-11 12:22:52.757 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.CreateTemplate (QuizMasterAPI)'
+2025-02-11 12:22:52.758 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/create-template?name=T6&countOfQuestions=2&topicId=1&isPrivate=false&isRandom=false&testType=QuestionsOnly - 200 null application/json; charset=utf-8 26.609ms
+2025-02-11 12:23:20.710 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/11023/questions/1001 - null 0
+2025-02-11 12:23:20.711 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:23:20.711 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 12:23:20.713 +05:00 [INF] Route matched with {action = "AddQuestionToTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] AddQuestionToTest(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:23:20.715 +05:00 [INF] Добавляем вопрос 1001 в тест 11023
+2025-02-11 12:23:20.716 +05:00 [INF] Добавляем вопрос 1001 в тест 11023
+2025-02-11 12:23:20.723 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:23:20.734 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [q].[Id], [q].[Text], [q].[TopicId]
+FROM [Questions] AS [q]
+WHERE [q].[Id] = @__p_0
+2025-02-11 12:23:20.750 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [TestQuestions] ([QuestionId], [TestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-02-11 12:23:20.753 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:23:20.756 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 12:23:20.758 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI) in 44.2818ms
+2025-02-11 12:23:20.758 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 12:23:20.758 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/11023/questions/1001 - 200 null application/json; charset=utf-8 47.9977ms
+2025-02-11 12:23:27.699 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Tests/11023/questions/1002 - null 0
+2025-02-11 12:23:27.700 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:23:27.700 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 12:23:27.700 +05:00 [INF] Route matched with {action = "AddQuestionToTest", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestDto]] AddQuestionToTest(Int32, Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-11 12:23:27.701 +05:00 [INF] Добавляем вопрос 1002 в тест 11023
+2025-02-11 12:23:27.701 +05:00 [INF] Добавляем вопрос 1002 в тест 11023
+2025-02-11 12:23:27.717 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:23:27.743 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [q].[Id], [q].[Text], [q].[TopicId]
+FROM [Questions] AS [q]
+WHERE [q].[Id] = @__p_0
+2025-02-11 12:23:27.745 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [TestQuestions] ([QuestionId], [TestId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+2025-02-11 12:23:27.746 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:23:27.747 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestDto'.
+2025-02-11 12:23:27.747 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI) in 46.6505ms
+2025-02-11 12:23:27.747 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.AddQuestionToTest (QuizMasterAPI)'
+2025-02-11 12:23:27.747 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Tests/11023/questions/1002 - 200 null application/json; charset=utf-8 48.0393ms
+2025-02-11 12:23:57.105 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTests/start/11023 - null 0
+2025-02-11 12:23:57.106 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:23:57.106 +05:00 [INF] Executing endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:23:57.106 +05:00 [INF] Route matched with {action = "StartTest", controller = "UserTests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.UserTestDto]] StartTest(Int32) on controller UserTestsController (QuizMasterAPI).
+2025-02-11 12:23:57.133 +05:00 [INF] Вход в StartTest(TestId=11023)
+2025-02-11 12:23:57.134 +05:00 [INF] Старт теста 11023 для пользователя 0ab40610-2629-4627-b313-6a207691ba1a
+2025-02-11 12:23:57.137 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[IsSurveyTopic], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[IsSurveyTopic], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-11 12:23:57.179 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = DateTime2), @p2='?' (DbType = Boolean), @p3='?' (DbType = Int32), @p4='?' (DbType = Int32), @p5='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [UserTests] ([CorrectAnswers], [DateCreated], [IsPassed], [TestId], [TotalQuestions], [UserId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2025-02-11 12:23:57.185 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestQuestions] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1)) AS i ([QuestionId], [UserTestId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([QuestionId], [UserTestId])
+VALUES (i.[QuestionId], i.[UserTestId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:23:57.189 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [u1].[Id], [u1].[CorrectAnswers], [u1].[DateCreated], [u1].[IsPassed], [u1].[TestId], [u1].[TotalQuestions], [u1].[UserId], [s].[Id], [s].[QuestionId], [s].[UserTestId], [s].[Id0], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId]
+    FROM [UserTests] AS [u]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [u1]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [u1].[Id] = [s].[UserTestId]
+ORDER BY [u1].[Id], [s].[Id], [s].[Id0]
+2025-02-11 12:23:57.189 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.UserTestDto'.
+2025-02-11 12:23:57.190 +05:00 [INF] Executed action UserTestsController.StartTest (QuizMasterAPI) in 83.5905ms
+2025-02-11 12:23:57.190 +05:00 [INF] Executed endpoint 'UserTestsController.StartTest (QuizMasterAPI)'
+2025-02-11 12:23:57.190 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTests/start/11023 - 200 null application/json; charset=utf-8 85.1809ms
+2025-02-11 12:26:40.253 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/UserTestAnswers/12019/save - application/json 186
+2025-02-11 12:26:40.254 +05:00 [INF] CORS policy execution successful.
+2025-02-11 12:26:40.254 +05:00 [INF] Executing endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-02-11 12:26:40.258 +05:00 [INF] Route matched with {action = "SaveAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAnswers(Int32, System.Collections.Generic.List`1[QuizMasterAPI.Models.DTOs.UserAnswerSubmitDto]) on controller UserTestAnswersController (QuizMasterAPI).
+2025-02-11 12:26:40.273 +05:00 [INF] SaveAnswers(UserTestId=12019), Count=2
+2025-02-11 12:26:40.274 +05:00 [INF] SaveAnswersAsync(UserTestId=12019, CountAnswers=2)
+2025-02-11 12:26:40.283 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2025-02-11 12:26:40.348 +05:00 [INF] Executed DbCommand (28ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CorrectAnswers], [s].[DateCreated], [s].[IsPassed], [s].[TestId], [s].[TotalQuestions], [s].[UserId], [s].[Id0], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s0].[Id], [s0].[QuestionId], [s0].[UserTestId], [s0].[Id0], [s0].[Id1], [s0].[AnswerOptionId], [s0].[UserTestQuestionId], [s0].[Text], [s0].[TopicId], [s0].[Id2], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId], [t].[Id] AS [Id0], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId]
+    FROM [UserTests] AS [u]
+    INNER JOIN [Tests] AS [t] ON [u].[TestId] = [t].[Id]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [s]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[UserTestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2025-02-11 12:26:40.366 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (DbType = Int32), @p2='?' (DbType = Int32), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+MERGE [UserTestAnswers] USING (
+VALUES (@p0, @p1, 0),
+(@p2, @p3, 1)) AS i ([AnswerOptionId], [UserTestQuestionId], _Position) ON 1=0
+WHEN NOT MATCHED THEN
+INSERT ([AnswerOptionId], [UserTestQuestionId])
+VALUES (i.[AnswerOptionId], i.[UserTestQuestionId])
+OUTPUT INSERTED.[Id], i._Position;
+2025-02-11 12:26:40.368 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-11 12:26:40.369 +05:00 [INF] Executed action UserTestAnswersController.SaveAnswers (QuizMasterAPI) in 110.8404ms
+2025-02-11 12:26:40.369 +05:00 [INF] Executed endpoint 'UserTestAnswersController.SaveAnswers (QuizMasterAPI)'
+2025-02-11 12:26:40.369 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/UserTestAnswers/12019/save - 200 null application/json; charset=utf-8 117.2384ms
+2025-02-11 12:26:54.925 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/UserTestAnswers/12019/check - null null
+2025-02-11 12:26:54.926 +05:00 [INF] Executing endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-02-11 12:26:54.928 +05:00 [INF] Route matched with {action = "CheckAnswers", controller = "UserTestAnswers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.TestCheckResultDto]] CheckAnswers(Int32) on controller UserTestAnswersController (QuizMasterAPI).
+2025-02-11 12:26:54.936 +05:00 [INF] CheckAnswers(UserTestId=12019)
+2025-02-11 12:26:54.940 +05:00 [INF] CheckAnswersAsync(UserTestId=12019)
+2025-02-11 12:26:54.944 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userTestId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CorrectAnswers], [s].[DateCreated], [s].[IsPassed], [s].[TestId], [s].[TotalQuestions], [s].[UserId], [s].[Id0], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TopicId], [s0].[Id], [s0].[QuestionId], [s0].[UserTestId], [s0].[Id0], [s0].[Id1], [s0].[AnswerOptionId], [s0].[UserTestQuestionId], [s0].[Text], [s0].[TopicId], [s0].[Id2], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [u].[Id], [u].[CorrectAnswers], [u].[DateCreated], [u].[IsPassed], [u].[TestId], [u].[TotalQuestions], [u].[UserId], [t].[Id] AS [Id0], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TopicId]
+    FROM [UserTests] AS [u]
+    INNER JOIN [Tests] AS [t] ON [u].[TestId] = [t].[Id]
+    WHERE [u].[Id] = @__userTestId_0
+) AS [s]
+LEFT JOIN (
+    SELECT [u0].[Id], [u0].[QuestionId], [u0].[UserTestId], [q].[Id] AS [Id0], [u1].[Id] AS [Id1], [u1].[AnswerOptionId], [u1].[UserTestQuestionId], [q].[Text], [q].[TopicId], [a].[Id] AS [Id2], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [UserTestQuestions] AS [u0]
+    INNER JOIN [Questions] AS [q] ON [u0].[QuestionId] = [q].[Id]
+    LEFT JOIN [UserTestAnswers] AS [u1] ON [u0].[Id] = [u1].[UserTestQuestionId]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[UserTestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0], [s0].[Id1]
+2025-02-11 12:26:54.989 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__questionIds_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[Text], [q].[TopicId], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text]
+FROM [Questions] AS [q]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+WHERE [q].[Id] IN (
+    SELECT [q0].[value]
+    FROM OPENJSON(@__questionIds_0) WITH ([value] int '$') AS [q0]
+)
+ORDER BY [q].[Id]
+2025-02-11 12:26:54.993 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.TestCheckResultDto'.
+2025-02-11 12:26:54.995 +05:00 [INF] Executed action UserTestAnswersController.CheckAnswers (QuizMasterAPI) in 67.2086ms
+2025-02-11 12:26:54.995 +05:00 [INF] Executed endpoint 'UserTestAnswersController.CheckAnswers (QuizMasterAPI)'
+2025-02-11 12:26:54.996 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/UserTestAnswers/12019/check - 200 null application/json; charset=utf-8 70.9884ms

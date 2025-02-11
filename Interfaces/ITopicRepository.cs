@@ -7,5 +7,6 @@ namespace QuizMasterAPI.Interfaces
     {
         Task<IEnumerable<Topic>> GetAllTopicsAsync();
         Task<Topic?> GetTopicByIdAsync(int id);
+        Task<IEnumerable<Topic>> GetTopicsByCategoryIdAsync(int categoryId);
     }
 }

@@ -1,5 +1,4 @@
-﻿// Services/TopicService.cs
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
@@ -34,12 +33,14 @@ namespace QuizMasterAPI.Services
 
             return _mapper.Map<TopicDto>(topic);
         }
+
         public async Task<TopicDto> CreateTopicAsync(CreateTopicDto dto)
         {
             var topic = new Topic
             {
                 Name = dto.Name,
-                IsSurveyTopic = dto.IsSurveyTopic
+                IsSurveyTopic = dto.IsSurveyTopic,
+                CategoryId = dto.CategoryId  // <-- учитываем привязку к категории
             };
             await _repo.AddAsync(topic);
             await _repo.SaveChangesAsync();
@@ -54,6 +55,9 @@ namespace QuizMasterAPI.Services
 
             topic.Name = dto.Name;
             topic.IsSurveyTopic = dto.IsSurveyTopic;
+
+            // Если хотите разрешать смену категории:
+            topic.CategoryId = dto.CategoryId;
 
             await _repo.UpdateAsync(topic);
             await _repo.SaveChangesAsync();

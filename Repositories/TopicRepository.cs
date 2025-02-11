@@ -1,5 +1,4 @@
-﻿// Repositories/TopicRepository.cs
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using QuizMasterAPI.Data;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.Entities;
@@ -17,6 +16,8 @@ namespace QuizMasterAPI.Repositories
 
         public async Task<IEnumerable<Topic>> GetAllTopicsAsync()
         {
+            // Если хотите, можете сделать .Include(t => t.Category) 
+            // если нужно вытаскивать имя категории
             return await _ctx.Topics.ToListAsync();
         }
 
@@ -24,5 +25,12 @@ namespace QuizMasterAPI.Repositories
         {
             return await _ctx.Topics.FindAsync(id);
         }
+        public async Task<IEnumerable<Topic>> GetTopicsByCategoryIdAsync(int categoryId)
+        {
+            return await _ctx.Topics
+                .Where(t => t.CategoryId == categoryId)
+                .ToListAsync();
+        }
+
     }
 }

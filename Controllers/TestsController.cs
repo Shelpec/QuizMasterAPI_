@@ -20,25 +20,36 @@ namespace QuizMasterAPI.Controllers
             _logger = logger;
         }
 
+        // Создание (раньше CreateTemplate)
+        // Добавим сюда isRandom и testType:
         [Authorize(Roles = "Admin")]
         [HttpPost("create-template")]
-        public async Task<ActionResult<Test>> CreateTemplate(
+        public async Task<ActionResult<TestDto>> CreateTemplate(
             [FromQuery] string name,
             [FromQuery] int countOfQuestions,
             [FromQuery] int topicId,
-            [FromQuery] bool isPrivate = false
+            [FromQuery] bool isPrivate = false,
+            [FromQuery] bool isRandom = false,
+            [FromQuery] string? testType = null
         )
         {
-            _logger.LogInformation("CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={Priv}",
-                name, countOfQuestions, topicId, isPrivate);
+            _logger.LogInformation("CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={Priv}, isRandom={Rand}, testType={Ttype}",
+                name, countOfQuestions, topicId, isPrivate, isRandom, testType);
 
             if (countOfQuestions <= 0)
                 return BadRequest("Количество вопросов должно быть > 0.");
 
             try
             {
-                var test = await _testService.CreateTemplateAsync(name, countOfQuestions, topicId, isPrivate);
-                return Ok(test);
+                var created = await _testService.CreateTemplateAsync(
+                    name,
+                    countOfQuestions,
+                    topicId,
+                    isPrivate,
+                    isRandom,
+                    testType
+                );
+                return Ok(created);
             }
             catch (Exception ex)
             {
@@ -47,12 +58,10 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-
-
         // Просмотр одного теста
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Test>> GetTest(int id)
+        public async Task<ActionResult<TestDto>> GetTest(int id)
         {
             _logger.LogInformation("Вход в GetTest(Id={Id})", id);
             try
@@ -80,15 +89,10 @@ namespace QuizMasterAPI.Controllers
 
             try
             {
-                // Определяем пользователя
                 var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
                 bool isAdmin = User.IsInRole("Admin");
 
                 var result = await _testService.GetAllTestsPaginatedAsync(page, pageSize, userId, isAdmin);
-                //  ^
-                //  |
-                // Добавим перегрузку, куда передаем userId, isAdmin
-
                 return Ok(result);
             }
             catch (Exception ex)
@@ -98,23 +102,23 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-
-
-
+        // Обновление теста
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Test>> UpdateTest(
+        public async Task<ActionResult<TestDto>> UpdateTest(
             int id,
             [FromQuery] string newName,
             [FromQuery] int countOfQuestions,
             [FromQuery] int? topicId,
-            [FromQuery] bool isPrivate = false
+            [FromQuery] bool isPrivate = false,
+            [FromQuery] bool isRandom = false,
+            [FromQuery] string? testType = null
         )
         {
-            _logger.LogInformation("UpdateTest(Id={Id}), isPrivate={Priv}", id, isPrivate);
+            _logger.LogInformation("UpdateTest(Id={Id}), isPrivate={Priv}, isRandom={Rand}, testType={Ttype}", id, isPrivate, isRandom, testType);
             try
             {
-                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate);
+                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate, isRandom, testType);
                 return Ok(updated);
             }
             catch (KeyNotFoundException ex)
@@ -128,8 +132,6 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
-
-
 
         // Удаление — только Admin
         [Authorize(Roles = "Admin")]
@@ -153,5 +155,71 @@ namespace QuizMasterAPI.Controllers
                 throw;
             }
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{testId}/questions/{questionId}")]
+        public async Task<ActionResult<TestDto>> AddQuestionToTest(int testId, int questionId)
+        {
+            _logger.LogInformation("Добавляем вопрос {QuestionId} в тест {TestId}", questionId, testId);
+            try
+            {
+                var updatedTest = await _testService.AddQuestionToTest(testId, questionId);
+                return Ok(updatedTest);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при добавлении вопроса {QuestionId} в тест {TestId}", questionId, testId);
+                throw;
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{testId}/questions/{questionId}")]
+        public async Task<ActionResult<TestDto>> RemoveQuestionFromTest(int testId, int questionId)
+        {
+            _logger.LogInformation("Удаляем вопрос {QuestionId} из теста {TestId}", questionId, testId);
+            try
+            {
+                var updatedTest = await _testService.RemoveQuestionFromTest(testId, questionId);
+                return Ok(updatedTest);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при удалении вопроса {QuestionId} из теста {TestId}", questionId, testId);
+                throw;
+            }
+        }
+
+        [HttpGet("{testId}/questions")]
+        public async Task<ActionResult<List<QuestionDto>>> GetTestQuestions(int testId)
+        {
+            _logger.LogInformation("Запрос вопросов для теста {TestId}", testId);
+
+            try
+            {
+                var questions = await _testService.GetTestQuestionsAsync(testId);
+                if (questions.Count == 0)
+                {
+                    return NotFound($"Вопросы для теста {testId} не найдены.");
+                }
+                return Ok(questions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при получении вопросов теста {TestId}", testId);
+                return StatusCode(500, "Ошибка сервера");
+            }
+        }
+
+
+
     }
 }

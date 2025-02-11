@@ -13,6 +13,7 @@ namespace QuizMasterAPI.Services
         private readonly ILogger<QuestionService> _logger;
         private readonly IMapper _mapper;
         private readonly QuizDbContext _ctx; // <-- нужно, чтобы формировать query
+
         public QuestionService(
             IQuestionRepository repository,
             ILogger<QuestionService> logger,
@@ -26,8 +27,7 @@ namespace QuizMasterAPI.Services
         }
 
         /// <summary>
-        /// Получить все вопросы (возвращаем сущности Question).
-        /// Если нужно DTO, сделайте _mapper.Map<IEnumerable<QuestionDto>>(...).
+        /// Получить все вопросы (как сущности).
         /// </summary>
         public async Task<IEnumerable<Question>> GetAllQuestions()
         {
@@ -35,7 +35,6 @@ namespace QuizMasterAPI.Services
             try
             {
                 return await _repository.GetAllQuestionsAsync();
-
             }
             catch (Exception ex)
             {
@@ -44,17 +43,15 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        // QuestionService.cs
+        /// <summary>
+        /// То же самое, но возвращаем QuestionDto
+        /// </summary>
         public async Task<IEnumerable<QuestionDto>> GetAllQuestionsDto()
         {
             var allQuestions = await _repository.GetAllQuestionsAsync();
             return allQuestions.Select(q => _mapper.Map<QuestionDto>(q));
         }
 
-
-        /// <summary>
-        /// Получить сущность Question по Id
-        /// </summary>
         public async Task<Question> GetQuestion(int id)
         {
             _logger.LogInformation("GetQuestion(Id={Id})", id);
@@ -75,25 +72,18 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        /// <summary>
-        /// Получить QuestionDto (маппим из Question).
-        /// </summary>
         public async Task<QuestionDto> GetQuestionDto(int id)
         {
             var question = await GetQuestion(id);
-            // AutoMapper: Question -> QuestionDto
             return _mapper.Map<QuestionDto>(question);
         }
 
-        /// <summary>
-        /// Создать вопрос (CreateQuestionDto -> Question).
-        /// </summary>
         public async Task<Question> CreateQuestion(CreateQuestionDto questionDto)
         {
             _logger.LogInformation("CreateQuestion(Text={Text})", questionDto.Text);
             try
             {
-                // Маппим DTO -> сущность Question
+                // DTO -> Question
                 var question = _mapper.Map<Question>(questionDto);
 
                 await _repository.AddAsync(question);
@@ -107,9 +97,6 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        /// <summary>
-        /// Обновить вопрос (UpdateQuestionDto -> Question).
-        /// </summary>
         public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto dto)
         {
             _logger.LogInformation("UpdateQuestion(Id={Id})", id);
@@ -117,7 +104,7 @@ namespace QuizMasterAPI.Services
             {
                 var question = await GetQuestion(id);
 
-                // Обновляем поля question из dto
+                // Маппим UpdateQuestionDto -> question (обновляя поля)
                 _mapper.Map(dto, question);
 
                 await _repository.UpdateAsync(question);
@@ -131,9 +118,6 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        /// <summary>
-        /// Удалить вопрос.
-        /// </summary>
         public async Task<bool> DeleteQuestion(int id)
         {
             _logger.LogInformation("DeleteQuestion(Id={Id})", id);
@@ -152,7 +136,7 @@ namespace QuizMasterAPI.Services
         }
 
         /// <summary>
-        /// Проверить один вариант ответа
+        /// Проверить один вариант ответа (пример).
         /// </summary>
         public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
         {
@@ -175,7 +159,6 @@ namespace QuizMasterAPI.Services
             try
             {
                 var questions = await _repository.GetRandomQuestionsAsync(count);
-                
                 return _mapper.Map<IEnumerable<QuestionDto>>(questions);
             }
             catch (Exception ex)
@@ -185,38 +168,41 @@ namespace QuizMasterAPI.Services
             }
         }
 
+        /// <summary>
+        /// Пример проверки нескольких ответов.
+        /// </summary>
         public async Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers)
         {
             _logger.LogInformation("CheckAnswers для {Count} вопросов", answers.Count);
             try
             {
-                // Загружаем сущности Question
+                // Собираем IDs вопросов
                 var questionIds = answers.Select(a => a.QuestionId).ToList();
                 var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
 
                 var questionDtos = _mapper.Map<List<QuestionDto>>(questions);
-
                 var response = new AnswerValidationResponseDto();
 
                 foreach (var answer in answers)
                 {
-                    // Ищем QuestionDto
                     var questionDto = questionDtos.FirstOrDefault(q => q.Id == answer.QuestionId);
                     if (questionDto == null)
                         throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
 
-                    // Собираем ID правильных ответов
-                    var correctAnswerIds = questionDto.AnswerOptions
+                    // ID правильных ответов
+                    var correctIds = questionDto.AnswerOptions
                         .Where(a => a.IsCorrect)
                         .Select(a => a.Id)
                         .ToList();
 
-                    // Сравниваем
+                    // Проверяем, совпадает ли выбранный набор
                     var isCorrect =
-                        !correctAnswerIds.Except(answer.SelectedAnswerIds).Any() &&
-                        !answer.SelectedAnswerIds.Except(correctAnswerIds).Any();
+                        !correctIds.Except(answer.SelectedAnswerIds).Any() &&
+                        !answer.SelectedAnswerIds.Except(correctIds).Any();
 
-                    // Заполняем результаты
+                    if (isCorrect) response.CorrectCount++;
+
+                    // Формируем подробный результат (опционально)
                     response.Results.Add(new QuestionValidationResultDto
                     {
                         QuestionText = questionDto.Text,
@@ -229,11 +215,6 @@ namespace QuizMasterAPI.Services
                             .Select(a => a.Text)
                             .ToList()
                     });
-
-                    if (isCorrect)
-                    {
-                        response.CorrectCount++;
-                    }
                 }
 
                 return response;
@@ -245,38 +226,28 @@ namespace QuizMasterAPI.Services
             }
         }
 
-
-        // =========================================
-        // Реализация пагинации
-        // =========================================
+        // Реализация пагинации для вопросов
         public async Task<PaginatedResponse<QuestionDto>> GetAllQuestionsPaginatedAsync(int page, int pageSize)
         {
             _logger.LogInformation("GetAllQuestionsPaginatedAsync(page={Page}, pageSize={PageSize})", page, pageSize);
 
-            // 1) Формируем базовый запрос с Include:
             var query = _ctx.Questions
                 .Include(q => q.AnswerOptions)
                 .Include(q => q.Topic)
                 .AsQueryable();
 
-            // 2) Считаем общее кол-во:
             var totalItems = await query.CountAsync();
 
-            // 3) "Вырезаем" нужный кусок:
             var skip = (page - 1) * pageSize;
             var questions = await query
-                .OrderBy(q => q.Id)          // Желательно отсортировать
+                .OrderBy(q => q.Id)
                 .Skip(skip)
                 .Take(pageSize)
                 .ToListAsync();
 
-            // 4) Вычисляем общее кол-во страниц
             var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-            // 5) Маппим в DTO
             var dtos = questions.Select(q => _mapper.Map<QuestionDto>(q)).ToList();
 
-            // 6) Формируем PaginatedResponse
             return new PaginatedResponse<QuestionDto>
             {
                 Items = dtos,

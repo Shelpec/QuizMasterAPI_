@@ -6,5 +6,6 @@ namespace QuizMasterAPI.Interfaces
     {
         Task<Test?> GetTestByIdAsync(int id);
         Task<IEnumerable<Test>> GetAllTestsAsync();
+        Task<List<Question>> GetTestQuestionsAsync(int testId); 
     }
 }
