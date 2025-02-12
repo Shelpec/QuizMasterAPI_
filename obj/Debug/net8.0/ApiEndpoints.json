@@ -1,5 +1,57 @@
 [
   {
+    "ContainingType": "QuizMasterAPI.Controllers.AnalyticsController",
+    "Method": "GetTestAnalytics",
+    "RelativePath": "api/Analytics/{testId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "testId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.DTOs.TestAnalyticsDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "QuizMasterAPI.Controllers.AnalyticsController",
+    "Method": "GetTestAnalyticsWithHistory",
+    "RelativePath": "api/Analytics/full/{testId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "testId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "QuizMasterAPI.Models.DTOs.TestAnalyticsWithHistoryDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "QuizMasterAPI.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -908,6 +960,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserTestsController",
+    "Method": "GetAllByTestId",
+    "RelativePath": "api/UserTests/all-by-test/{testId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "testId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.UserTestHistoryDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "UserTestsController",

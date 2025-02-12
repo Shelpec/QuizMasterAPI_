@@ -460,5 +460,26 @@ namespace QuizMasterAPI.Services
                 PageSize = pageSize
             };
         }
+
+        public async Task<List<UserTestHistoryDto>> GetAllHistoryByTestId(int testId)
+        {
+            // Грузим все UserTest с нужным TestId
+            var userTests = await _context.UserTests
+                .Include(ut => ut.User)
+                .Include(ut => ut.Test).ThenInclude(t => t.Topic)
+                .Include(ut => ut.UserTestQuestions).ThenInclude(utq => utq.UserTestAnswers)
+                .Include(ut => ut.UserTestQuestions).ThenInclude(utq => utq.Question).ThenInclude(q => q.AnswerOptions)
+                .Where(ut => ut.TestId == testId)
+                .ToListAsync();
+
+            // Собираем список DTO
+            var result = new List<UserTestHistoryDto>();
+            foreach (var userTest in userTests)
+            {
+                var dto = BuildUserTestHistoryDto(userTest);
+                result.Add(dto);
+            }
+            return result;
+        }
     }
 }

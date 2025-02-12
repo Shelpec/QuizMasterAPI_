@@ -178,4 +178,23 @@ public class UserTestsController : ControllerBase
         }
     }
 
+    [Authorize(Roles = "Admin")]
+    [HttpGet("all-by-test/{testId}")]
+    public async Task<ActionResult<List<UserTestHistoryDto>>> GetAllByTestId(int testId)
+    {
+        _logger.LogInformation("Вход в GetAllByTestId(TestId={TestId})", testId);
+
+        try
+        {
+            var list = await _userTestService.GetAllHistoryByTestId(testId);
+            return Ok(list);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Ошибка в GetAllByTestId(TestId={TestId})", testId);
+            throw;
+        }
+    }
+
+
 }

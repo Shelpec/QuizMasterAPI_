@@ -5,6 +5,86 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Analytics/{testId}": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Analytics/full/{testId}": {
+      "get": {
+        "tags": [
+          "Analytics"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsWithHistoryDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsWithHistoryDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestAnalyticsWithHistoryDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Auth/register": {
       "post": {
         "tags": [
@@ -1666,6 +1746,55 @@
         }
       }
     },
+    "/api/UserTests/all-by-test/{testId}": {
+      "get": {
+        "tags": [
+          "UserTests"
+        ],
+        "parameters": [
+          {
+            "name": "testId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTestHistoryDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -1904,6 +2033,24 @@
           "categoryId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DifficultQuestionDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "questionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "wrongRatePercent": {
+            "type": "number",
+            "format": "double"
           }
         },
         "additionalProperties": false
@@ -2189,6 +2336,79 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TestQuestion"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TestAnalyticsDto": {
+        "type": "object",
+        "properties": {
+          "testId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "testName": {
+            "type": "string",
+            "nullable": true
+          },
+          "averageScorePercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalAttempts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "averageTimeSeconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "difficultQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DifficultQuestionDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TestAnalyticsWithHistoryDto": {
+        "type": "object",
+        "properties": {
+          "testId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "testName": {
+            "type": "string",
+            "nullable": true
+          },
+          "averageScorePercent": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalAttempts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "averageTimeSeconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "difficultQuestions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DifficultQuestionDto"
+            },
+            "nullable": true
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserTestHistoryDto"
             },
             "nullable": true
           }

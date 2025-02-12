@@ -29,6 +29,7 @@ namespace QuizMasterAPI.Interfaces
         Task<PaginatedResponse<UserTestHistoryDto>> GetAllFullPaginatedAsync(int page, int pageSize);
         Task<PaginatedResponse<UserTestHistoryDto>> GetAllByUserEmailPaginatedAsync(string email, int page, int pageSize);
 
+        Task<List<UserTestHistoryDto>> GetAllHistoryByTestId(int testId);
 
     }
 }
