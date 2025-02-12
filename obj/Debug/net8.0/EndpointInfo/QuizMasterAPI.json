@@ -479,7 +479,7 @@
         }
       }
     },
-    "/api/Questions/check-answers": {
+    "/api/Questions/check-answer": {
       "post": {
         "tags": [
           "Questions"
@@ -490,7 +490,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AnswerValidationDto"
+                  "$ref": "#/components/schemas/CheckAnswerDto"
                 }
               }
             },
@@ -498,7 +498,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AnswerValidationDto"
+                  "$ref": "#/components/schemas/CheckAnswerDto"
                 }
               }
             },
@@ -506,7 +506,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/AnswerValidationDto"
+                  "$ref": "#/components/schemas/CheckAnswerDto"
                 }
               }
             }
@@ -1742,6 +1742,10 @@
           },
           "isChosen": {
             "type": "boolean"
+          },
+          "userTextAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1780,24 +1784,6 @@
           },
           "isCorrect": {
             "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "AnswerValidationDto": {
-        "type": "object",
-        "properties": {
-          "questionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "selectedAnswerIds": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1854,6 +1840,28 @@
         },
         "additionalProperties": false
       },
+      "CheckAnswerDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "selectedAnswerIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "userTextAnswer": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateQuestionDto": {
         "type": "object",
         "properties": {
@@ -1864,6 +1872,13 @@
           "topicId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
+            "type": "string",
             "nullable": true
           },
           "answerOptions": {
@@ -1908,6 +1923,9 @@
         "additionalProperties": false
       },
       "Question": {
+        "required": [
+          "text"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -1915,8 +1933,8 @@
             "format": "int32"
           },
           "text": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "topicId": {
             "type": "integer",
@@ -1932,6 +1950,13 @@
               "$ref": "#/components/schemas/AnswerOption"
             },
             "nullable": true
+          },
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1945,6 +1970,10 @@
           },
           "isCorrect": {
             "type": "boolean"
+          },
+          "correctTextAnswer": {
+            "type": "string",
+            "nullable": true
           },
           "correctAnswers": {
             "type": "array",
@@ -1980,6 +2009,13 @@
             "nullable": true
           },
           "topicName": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
             "type": "string",
             "nullable": true
           },
@@ -2037,7 +2073,14 @@
             "type": "string",
             "nullable": true
           },
-          "answers": {
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
+            "type": "string",
+            "nullable": true
+          },
+          "answerOptions": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AnswerHistoryDto"
@@ -2047,12 +2090,25 @@
         },
         "additionalProperties": false
       },
+      "QuestionTypeEnum": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "QuestionValidationResultDto": {
         "type": "object",
         "properties": {
           "questionText": {
             "type": "string",
             "nullable": true
+          },
+          "isCorrect": {
+            "type": "boolean"
           },
           "correctAnswers": {
             "type": "array",
@@ -2142,9 +2198,6 @@
       "TestCheckResultDto": {
         "type": "object",
         "properties": {
-          "isSurvey": {
-            "type": "boolean"
-          },
           "correctCount": {
             "type": "integer",
             "format": "int32"
@@ -2350,6 +2403,13 @@
             "format": "int32",
             "nullable": true
           },
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
+            "type": "string",
+            "nullable": true
+          },
           "answerOptions": {
             "type": "array",
             "items": {
@@ -2462,6 +2522,10 @@
               "format": "int32"
             },
             "nullable": true
+          },
+          "userTextAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2528,7 +2592,12 @@
           },
           "answerOptionId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
+          },
+          "userTextAnswer": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -2554,9 +2623,6 @@
               "$ref": "#/components/schemas/UserTestQuestionDto"
             },
             "nullable": true
-          },
-          "isSurveyTopic": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -2610,9 +2676,6 @@
           "topicName": {
             "type": "string",
             "nullable": true
-          },
-          "topicIsSurvey": {
-            "type": "boolean"
           },
           "questions": {
             "type": "array",
@@ -2696,6 +2759,13 @@
             "format": "int32"
           },
           "questionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionType": {
+            "$ref": "#/components/schemas/QuestionTypeEnum"
+          },
+          "correctTextAnswer": {
             "type": "string",
             "nullable": true
           },

@@ -137,26 +137,16 @@ namespace QuizMasterAPI.Controllers
             }
         }
 
-        // Проверка ответов (пример)
-        [HttpPost("check-answers")]
-        public async Task<ActionResult<AnswerValidationResponseDto>> CheckAnswers([FromBody] List<AnswerValidationDto> answers)
-        {
-            _logger.LogInformation("Вход в CheckAnswers");
-            if (!answers.Any())
-            {
-                return BadRequest("Answers cannot be empty.");
-            }
 
-            try
-            {
-                var result = await _service.CheckAnswers(answers);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ошибка в CheckAnswers");
-                throw;
-            }
+        [HttpPost("check-answer")]
+        public async Task<ActionResult<AnswerValidationResponseDto>> CheckAnswers([FromBody] List<CheckAnswerDto> answers)
+        {
+            _logger.LogInformation("Проверка ответов для {Count} вопросов", answers.Count);
+
+            var result = await _service.CheckAnswers(answers);
+            return Ok(result);
         }
+
+
     }
 }

@@ -1,0 +1,62 @@
+2025-02-12 10:27:52.543 +05:00 [INF] Executed DbCommand (37ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-12 10:27:52.614 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+FROM [AspNetRoles] AS [a]
+WHERE [a].[NormalizedName] = @__normalizedName_0
+2025-02-12 10:27:52.724 +05:00 [INF] User profile is available. Using 'C:\Users\zhanarys\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-02-12 10:27:52.889 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/index.html - null null
+2025-02-12 10:27:52.962 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-12 10:27:52.963 +05:00 [INF] Hosting environment: Development
+2025-02-12 10:27:52.963 +05:00 [INF] Content root path: C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI
+2025-02-12 10:27:53.588 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/index.html - 200 null text/html;charset=utf-8 705.5ms
+2025-02-12 10:27:53.607 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-12 10:27:53.618 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_framework/aspnetcore-browser-refresh.js - 200 13778 application/javascript; charset=utf-8 9.7679ms
+2025-02-12 10:27:53.657 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/_vs/browserLink - null null
+2025-02-12 10:27:53.704 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/_vs/browserLink - 200 null text/javascript; charset=UTF-8 47.2382ms
+2025-02-12 10:27:53.734 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - null null
+2025-02-12 10:27:53.778 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 43.8913ms
+2025-02-12 10:28:11.006 +05:00 [INF] Request starting HTTP/2 POST https://localhost:44336/api/Auth/login - application/json 45
+2025-02-12 10:28:11.019 +05:00 [INF] CORS policy execution successful.
+2025-02-12 10:28:11.082 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-12 10:28:11.099 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(QuizMasterAPI.Models.DTOs.LoginDto) on controller QuizMasterAPI.Controllers.AuthController (QuizMasterAPI).
+2025-02-12 10:28:11.132 +05:00 [INF] Запрос на логин пользователя: AA
+2025-02-12 10:28:11.183 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedEmail_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[DateRegistered], [a].[Email], [a].[EmailConfirmed], [a].[FullName], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+FROM [AspNetUsers] AS [a]
+WHERE [a].[NormalizedEmail] = @__normalizedEmail_0
+2025-02-12 10:28:11.323 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__userId_0='?' (Size = 450)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a0].[Name]
+FROM [AspNetUserRoles] AS [a]
+INNER JOIN [AspNetRoles] AS [a0] ON [a].[RoleId] = [a0].[Id]
+WHERE [a].[UserId] = @__userId_0
+2025-02-12 10:28:11.346 +05:00 [INF] Пользователь AA успешно залогинился
+2025-02-12 10:28:11.351 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-12 10:28:11.359 +05:00 [INF] Executed action QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI) in 255.9138ms
+2025-02-12 10:28:11.360 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.AuthController.Login (QuizMasterAPI)'
+2025-02-12 10:28:11.363 +05:00 [INF] Request finished HTTP/2 POST https://localhost:44336/api/Auth/login - 200 null application/json; charset=utf-8 357.73ms
+2025-02-12 10:28:30.877 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/Questions?page=1&pageSize=10 - null null
+2025-02-12 10:28:30.915 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-12 10:28:30.919 +05:00 [INF] Route matched with {action = "GetAllQuestions", controller = "Questions"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[QuizMasterAPI.Models.DTOs.PaginatedResponse`1[QuestionDto]]] GetAllQuestions(Int32, Int32) on controller QuizMasterAPI.Controllers.QuestionsController (QuizMasterAPI).
+2025-02-12 10:28:31.019 +05:00 [INF] Вход в GetAllQuestions() c пагинацией: page=1, pageSize=10
+2025-02-12 10:28:31.021 +05:00 [INF] GetAllQuestionsPaginatedAsync(page=1, pageSize=10)
+2025-02-12 10:28:31.052 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Questions] AS [q]
+2025-02-12 10:28:31.115 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [q0].[Id], [q0].[CorrectTextAnswer], [q0].[QuestionType], [q0].[Text], [q0].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[CategoryId], [t].[IsSurveyTopic], [t].[Name]
+FROM (
+    SELECT [q].[Id], [q].[CorrectTextAnswer], [q].[QuestionType], [q].[Text], [q].[TopicId]
+    FROM [Questions] AS [q]
+    ORDER BY [q].[Id]
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [q0]
+LEFT JOIN [Topics] AS [t] ON [q0].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q0].[Id] = [a].[QuestionId]
+ORDER BY [q0].[Id], [t].[Id]
+2025-02-12 10:28:31.169 +05:00 [INF] Executing OkObjectResult, writing value of type 'QuizMasterAPI.Models.DTOs.PaginatedResponse`1[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-12 10:28:31.178 +05:00 [INF] Executed action QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI) in 259.2238ms
+2025-02-12 10:28:31.178 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.QuestionsController.GetAllQuestions (QuizMasterAPI)'
+2025-02-12 10:28:31.179 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/Questions?page=1&pageSize=10 - 200 null application/json; charset=utf-8 301.7824ms

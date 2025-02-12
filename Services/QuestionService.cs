@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
+using QuizMasterAPI.Models.Enums;
 
 namespace QuizMasterAPI.Services
 {
@@ -83,9 +84,7 @@ namespace QuizMasterAPI.Services
             _logger.LogInformation("CreateQuestion(Text={Text})", questionDto.Text);
             try
             {
-                // DTO -> Question
                 var question = _mapper.Map<Question>(questionDto);
-
                 await _repository.AddAsync(question);
                 await _repository.SaveChangesAsync();
                 return question;
@@ -96,6 +95,7 @@ namespace QuizMasterAPI.Services
                 throw;
             }
         }
+
 
         public async Task<Question> UpdateQuestion(int id, UpdateQuestionDto dto)
         {
@@ -135,23 +135,8 @@ namespace QuizMasterAPI.Services
             }
         }
 
-        /// <summary>
-        /// Проверить один вариант ответа (пример).
-        /// </summary>
-        public async Task<bool> CheckAnswer(int questionId, int selectedAnswerId)
-        {
-            _logger.LogInformation("CheckAnswer(QuestionId={Qid}, AnswerId={Aid})", questionId, selectedAnswerId);
-            var question = await GetQuestion(questionId);
+        
 
-            var selectedAnswer = question.AnswerOptions.FirstOrDefault(a => a.Id == selectedAnswerId);
-            if (selectedAnswer == null)
-            {
-                _logger.LogWarning("Answer option Id={Aid} не найден в QuestionId={Qid}", selectedAnswerId, questionId);
-                throw new ArgumentException("Answer option not found.");
-            }
-
-            return selectedAnswer.IsCorrect;
-        }
 
         public async Task<IEnumerable<QuestionDto>> GetRandomQuestions(int count)
         {
@@ -171,49 +156,69 @@ namespace QuizMasterAPI.Services
         /// <summary>
         /// Пример проверки нескольких ответов.
         /// </summary>
-        public async Task<AnswerValidationResponseDto> CheckAnswers(List<AnswerValidationDto> answers)
+        public async Task<AnswerValidationResponseDto> CheckAnswers(List<CheckAnswerDto> answers)
         {
             _logger.LogInformation("CheckAnswers для {Count} вопросов", answers.Count);
             try
             {
-                // Собираем IDs вопросов
-                var questionIds = answers.Select(a => a.QuestionId).ToList();
-                var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
+                // Приведение CheckAnswerDto к AnswerValidationDto
+                var answerDtos = answers.Select(a => new AnswerValidationDto
+                {
+                    QuestionId = a.QuestionId,
+                    SelectedAnswerIds = a.SelectedAnswerIds,
+                    UserTextAnswer = a.UserTextAnswer
+                }).ToList();
 
-                var questionDtos = _mapper.Map<List<QuestionDto>>(questions);
+                var questionIds = answerDtos.Select(a => a.QuestionId).ToList();
+                var questions = await _repository.GetQuestionsWithAnswersByIdsAsync(questionIds);
                 var response = new AnswerValidationResponseDto();
 
-                foreach (var answer in answers)
+                foreach (var answer in answerDtos)
                 {
-                    var questionDto = questionDtos.FirstOrDefault(q => q.Id == answer.QuestionId);
-                    if (questionDto == null)
+                    var question = questions.FirstOrDefault(q => q.Id == answer.QuestionId);
+                    if (question == null)
                         throw new KeyNotFoundException($"Question with ID {answer.QuestionId} not found");
 
-                    // ID правильных ответов
-                    var correctIds = questionDto.AnswerOptions
+                    var correctOptions = question.AnswerOptions
                         .Where(a => a.IsCorrect)
                         .Select(a => a.Id)
                         .ToList();
 
-                    // Проверяем, совпадает ли выбранный набор
-                    var isCorrect =
-                        !correctIds.Except(answer.SelectedAnswerIds).Any() &&
-                        !answer.SelectedAnswerIds.Except(correctIds).Any();
+                    var correctTexts = question.AnswerOptions
+                        .Where(a => a.IsCorrect)
+                        .Select(a => a.Text)
+                        .ToList();
+
+                    bool isCorrect = false;
+                    var selectedTexts = question.AnswerOptions
+                        .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
+                        .Select(a => a.Text)
+                        .ToList();
+
+                    // Логика для разных типов вопросов
+                    if (question.QuestionType == QuestionTypeEnum.OpenText)
+                    {
+                        isCorrect = string.Equals(answer.UserTextAnswer?.Trim(), question.CorrectTextAnswer?.Trim(), StringComparison.OrdinalIgnoreCase);
+                        selectedTexts = new List<string> { answer.UserTextAnswer ?? "" };
+                    }
+                    else if (question.QuestionType == QuestionTypeEnum.Survey)
+                    {
+                        isCorrect = true; // Все ответы в опроснике правильные
+                    }
+                    else
+                    {
+                        isCorrect = !correctOptions.Except(answer.SelectedAnswerIds).Any() &&
+                                    !answer.SelectedAnswerIds.Except(correctOptions).Any();
+                    }
 
                     if (isCorrect) response.CorrectCount++;
 
-                    // Формируем подробный результат (опционально)
                     response.Results.Add(new QuestionValidationResultDto
                     {
-                        QuestionText = questionDto.Text,
-                        CorrectAnswers = questionDto.AnswerOptions
-                            .Where(a => a.IsCorrect)
-                            .Select(a => a.Text)
-                            .ToList(),
-                        SelectedAnswers = questionDto.AnswerOptions
-                            .Where(a => answer.SelectedAnswerIds.Contains(a.Id))
-                            .Select(a => a.Text)
-                            .ToList()
+                        QuestionText = question.Text,
+                        IsCorrect = isCorrect,
+                        CorrectAnswers = correctTexts,
+                        SelectedAnswers = selectedTexts
                     });
                 }
 
@@ -225,6 +230,9 @@ namespace QuizMasterAPI.Services
                 throw;
             }
         }
+
+
+
 
         // Реализация пагинации для вопросов
         public async Task<PaginatedResponse<QuestionDto>> GetAllQuestionsPaginatedAsync(int page, int pageSize)

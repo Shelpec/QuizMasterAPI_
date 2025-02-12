@@ -5,6 +5,7 @@ using QuizMasterAPI.Data;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
+using QuizMasterAPI.Models.Enums;
 
 namespace QuizMasterAPI.Services
 {
@@ -40,136 +41,150 @@ namespace QuizMasterAPI.Services
         {
             _logger.LogInformation("SaveAnswersAsync(UserTestId={Id}, CountAnswers={Count})", userTestId, answers.Count);
 
+            // 1) Проверяем, есть ли UserTest
             var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
             if (userTest == null)
                 throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
 
+            // 2) Проверяем, принадлежит ли этот тест пользователю
             if (userTest.UserId != userId)
                 throw new UnauthorizedAccessException("This UserTest belongs to another user.");
 
-            // Перебираем, сохраняем
+            // 3) Сохраняем ответы
             foreach (var dto in answers)
             {
+                // Находим соответствующий UserTestQuestion
                 var utq = userTest.UserTestQuestions
                     .FirstOrDefault(x => x.Id == dto.UserTestQuestionId);
                 if (utq == null) continue;
 
-                // Удаляем все прежние ответы
+                // Чистим предыдущие ответы
                 utq.UserTestAnswers.Clear();
 
-                // Добавляем новые
-                foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
+                // Определяем тип вопроса
+                var question = utq.Question;
+                if (question == null) continue;
+
+                // Если вопрос - текстовый (OpenText)
+                if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
+                    // Сохраняем только текст
                     var userTestAnswer = new UserTestAnswer
                     {
                         UserTestQuestionId = utq.Id,
-                        AnswerOptionId = answerOptionId
+                        // AnswerOptionId = null,
+                        UserTextAnswer = dto.UserTextAnswer
                     };
                     await _userTestAnswerRepo.AddAsync(userTestAnswer);
                 }
+                else
+                {
+                    // Иначе сохраняем выбранные варианты
+                    foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
+                    {
+                        var userTestAnswer = new UserTestAnswer
+                        {
+                            UserTestQuestionId = utq.Id,
+                            AnswerOptionId = answerOptionId
+                        };
+                        await _userTestAnswerRepo.AddAsync(userTestAnswer);
+                    }
+                }
             }
 
+            // 4) Сохраняем
             await _userTestAnswerRepo.SaveChangesAsync();
         }
 
         /// <summary>
-        /// Проверка ответов. Если test.Topic.IsSurveyTopic == true, считаем опросником
+        /// Проверка ответов
         /// </summary>
         public async Task<TestCheckResultDto> CheckAnswersAsync(int userTestId, string userId)
         {
             _logger.LogInformation("CheckAnswersAsync(UserTestId={Id})", userTestId);
 
+            // Загружаем полный UserTest (с вопросами и ответами)
             var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
             if (userTest == null)
                 throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
 
+            // Проверка владельца
             if (userTest.UserId != userId)
                 throw new UnauthorizedAccessException("Not your test.");
 
-            var isSurvey = userTest.Test.Topic?.IsSurveyTopic == true; // ← признак опросника
-
-            // Создаём результат
+            // Формируем результат
             var result = new TestCheckResultDto
             {
-                IsSurvey = isSurvey, // <-- теперь фронт будет видеть, что это опрос
                 TotalQuestions = userTest.TotalQuestions,
-                CorrectCount = 0, // по умолчанию
+                CorrectCount = 0,
                 Results = new List<QuestionCheckResultDto>()
             };
 
-            if (isSurvey)
+            // Перебираем все вопросы
+            foreach (var utq in userTest.UserTestQuestions)
             {
-                // Если это ОПРОСНИК
-                result.CorrectCount = userTest.TotalQuestions; // всё считаем «верным»
+                var question = utq.Question;
+                if (question == null) continue;
 
-                // Перебираем все вопросы
-                foreach (var utq in userTest.UserTestQuestions)
+                // Список ID выбранных AnswerOption
+                var chosenIds = utq.UserTestAnswers
+                    .Where(a => a.AnswerOptionId.HasValue)
+                    .Select(a => a.AnswerOptionId.Value)
+                    .ToList();
+
+                // Список ID правильных AnswerOption
+                var correctOptions = question.AnswerOptions
+                    .Where(a => a.IsCorrect)
+                    .Select(a => a.Id)
+                    .ToList();
+
+                // Список правильных текстов (если IsCorrect = true)
+                var correctTexts = question.AnswerOptions
+                    .Where(a => a.IsCorrect)
+                    .Select(a => a.Text)
+                    .ToList();
+
+                bool isCorrect = false;
+
+                // Тексты, которые выбрал пользователь
+                var selectedTexts = question.AnswerOptions
+                    .Where(a => chosenIds.Contains(a.Id))
+                    .Select(a => a.Text)
+                    .ToList();
+
+                // Если вопрос - OpenText
+                if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
-                    var chosenIds = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToList();
-                    var question = utq.Question;
-                    if (question == null) continue;
-
-                    // Соберём тексты выбранных вариантов
-                    var selectedTexts = question.AnswerOptions
-                        .Where(a => chosenIds.Contains(a.Id))
-                        .Select(a => a.Text)
-                        .ToList();
-
-                    // формируем QuestionCheckResultDto
-                    var qDto = new QuestionCheckResultDto
-                    {
-                        QuestionId = question.Id,
-                        IsCorrect = true,  // всё верно
-                        CorrectAnswers = new List<string>(), // не отображаем «правильные»,
-                                                             // или можно SelectedAnswers = ...
-                        SelectedAnswers = selectedTexts
-                    };
-
-                    result.Results.Add(qDto);
+                    var userTextAnswer = utq.UserTestAnswers.FirstOrDefault()?.UserTextAnswer;
+                    // Логика проверки - если нужно
+                    // Если не нужно проверять, просто считаем false/true как вам удобно
+                    // Допустим, считаем всегда true?
+                    isCorrect = false;
+                    //selectedTexts = new List<string> { userTextAnswer ?? "" };
+                    selectedTexts = new List<string>();
+                    selectedTexts.Add(userTextAnswer ?? "");
                 }
-            }
-            else
-            {
-                // Обычная логика теста
-                var questionIds = userTest.UserTestQuestions.Select(q => q.QuestionId).ToList();
-                var questions = await _questionRepository.GetQuestionsWithAnswersByIdsAsync(questionIds);
-
-                int correctCount = 0;
-
-                foreach (var utq in userTest.UserTestQuestions)
+                else if (question.QuestionType == QuestionTypeEnum.Survey)
                 {
-                    var question = questions.FirstOrDefault(q => q.Id == utq.QuestionId);
-                    if (question == null) continue;
-
-                    var userChosen = utq.UserTestAnswers.Select(a => a.AnswerOptionId).ToList();
-                    var correctOptions = question.AnswerOptions
-                        .Where(a => a.IsCorrect)
-                        .Select(a => a.Id)
-                        .ToList();
-
-                    bool isCorrect = !correctOptions.Except(userChosen).Any()
-                                     && !userChosen.Except(correctOptions).Any();
-
-                    if (isCorrect) correctCount++;
-
-                    var detail = new QuestionCheckResultDto
-                    {
-                        QuestionId = question.Id,
-                        IsCorrect = isCorrect,
-                        CorrectAnswers = question.AnswerOptions
-                            .Where(a => a.IsCorrect)
-                            .Select(a => a.Text)
-                            .ToList(),
-                        SelectedAnswers = question.AnswerOptions
-                            .Where(a => userChosen.Contains(a.Id))
-                            .Select(a => a.Text)
-                            .ToList()
-                    };
-
-                    result.Results.Add(detail);
+                    // В опроснике все считаем верно
+                    isCorrect = true;
+                }
+                else
+                {
+                    // SingleChoice / MultipleChoice
+                    isCorrect = !correctOptions.Except(chosenIds).Any()
+                                && !chosenIds.Except(correctOptions).Any();
                 }
 
-                result.CorrectCount = correctCount;
+                if (isCorrect) result.CorrectCount++;
+
+                result.Results.Add(new QuestionCheckResultDto
+                {
+                    QuestionId = question.Id,
+                    IsCorrect = isCorrect,
+                    CorrectAnswers = correctTexts,
+                    SelectedAnswers = selectedTexts
+                });
             }
 
             return result;

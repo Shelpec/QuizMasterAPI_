@@ -161,7 +161,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "QuizMasterAPI.Models.DTOs.PaginatedResponse\u00601[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -203,7 +203,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "QuizMasterAPI.Models.DTOs.QuestionDto",
+        "Type": "QuestionDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -228,7 +228,7 @@
       },
       {
         "Name": "dto",
-        "Type": "UpdateQuestionDto",
+        "Type": "QuizMasterAPI.Models.DTOs.UpdateQuestionDto",
         "IsRequired": true
       }
     ],
@@ -253,14 +253,14 @@
   {
     "ContainingType": "QuizMasterAPI.Controllers.QuestionsController",
     "Method": "CheckAnswers",
-    "RelativePath": "api/Questions/check-answers",
+    "RelativePath": "api/Questions/check-answer",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "answers",
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.AnswerValidationDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.CheckAnswerDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -292,7 +292,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -515,7 +515,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[QuizMasterAPI.Models.DTOs.QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

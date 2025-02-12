@@ -12,9 +12,11 @@ namespace QuizMasterAPI.Models.Entities
         public int UserTestQuestionId { get; set; }
         public UserTestQuestion UserTestQuestion { get; set; } = null!;
 
-        // Какой вариант ответа выбрал пользователь
-        public int AnswerOptionId { get; set; }
-        // Можно добавить навигацию:
-        // public AnswerOption? AnswerOption { get; set; }
+        // Если это обычный вопрос, то хранится выбранный AnswerOptionId
+        public int? AnswerOptionId { get; set; }
+
+        // Если это вопрос с открытым ответом (OpenText),
+        // то здесь будет храниться введённый пользователем текст.
+        public string? UserTextAnswer { get; set; }
     }
 }

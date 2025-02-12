@@ -9,8 +9,10 @@
     public class QuestionValidationResultDto
     {
         public string QuestionText { get; set; } = string.Empty;
+        public bool IsCorrect { get; set; } // Добавлено
         public List<string> CorrectAnswers { get; set; } = new();
         public List<string> SelectedAnswers { get; set; } = new();
     }
+
 
 }

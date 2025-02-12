@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QuizMasterAPI.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    partial class QuizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250211095043_AddQuestionTypeAndTextAnswer")]
+    partial class AddQuestionTypeAndTextAnswer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -448,14 +451,11 @@ namespace QuizMasterAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AnswerOptionId")
+                    b.Property<int>("AnswerOptionId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserTestQuestionId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserTextAnswer")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

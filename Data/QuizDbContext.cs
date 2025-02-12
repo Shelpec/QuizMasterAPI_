@@ -47,6 +47,11 @@ public class QuizDbContext : IdentityDbContext<User>
             .HasForeignKey(uta => uta.UserTestQuestionId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        modelBuilder.Entity<UserTestAnswer>()
+            .Property(a => a.AnswerOptionId)
+            .IsRequired(false);
+
+
         modelBuilder.Entity<UserTest>()
             .HasOne(ut => ut.User)
             .WithMany()
@@ -92,6 +97,8 @@ public class QuizDbContext : IdentityDbContext<User>
             .WithMany()
             .HasForeignKey(tq => tq.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
+
+
     }
 
 }
