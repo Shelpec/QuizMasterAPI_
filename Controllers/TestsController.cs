@@ -30,7 +30,8 @@ namespace QuizMasterAPI.Controllers
             [FromQuery] int topicId,
             [FromQuery] bool isPrivate = false,
             [FromQuery] bool isRandom = false,
-            [FromQuery] string? testType = null
+            [FromQuery] string? testType = null,
+            [FromQuery] int? timeLimitMinutes = null
         )
         {
             _logger.LogInformation("CreateTemplate: {Name}, count={Count}, topic={Topic}, isPrivate={Priv}, isRandom={Rand}, testType={Ttype}",
@@ -47,7 +48,9 @@ namespace QuizMasterAPI.Controllers
                     topicId,
                     isPrivate,
                     isRandom,
-                    testType
+                    testType,
+                    timeLimitMinutes
+
                 );
                 return Ok(created);
             }
@@ -112,13 +115,14 @@ namespace QuizMasterAPI.Controllers
             [FromQuery] int? topicId,
             [FromQuery] bool isPrivate = false,
             [FromQuery] bool isRandom = false,
-            [FromQuery] string? testType = null
+            [FromQuery] string? testType = null,
+            [FromQuery] int? timeLimitMinutes = null
         )
         {
             _logger.LogInformation("UpdateTest(Id={Id}), isPrivate={Priv}, isRandom={Rand}, testType={Ttype}", id, isPrivate, isRandom, testType);
             try
             {
-                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate, isRandom, testType);
+                var updated = await _testService.UpdateTestAsync(id, newName, countOfQuestions, topicId, isPrivate, isRandom, testType, timeLimitMinutes);
                 return Ok(updated);
             }
             catch (KeyNotFoundException ex)
@@ -218,6 +222,33 @@ namespace QuizMasterAPI.Controllers
                 return StatusCode(500, "Ошибка сервера");
             }
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{testId}/candidate-questions")]
+        public async Task<ActionResult<List<QuestionDto>>> GetCandidateQuestions(int testId)
+        {
+            _logger.LogInformation("Запрос кандидатных вопросов для теста {TestId}", testId);
+
+            try
+            {
+                var candidateQuestions = await _testService.GetCandidateQuestionsAsync(testId);
+                return Ok(candidateQuestions);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при получении кандидатных вопросов для теста {TestId}", testId);
+                return StatusCode(500, "Ошибка сервера");
+            }
+        }
+
 
 
 

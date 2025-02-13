@@ -15,6 +15,9 @@ namespace QuizMasterAPI.Models.DTOs
         public bool IsRandom { get; set; }
         public TestTypeEnum TestType { get; set; }
 
+        // ✅ Новое поле
+        public int? TimeLimitMinutes { get; set; }
+
         public List<TestQuestionDto> TestQuestions { get; set; } = new();
     }
 }

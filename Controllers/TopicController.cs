@@ -1,88 +1,73 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 
-namespace QuizMasterAPI.Controllers
+[ApiController]
+[Route("api/[controller]")]
+public class TopicController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class TopicController : ControllerBase
+    private readonly ITopicService _service;
+    private readonly ILogger<TopicController> _logger;
+
+    public TopicController(ITopicService service, ILogger<TopicController> logger)
     {
-        private readonly ITopicService _service;
-        private readonly ILogger<TopicController> _logger;
+        _service = service;
+        _logger = logger;
+    }
 
-        public TopicController(ITopicService service, ILogger<TopicController> logger)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TopicDto>>> GetAll()
+    {
+        var topics = await _service.GetAllTopicsAsync();
+        return Ok(topics);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<TopicDto>> GetById(int id)
+    {
+        try
         {
-            _service = service;
-            _logger = logger;
+            var topic = await _service.GetTopicByIdAsync(id);
+            return Ok(topic);
         }
-
-        // Просмотр всех топиков — допустим, только авторизованные
-        [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TopicDto>>> GetAll()
+        catch (KeyNotFoundException ex)
         {
-            _logger.LogInformation("GetAll Topics");
-            var topics = await _service.GetAllTopicsAsync();
-            return Ok(topics);
+            return NotFound(new { Error = ex.Message });
         }
+    }
 
-        // Просмотр конкретного топика
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TopicDto>> GetById(int id)
+    [HttpPost]
+    public async Task<ActionResult<TopicDto>> Create([FromBody] CreateTopicDto dto)
+    {
+        var created = await _service.CreateTopicAsync(dto);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<TopicDto>> Update(int id, [FromBody] UpdateTopicDto dto)
+    {
+        try
         {
-            try
-            {
-                var topic = await _service.GetTopicByIdAsync(id);
-                return Ok(topic);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { Error = ex.Message });
-            }
+            var updated = await _service.UpdateTopicAsync(id, dto);
+            return Ok(updated);
         }
-
-        [HttpPost]
-        public async Task<ActionResult<TopicDto>> Create([FromBody] CreateTopicDto dto)
+        catch (KeyNotFoundException ex)
         {
-            // dto содержит: Name, IsSurveyTopic, CategoryId
-            var created = await _service.CreateTopicAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return NotFound(new { Error = ex.Message });
         }
+    }
 
-        // Обновление — только Admin
-        [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public async Task<ActionResult<TopicDto>> Update(int id, [FromBody] UpdateTopicDto dto)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
         {
-            try
-            {
-                var updated = await _service.UpdateTopicAsync(id, dto);
-                return Ok(updated);
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { Error = ex.Message });
-            }
+            await _service.DeleteTopicAsync(id);
+            return NoContent();
         }
-
-        // Удаление — только Admin
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        catch (KeyNotFoundException ex)
         {
-            try
-            {
-                await _service.DeleteTopicAsync(id);
-                return NoContent();
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(new { Error = ex.Message });
-            }
+            return NotFound(new { Error = ex.Message });
         }
     }
 }

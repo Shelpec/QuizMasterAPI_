@@ -48,26 +48,22 @@ namespace QuizMasterAPI.Services
             int topicId,
             bool isPrivate,
             bool isRandom,
-            string? testType
+            string? testType,
+            int? timeLimitMinutes = null
         )
         {
             var topic = await _topicRepository.GetTopicByIdAsync(topicId);
             if (topic == null)
                 throw new KeyNotFoundException($"Topic with ID={topicId} not found");
 
-            // Если testType = null или пусто -> используем QuestionsOnly
-            // Иначе пробуем конвертировать строку в TestTypeEnum
             var finalTestType = TestTypeEnum.QuestionsOnly;
             if (!string.IsNullOrEmpty(testType))
             {
                 if (!Enum.TryParse<TestTypeEnum>(testType, ignoreCase: true, out finalTestType))
                 {
-                    throw new ArgumentException($"Invalid testType value: {testType}. Expected: QuestionsOnly, SurveyOnly or Mixed.");
+                    throw new ArgumentException($"Invalid testType value: {testType}");
                 }
             }
-
-            _logger.LogInformation("CreateTemplateAsync(Name={Name}, isPrivate={Priv}, isRandom={Rand}, testType={Type})",
-                name, isPrivate, isRandom, finalTestType);
 
             var test = new Test
             {
@@ -78,7 +74,10 @@ namespace QuizMasterAPI.Services
                 CreatedAt = DateTime.UtcNow,
                 IsPrivate = isPrivate,
                 IsRandom = isRandom,
-                TestType = finalTestType
+                TestType = finalTestType,
+
+                // ✅ Если хотим сразу передавать timeLimitMinutes, добавьте параметр
+                TimeLimitMinutes = timeLimitMinutes
             };
 
             await _testRepository.AddAsync(test);
@@ -86,7 +85,6 @@ namespace QuizMasterAPI.Services
 
             return _mapper.Map<TestDto>(test);
         }
-
         public async Task<TestDto?> GetTestByIdAsync(int id)
         {
             _logger.LogInformation("GetTestByIdAsync(Id={Id})", id);
@@ -116,7 +114,8 @@ namespace QuizMasterAPI.Services
             int? topicId,
             bool isPrivate,
             bool isRandom,
-            string? testType
+            string? testType,
+            int? timeLimitMinutes = null
         )
         {
             _logger.LogInformation("UpdateTestAsync(Id={Id}, isPrivate={Priv}, isRandom={Rand}, testType={Type})",
@@ -150,6 +149,12 @@ namespace QuizMasterAPI.Services
 
                 test.TopicId = topicId.Value;
                 test.Topic = topic;
+            }
+
+
+            if (timeLimitMinutes.HasValue)
+            {
+                test.TimeLimitMinutes = timeLimitMinutes.Value;
             }
 
             await _testRepository.UpdateAsync(test);
@@ -292,6 +297,60 @@ namespace QuizMasterAPI.Services
 
             return _mapper.Map<List<QuestionDto>>(questions);
         }
+
+
+        public async Task<List<QuestionDto>> GetCandidateQuestionsAsync(int testId)
+        {
+            // 1) Получаем сам тест из БД
+            var test = await _testRepository.GetTestByIdAsync(testId);
+            if (test == null)
+                throw new KeyNotFoundException($"Test with ID={testId} not found.");
+
+            // Если хотите запрещать для isRandom:
+            if (test.IsRandom)
+                throw new InvalidOperationException($"Test with ID={testId} is random => no manual candidate questions.");
+
+            // 2) Берём topicId и testType
+            var topicId = test.TopicId; // может быть null
+            var testType = test.TestType; // QuestionsOnly / SurveyOnly / Mixed
+
+            // 3) Если topicId == null => return пустой список
+            if (!topicId.HasValue)
+                return new List<QuestionDto>();
+
+            // 4) Фильтруем вопросы в репозитории Questions, где TopicId == topicId
+            var allQuestions = await _questionRepository.GetAllQuestionsAsync();
+            var candidateQuestions = allQuestions.Where(q => q.TopicId == topicId.Value);
+
+            // 5) Фильтруем по testType
+            // Логика условная:
+            // - QuestionsOnly => SingleChoice / MultipleChoice
+            // - SurveyOnly => Survey / OpenText
+            // - Mixed => всё
+            IEnumerable<Question> filtered;
+            switch (testType)
+            {
+                case TestTypeEnum.QuestionsOnly:
+                    filtered = candidateQuestions
+                        .Where(q => q.QuestionType == QuestionTypeEnum.SingleChoice
+                                 || q.QuestionType == QuestionTypeEnum.MultipleChoice);
+                    break;
+                case TestTypeEnum.SurveyOnly:
+                    filtered = candidateQuestions
+                        .Where(q => q.QuestionType == QuestionTypeEnum.Survey
+                                 || q.QuestionType == QuestionTypeEnum.OpenText);
+                    break;
+                case TestTypeEnum.Mixed:
+                default:
+                    filtered = candidateQuestions; // все
+                    break;
+            }
+
+            // 6) Мапим в DTO
+            var dtoList = filtered.Select(q => _mapper.Map<QuestionDto>(q)).ToList();
+            return dtoList;
+        }
+
 
     }
 }

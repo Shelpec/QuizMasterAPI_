@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace QuizMasterAPI.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    partial class QuizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250213082332_RemoveIsSurveyTopicFromTopic")]
+    partial class RemoveIsSurveyTopicFromTopic
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,9 +220,14 @@ namespace QuizMasterAPI.Migrations
                     b.Property<int?>("TopicId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TopicId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TopicId");
+
+                    b.HasIndex("TopicId1");
 
                     b.ToTable("Questions");
                 });
@@ -566,6 +574,10 @@ namespace QuizMasterAPI.Migrations
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("QuizMasterAPI.Models.Entities.Topic", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("TopicId1");
+
                     b.Navigation("Topic");
                 });
 
@@ -681,6 +693,11 @@ namespace QuizMasterAPI.Migrations
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.Test", b =>
                 {
                     b.Navigation("TestQuestions");
+                });
+
+            modelBuilder.Entity("QuizMasterAPI.Models.Entities.Topic", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("QuizMasterAPI.Models.Entities.UserTest", b =>

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using QuizMasterAPI.Models.Enums;
-using System.Collections.Generic;
 
 namespace QuizMasterAPI.Models.Entities
 {
@@ -19,14 +18,13 @@ namespace QuizMasterAPI.Models.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public bool IsPrivate { get; set; } = false;
 
-        /// <summary>
-        /// Если true, то тест при старте выбирает вопросы рандомно.
-        /// </summary>
         public bool IsRandom { get; set; } = false;
-
         public TestTypeEnum TestType { get; set; } = TestTypeEnum.QuestionsOnly;
 
         // Связь с TestQuestion
         public ICollection<TestQuestion> TestQuestions { get; set; } = new List<TestQuestion>();
+
+        // ➡️ Новое поле: Ограничение по времени (в минутах).
+        public int? TimeLimitMinutes { get; set; }
     }
 }

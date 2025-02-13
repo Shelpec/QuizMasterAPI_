@@ -6,6 +6,8 @@ using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 using QuizMasterAPI.Models.Enums;
+using QuizMasterAPI.Repositories;
+using System.Linq;
 
 namespace QuizMasterAPI.Services
 {
@@ -35,22 +37,54 @@ namespace QuizMasterAPI.Services
         }
 
         /// <summary>
-        /// Сохранение ответов пользователя
+        /// Сохранение ответов пользователя (учитывая таймер)
         /// </summary>
         public async Task SaveAnswersAsync(int userTestId, List<UserAnswerSubmitDto> answers, string userId)
         {
             _logger.LogInformation("SaveAnswersAsync(UserTestId={Id}, CountAnswers={Count})", userTestId, answers.Count);
 
-            // 1) Проверяем, есть ли UserTest
+            // 1) Загружаем UserTest (со всем, включая UserTestQuestions и Answers)
             var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
             if (userTest == null)
                 throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
 
-            // 2) Проверяем, принадлежит ли этот тест пользователю
+            // 2) Проверяем владельца
             if (userTest.UserId != userId)
                 throw new UnauthorizedAccessException("This UserTest belongs to another user.");
 
-            // 3) Сохраняем ответы
+            // 3) Если EndTime задано и текущее время > EndTime => тест просрочен
+            if (userTest.EndTime.HasValue && DateTime.UtcNow > userTest.EndTime.Value)
+            {
+                // Сохраняем ответы, если хотите, но помечаем, что тест уже просрочен
+                SaveAnswersToUserTest(userTest, answers);
+
+                // Принудительно заканчиваем тест
+                userTest.IsPassed = false; // считаем, что не прошёл
+                // Можно также вычислить TimeSpentSeconds, если есть StartTime
+                if (userTest.StartTime.HasValue)
+                {
+                    userTest.TimeSpentSeconds = (int)((userTest.EndTime.Value - userTest.StartTime.Value).TotalSeconds);
+                }
+
+                await _userTestRepository.UpdateAsync(userTest);
+                await _userTestAnswerRepo.SaveChangesAsync();
+
+                throw new InvalidOperationException("Time is over! The test was forcibly finished.");
+            }
+            else
+            {
+                // Время ещё не истекло — просто сохраняем ответы
+                SaveAnswersToUserTest(userTest, answers);
+                await _userTestAnswerRepo.SaveChangesAsync();
+            }
+        }
+
+        /// <summary>
+        /// Вспомогательный метод: добавляет (перезаписывает) ответы в <see cref="UserTestQuestion.UserTestAnswers"/>.
+        /// </summary>
+        private void SaveAnswersToUserTest(UserTest userTest, List<UserAnswerSubmitDto> answers)
+        {
+            // Для каждого ответа
             foreach (var dto in answers)
             {
                 // Находим соответствующий UserTestQuestion
@@ -58,28 +92,25 @@ namespace QuizMasterAPI.Services
                     .FirstOrDefault(x => x.Id == dto.UserTestQuestionId);
                 if (utq == null) continue;
 
-                // Чистим предыдущие ответы
+                // Удаляем прежние ответы
                 utq.UserTestAnswers.Clear();
 
-                // Определяем тип вопроса
                 var question = utq.Question;
                 if (question == null) continue;
 
-                // Если вопрос - текстовый (OpenText)
+                // Если вопрос OpenText => сохраняем текст
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
-                    // Сохраняем только текст
                     var userTestAnswer = new UserTestAnswer
                     {
                         UserTestQuestionId = utq.Id,
-                        // AnswerOptionId = null,
                         UserTextAnswer = dto.UserTextAnswer
                     };
-                    await _userTestAnswerRepo.AddAsync(userTestAnswer);
+                    utq.UserTestAnswers.Add(userTestAnswer);
                 }
                 else
                 {
-                    // Иначе сохраняем выбранные варианты
+                    // Сохраняем выбранные варианты
                     foreach (var answerOptionId in dto.SelectedAnswerOptionIds)
                     {
                         var userTestAnswer = new UserTestAnswer
@@ -87,32 +118,70 @@ namespace QuizMasterAPI.Services
                             UserTestQuestionId = utq.Id,
                             AnswerOptionId = answerOptionId
                         };
-                        await _userTestAnswerRepo.AddAsync(userTestAnswer);
+                        utq.UserTestAnswers.Add(userTestAnswer);
                     }
                 }
             }
-
-            // 4) Сохраняем
-            await _userTestAnswerRepo.SaveChangesAsync();
         }
 
         /// <summary>
-        /// Проверка ответов
+        /// Проверка ответов (подсчёт правильных и т.д.)
         /// </summary>
         public async Task<TestCheckResultDto> CheckAnswersAsync(int userTestId, string userId)
         {
             _logger.LogInformation("CheckAnswersAsync(UserTestId={Id})", userTestId);
 
-            // Загружаем полный UserTest (с вопросами и ответами)
             var userTest = await _userTestRepository.GetUserTestWithEverythingAsync(userTestId);
             if (userTest == null)
                 throw new KeyNotFoundException($"UserTest with ID={userTestId} not found.");
 
-            // Проверка владельца
             if (userTest.UserId != userId)
                 throw new UnauthorizedAccessException("Not your test.");
 
-            // Формируем результат
+            // Проверяем — не истёк ли лимит
+            if (userTest.EndTime.HasValue && DateTime.UtcNow > userTest.EndTime.Value)
+            {
+                // Время истекло => завершаем
+                userTest.IsPassed = false;
+                if (userTest.StartTime.HasValue)
+                {
+                    userTest.TimeSpentSeconds = (int)((userTest.EndTime.Value - userTest.StartTime.Value).TotalSeconds);
+                }
+
+                await _userTestRepository.UpdateAsync(userTest);
+                await _context.SaveChangesAsync();
+
+                throw new Exception("Время прохождения теста истекло. Тест завершён.");
+            }
+
+            // Иначе проверяем ответы
+            var result = await CheckAnswersInternalAsync(userTest);
+
+            // Проставляем IsPassed = true, EndTime = now (если нужно)
+            userTest.IsPassed = true;
+            if (!userTest.EndTime.HasValue)
+            {
+                userTest.EndTime = DateTime.UtcNow;
+            }
+            if (userTest.StartTime.HasValue)
+            {
+                userTest.TimeSpentSeconds = (int)((userTest.EndTime.Value - userTest.StartTime.Value).TotalSeconds);
+            }
+
+            // Сохраняем количество правильных
+            userTest.CorrectAnswers = result.CorrectCount;
+
+            await _userTestRepository.UpdateAsync(userTest);
+            await _context.SaveChangesAsync();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Внутренняя логика подсчёта правильных ответов
+        /// </summary>
+        private async Task<TestCheckResultDto> CheckAnswersInternalAsync(UserTest userTest)
+        {
             var result = new TestCheckResultDto
             {
                 TotalQuestions = userTest.TotalQuestions,
@@ -120,60 +189,44 @@ namespace QuizMasterAPI.Services
                 Results = new List<QuestionCheckResultDto>()
             };
 
-            // Перебираем все вопросы
+            // Обходим все вопросы
             foreach (var utq in userTest.UserTestQuestions)
             {
                 var question = utq.Question;
                 if (question == null) continue;
 
-                // Список ID выбранных AnswerOption
+                // ID выбранных вариантов
                 var chosenIds = utq.UserTestAnswers
                     .Where(a => a.AnswerOptionId.HasValue)
-                    .Select(a => a.AnswerOptionId.Value)
+                    .Select(a => a.AnswerOptionId!.Value)
                     .ToList();
 
-                // Список ID правильных AnswerOption
-                var correctOptions = question.AnswerOptions
+                // ID правильных вариантов
+                var correctIds = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
 
-                // Список правильных текстов (если IsCorrect = true)
-                var correctTexts = question.AnswerOptions
-                    .Where(a => a.IsCorrect)
-                    .Select(a => a.Text)
-                    .ToList();
-
                 bool isCorrect = false;
-
-                // Тексты, которые выбрал пользователь
                 var selectedTexts = question.AnswerOptions
                     .Where(a => chosenIds.Contains(a.Id))
                     .Select(a => a.Text)
                     .ToList();
 
-                // Если вопрос - OpenText
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
-                    var userTextAnswer = utq.UserTestAnswers.FirstOrDefault()?.UserTextAnswer;
-                    // Логика проверки - если нужно
-                    // Если не нужно проверять, просто считаем false/true как вам удобно
-                    // Допустим, считаем всегда true?
-                    isCorrect = false;
-                    //selectedTexts = new List<string> { userTextAnswer ?? "" };
-                    selectedTexts = new List<string>();
-                    selectedTexts.Add(userTextAnswer ?? "");
+                    // Не проверяем => false (или ваша логика)
                 }
                 else if (question.QuestionType == QuestionTypeEnum.Survey)
                 {
-                    // В опроснике все считаем верно
+                    // Считаем всё верным
                     isCorrect = true;
                 }
                 else
                 {
                     // SingleChoice / MultipleChoice
-                    isCorrect = !correctOptions.Except(chosenIds).Any()
-                                && !chosenIds.Except(correctOptions).Any();
+                    isCorrect = !correctIds.Except(chosenIds).Any()
+                                && !chosenIds.Except(correctIds).Any();
                 }
 
                 if (isCorrect) result.CorrectCount++;
@@ -182,7 +235,10 @@ namespace QuizMasterAPI.Services
                 {
                     QuestionId = question.Id,
                     IsCorrect = isCorrect,
-                    CorrectAnswers = correctTexts,
+                    CorrectAnswers = question.AnswerOptions
+                        .Where(a => a.IsCorrect)
+                        .Select(a => a.Text)
+                        .ToList(),
                     SelectedAnswers = selectedTexts
                 });
             }

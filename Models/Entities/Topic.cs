@@ -1,20 +1,19 @@
-﻿namespace QuizMasterAPI.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace QuizMasterAPI.Models.Entities
 {
     public class Topic
     {
+        [Key]
         public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Если true — топик «опросниковый».
-        /// Тогда все вопросы внутри него не имеют правильных ответов (isCorrect = null).
-        /// </summary>
-        public bool IsSurveyTopic { get; set; } = false;
-
-        /// <summary>
-        /// Связь с Category (чтобы топики были сгруппированы по категориям).
-        /// </summary>
-        public int CategoryId { get; set; }           // <-- Новое поле
-        public Category? Category { get; set; }       // Навигационное свойство (опционально nullable)
+        // Связь: один Category -> много Topics
+        // Для этого нужно убедиться, что в БД есть таблица Categories
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
 }

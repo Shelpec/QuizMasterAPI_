@@ -7,7 +7,7 @@ using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
 using QuizMasterAPI.Models.Enums;
 using QuizMasterAPI.Repositories;
-// Обязательно!
+
 using System.Linq;
 
 namespace QuizMasterAPI.Services
@@ -112,22 +112,15 @@ namespace QuizMasterAPI.Services
             if (test == null)
                 throw new KeyNotFoundException($"Тест ID={testId} не найден.");
 
-            List<Question> questions;
-
-            if (test.IsRandom)
-            {
-                // Выбираем случайные вопросы
-                questions = await _questionRepository.GetRandomQuestionsAsync(test.CountOfQuestions, test.TopicId);
-            }
-            else
-            {
-                // Берем вопросы из TestQuestions
-                questions = test.TestQuestions.Select(tq => tq.Question).ToList();
-            }
+            // Собираем вопросы
+            List<Question> questions = test.IsRandom
+                ? await _questionRepository.GetRandomQuestionsAsync(test.CountOfQuestions, test.TopicId)
+                : test.TestQuestions.Select(tq => tq.Question).ToList();
 
             if (!questions.Any())
                 throw new Exception($"В тесте ID={testId} нет доступных вопросов.");
 
+            // Создаём UserTest
             var userTest = new UserTest
             {
                 UserId = userId,
@@ -135,12 +128,23 @@ namespace QuizMasterAPI.Services
                 TotalQuestions = questions.Count,
                 CorrectAnswers = 0,
                 IsPassed = false,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
+
+                // Новые поля для времени
+                StartTime = DateTime.UtcNow
             };
+
+            // Если у теста есть лимит (TimeLimitMinutes)
+            if (test.TimeLimitMinutes.HasValue && test.TimeLimitMinutes.Value > 0)
+            {
+                // expireTime
+                userTest.ExpireTime = userTest.StartTime.Value.AddMinutes(test.TimeLimitMinutes.Value);
+            }
 
             await _userTestRepository.AddAsync(userTest);
             await _userTestRepository.SaveChangesAsync();
 
+            // Добавляем UserTestQuestions
             var userTestQuestions = questions.Select(q => new UserTestQuestion
             {
                 UserTestId = userTest.Id,
@@ -151,7 +155,6 @@ namespace QuizMasterAPI.Services
             await _context.SaveChangesAsync();
 
             var createdUserTest = await _userTestRepository.GetUserTestWithQuestionsAsync(userTest.Id);
-
             return _mapper.Map<UserTestDto>(createdUserTest);
         }
 
@@ -293,7 +296,6 @@ namespace QuizMasterAPI.Services
 
         private UserTestHistoryDto BuildUserTestHistoryDto(UserTest userTest)
         {
-            // Аналогично тому, что в GetFullUserTestAsync, но без запросов БД
             int correctCount = 0;
             var totalQuestions = userTest.UserTestQuestions.Count;
 
@@ -313,6 +315,11 @@ namespace QuizMasterAPI.Services
                 TestName = userTest.Test?.Name,
                 TestCountOfQuestions = userTest.Test?.CountOfQuestions ?? 0,
                 TopicName = userTest.Test?.Topic?.Name,
+
+                // ✅ Новые поля времени
+                StartTime = userTest.StartTime,
+                EndTime = userTest.EndTime,
+                TimeSpentSeconds = userTest.TimeSpentSeconds,
 
                 Questions = new List<QuestionHistoryDto>()
             };
@@ -370,7 +377,6 @@ namespace QuizMasterAPI.Services
                     });
                 }
 
-                // Если это текстовый вопрос
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
                     var userText = utq.UserTestAnswers.FirstOrDefault()?.UserTextAnswer;

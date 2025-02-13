@@ -14,7 +14,8 @@ namespace QuizMasterAPI.Interfaces
             int topicId,
             bool isPrivate,
             bool isRandom,
-            string? testType
+            string? testType,
+            int? timeLimitMinutes
         );
         Task<TestDto> UpdateTestAsync(
             int id,
@@ -23,7 +24,8 @@ namespace QuizMasterAPI.Interfaces
             int? topicId,
             bool isPrivate,
             bool isRandom,
-            string? testType
+            string? testType,
+            int? timeLimitMinutes
         );
 
         // Получить шаблон
@@ -40,6 +42,8 @@ namespace QuizMasterAPI.Interfaces
         Task<TestDto> RemoveQuestionFromTest(int testId, int questionId);
         Task<List<QuestionDto>> GetQuestionsByTestId(int testId);
         Task<List<QuestionDto>> GetTestQuestionsAsync(int testId);
+        Task<List<QuestionDto>> GetCandidateQuestionsAsync(int testId);
+
     }
 }
 

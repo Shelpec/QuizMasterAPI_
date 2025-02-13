@@ -18,6 +18,12 @@ namespace QuizMasterAPI.Models.DTOs
         public string? TestName { get; set; }
         public int TestCountOfQuestions { get; set; }
         public string? TopicName { get; set; }
+
+        // ✅ Новые поля
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public int? TimeSpentSeconds { get; set; }
+
         public List<QuestionHistoryDto> Questions { get; set; } = new();
     }
 

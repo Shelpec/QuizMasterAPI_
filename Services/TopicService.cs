@@ -39,11 +39,11 @@ namespace QuizMasterAPI.Services
             var topic = new Topic
             {
                 Name = dto.Name,
-                IsSurveyTopic = dto.IsSurveyTopic,
-                CategoryId = dto.CategoryId  // <-- учитываем привязку к категории
+                CategoryId = dto.CategoryId
             };
             await _repo.AddAsync(topic);
             await _repo.SaveChangesAsync();
+
             return _mapper.Map<TopicDto>(topic);
         }
 
@@ -54,13 +54,11 @@ namespace QuizMasterAPI.Services
                 throw new KeyNotFoundException($"Topic with ID={id} not found");
 
             topic.Name = dto.Name;
-            topic.IsSurveyTopic = dto.IsSurveyTopic;
-
-            // Если хотите разрешать смену категории:
             topic.CategoryId = dto.CategoryId;
 
             await _repo.UpdateAsync(topic);
             await _repo.SaveChangesAsync();
+
             return _mapper.Map<TopicDto>(topic);
         }
 

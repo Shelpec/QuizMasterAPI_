@@ -2,9 +2,10 @@
 {
     public enum QuestionTypeEnum
     {
-        SingleChoice,  
-        MultipleChoice,
-        Survey, 
-        OpenText
+        SingleChoice = 0,
+        MultipleChoice = 1,
+        Survey = 2,
+        OpenText = 3
     }
+
 }
