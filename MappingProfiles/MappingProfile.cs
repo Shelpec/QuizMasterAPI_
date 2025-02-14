@@ -35,11 +35,12 @@ namespace QuizMasterAPI.MappingProfiles
             CreateMap<Question, QuestionHistoryDto>()
                 .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.Text))
                 .ForMember(dest => dest.QuestionType, opt => opt.MapFrom(src => src.QuestionType)) // ✅ Добавлено!
-                .ForMember(dest => dest.CorrectTextAnswer, opt => opt.MapFrom(src => src.QuestionType == QuestionTypeEnum.OpenText ? src.CorrectTextAnswer : null))
+                //.ForMember(dest => dest.CorrectTextAnswer, opt => opt.MapFrom(src => src.QuestionType == QuestionTypeEnum.OpenText ? src.CorrectTextAnswer : null))
                 .ForMember(dest => dest.AnswerOptions, opt => opt.MapFrom(src => src.AnswerOptions))
                 .ReverseMap();
 
             CreateMap<UserTest, UserTestDto>()
+                .ForMember(dest => dest.ExpireTime, opt => opt.MapFrom(src => src.ExpireTime))
                 .ForMember(dest => dest.UserTestQuestions, opt => opt.MapFrom(src => src.UserTestQuestions));
 
             CreateMap<UserTestQuestion, UserTestQuestionDto>()
@@ -53,9 +54,6 @@ namespace QuizMasterAPI.MappingProfiles
                 .ReverseMap();
 
             CreateMap<TestQuestion, TestQuestionDto>().ReverseMap();
-
-            CreateMap<UserTest, UserTestDto>().ReverseMap();
-
 
             CreateMap<Topic, TopicDto>().ReverseMap();
             CreateMap<CreateTopicDto, Topic>().ReverseMap();

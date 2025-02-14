@@ -1925,7 +1925,8 @@
         "properties": {
           "answerOptionId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "text": {
             "type": "string",
@@ -2284,10 +2285,6 @@
           },
           "questionType": {
             "$ref": "#/components/schemas/QuestionTypeEnum"
-          },
-          "correctTextAnswer": {
-            "type": "string",
-            "nullable": true
           },
           "answerOptions": {
             "type": "array",
@@ -2923,6 +2920,11 @@
             "type": "string",
             "format": "date-time"
           },
+          "expireTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "userTestQuestions": {
             "type": "array",
             "items": {
@@ -2997,6 +2999,9 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "topicIsSurvey": {
+            "type": "boolean"
           },
           "questions": {
             "type": "array",

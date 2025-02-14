@@ -296,6 +296,7 @@ namespace QuizMasterAPI.Services
 
         private UserTestHistoryDto BuildUserTestHistoryDto(UserTest userTest)
         {
+            // Собираем DTO
             int correctCount = 0;
             var totalQuestions = userTest.UserTestQuestions.Count;
 
@@ -316,7 +317,7 @@ namespace QuizMasterAPI.Services
                 TestCountOfQuestions = userTest.Test?.CountOfQuestions ?? 0,
                 TopicName = userTest.Test?.Topic?.Name,
 
-                // ✅ Новые поля времени
+                // поля времени
                 StartTime = userTest.StartTime,
                 EndTime = userTest.EndTime,
                 TimeSpentSeconds = userTest.TimeSpentSeconds,
@@ -329,33 +330,40 @@ namespace QuizMasterAPI.Services
                 var question = utq.Question;
                 if (question == null) continue;
 
+                // IDs выбранных (AnswerOptionId)
                 var chosenIds = utq.UserTestAnswers
                     .Where(a => a.AnswerOptionId.HasValue)
                     .Select(a => a.AnswerOptionId!.Value)
                     .ToList();
 
+                // Собираем IDs правильных
                 var correctIds = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
 
                 bool isCorrect = false;
+
+                // Логика определения isCorrect (упрощённая)
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
                     isCorrect = false;
                 }
                 else if (question.QuestionType == QuestionTypeEnum.Survey)
                 {
+                    // Survey считаем «всегда верным»
                     isCorrect = true;
                 }
                 else
                 {
+                    // SingleChoice / MultipleChoice
                     isCorrect = !correctIds.Except(chosenIds).Any()
                                 && !chosenIds.Except(correctIds).Any();
                 }
 
                 if (isCorrect) correctCount++;
 
+                // Формируем DTO для вопроса
                 var qDto = new QuestionHistoryDto
                 {
                     UserTestQuestionId = utq.Id,
@@ -365,25 +373,34 @@ namespace QuizMasterAPI.Services
                     AnswerOptions = new List<AnswerHistoryDto>()
                 };
 
-                var chosenSet = chosenIds.ToHashSet();
-                foreach (var ans in question.AnswerOptions)
-                {
-                    qDto.AnswerOptions.Add(new AnswerHistoryDto
-                    {
-                        AnswerOptionId = ans.Id,
-                        Text = ans.Text,
-                        IsCorrect = ans.IsCorrect,
-                        IsChosen = chosenSet.Contains(ans.Id)
-                    });
-                }
-
+                // Если вопрос OpenText => добавляем один элемент userTextAnswer
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
                     var userText = utq.UserTestAnswers.FirstOrDefault()?.UserTextAnswer;
                     qDto.AnswerOptions.Add(new AnswerHistoryDto
                     {
+                        AnswerOptionId = null,
+                        Text = null,
+                        IsCorrect = false, // либо логика проверки
+                        IsChosen = true,
                         UserTextAnswer = userText
                     });
+                }
+                else
+                {
+                    // Перебираем все варианты
+                    var chosenSet = chosenIds.ToHashSet();
+                    foreach (var ansOpt in question.AnswerOptions)
+                    {
+                        qDto.AnswerOptions.Add(new AnswerHistoryDto
+                        {
+                            AnswerOptionId = ansOpt.Id,
+                            Text = ansOpt.Text,
+                            IsCorrect = ansOpt.IsCorrect,
+                            IsChosen = chosenSet.Contains(ansOpt.Id),
+                            UserTextAnswer = null
+                        });
+                    }
                 }
 
                 dto.Questions.Add(qDto);
@@ -392,6 +409,7 @@ namespace QuizMasterAPI.Services
             dto.CorrectAnswers = correctCount;
             return dto;
         }
+
 
         public async Task<PaginatedResponse<UserTestHistoryDto>> GetAllFullPaginatedAsync(int page, int pageSize)
         {
