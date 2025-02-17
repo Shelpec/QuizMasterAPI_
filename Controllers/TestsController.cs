@@ -248,9 +248,5 @@ namespace QuizMasterAPI.Controllers
                 return StatusCode(500, "Ошибка сервера");
             }
         }
-
-
-
-
     }
 }
