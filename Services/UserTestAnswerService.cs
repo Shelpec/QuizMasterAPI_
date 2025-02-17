@@ -195,42 +195,45 @@ namespace QuizMasterAPI.Services
                 var question = utq.Question;
                 if (question == null) continue;
 
-                // ID выбранных вариантов
+                // Список ID выбранных вариантов (для Single/MultipleChoice)
                 var chosenIds = utq.UserTestAnswers
                     .Where(a => a.AnswerOptionId.HasValue)
                     .Select(a => a.AnswerOptionId!.Value)
                     .ToList();
 
-                // ID правильных вариантов
+                // Список ID «правильных» вариантов
                 var correctIds = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
 
                 bool isCorrect = false;
+
+                // Собираем тексты выбранных вариантов (для подсветки на фронте)
                 var selectedTexts = question.AnswerOptions
                     .Where(a => chosenIds.Contains(a.Id))
                     .Select(a => a.Text)
                     .ToList();
 
-                if (question.QuestionType == QuestionTypeEnum.OpenText)
+                // Логика проверки
+                if (question.QuestionType == QuestionTypeEnum.OpenText
+                 || question.QuestionType == QuestionTypeEnum.Survey)
                 {
-                    // Не проверяем => false (или ваша логика)
-                }
-                else if (question.QuestionType == QuestionTypeEnum.Survey)
-                {
-                    // Считаем всё верным
+                    // Теперь и OpenText, и Survey считаем «всегда правильными»
                     isCorrect = true;
                 }
                 else
                 {
-                    // SingleChoice / MultipleChoice
+                    // Для SingleChoice / MultipleChoice:
+                    // сравниваем chosenIds c correctIds
                     isCorrect = !correctIds.Except(chosenIds).Any()
                                 && !chosenIds.Except(correctIds).Any();
                 }
 
-                if (isCorrect) result.CorrectCount++;
+                if (isCorrect)
+                    result.CorrectCount++;
 
+                // Заполняем результат по текущему вопросу
                 result.Results.Add(new QuestionCheckResultDto
                 {
                     QuestionId = question.Id,
@@ -245,5 +248,6 @@ namespace QuizMasterAPI.Services
 
             return result;
         }
+
     }
 }

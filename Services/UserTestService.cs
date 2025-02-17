@@ -296,7 +296,6 @@ namespace QuizMasterAPI.Services
 
         private UserTestHistoryDto BuildUserTestHistoryDto(UserTest userTest)
         {
-            // Собираем DTO
             int correctCount = 0;
             var totalQuestions = userTest.UserTestQuestions.Count;
 
@@ -317,7 +316,6 @@ namespace QuizMasterAPI.Services
                 TestCountOfQuestions = userTest.Test?.CountOfQuestions ?? 0,
                 TopicName = userTest.Test?.Topic?.Name,
 
-                // поля времени
                 StartTime = userTest.StartTime,
                 EndTime = userTest.EndTime,
                 TimeSpentSeconds = userTest.TimeSpentSeconds,
@@ -330,28 +328,29 @@ namespace QuizMasterAPI.Services
                 var question = utq.Question;
                 if (question == null) continue;
 
-                // IDs выбранных (AnswerOptionId)
+                // Собираем ID выбранных (Single/Multiple)
                 var chosenIds = utq.UserTestAnswers
                     .Where(a => a.AnswerOptionId.HasValue)
                     .Select(a => a.AnswerOptionId!.Value)
                     .ToList();
 
-                // Собираем IDs правильных
+                // Собираем ID «правильных»
                 var correctIds = question.AnswerOptions
                     .Where(a => a.IsCorrect)
                     .Select(a => a.Id)
                     .ToList();
 
+                // Определяем isCorrect
                 bool isCorrect = false;
 
-                // Логика определения isCorrect (упрощённая)
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
-                    isCorrect = false;
+                    // Всегда считаем правильным
+                    isCorrect = true;
                 }
                 else if (question.QuestionType == QuestionTypeEnum.Survey)
                 {
-                    // Survey считаем «всегда верным»
+                    // Тоже считаем правильным
                     isCorrect = true;
                 }
                 else
@@ -361,9 +360,10 @@ namespace QuizMasterAPI.Services
                                 && !chosenIds.Except(correctIds).Any();
                 }
 
-                if (isCorrect) correctCount++;
+                if (isCorrect)
+                    correctCount++;
 
-                // Формируем DTO для вопроса
+                // Формируем DTO для одного вопроса
                 var qDto = new QuestionHistoryDto
                 {
                     UserTestQuestionId = utq.Id,
@@ -373,7 +373,7 @@ namespace QuizMasterAPI.Services
                     AnswerOptions = new List<AnswerHistoryDto>()
                 };
 
-                // Если вопрос OpenText => добавляем один элемент userTextAnswer
+                // 1) Если вопрос OpenText => добавляем один объект AnswerHistoryDto
                 if (question.QuestionType == QuestionTypeEnum.OpenText)
                 {
                     var userText = utq.UserTestAnswers.FirstOrDefault()?.UserTextAnswer;
@@ -381,14 +381,34 @@ namespace QuizMasterAPI.Services
                     {
                         AnswerOptionId = null,
                         Text = null,
-                        IsCorrect = false, // либо логика проверки
+                        // Ставим IsCorrect = true => зелёный
+                        IsCorrect = true,
+                        // Говорим что «выбран» (для визуализации)
                         IsChosen = true,
                         UserTextAnswer = userText
                     });
                 }
+                // 2) Если вопрос Survey => все варианты показываем «правильными»
+                else if (question.QuestionType == QuestionTypeEnum.Survey)
+                {
+                    var chosenSet = chosenIds.ToHashSet();
+                    foreach (var ansOpt in question.AnswerOptions)
+                    {
+                        qDto.AnswerOptions.Add(new AnswerHistoryDto
+                        {
+                            AnswerOptionId = ansOpt.Id,
+                            Text = ansOpt.Text,
+                            // Всегда правильный => зелёный
+                            IsCorrect = true,
+                            // Выбран ли пользователь
+                            IsChosen = chosenSet.Contains(ansOpt.Id),
+                            UserTextAnswer = null
+                        });
+                    }
+                }
+                // 3) SingleChoice/MultipleChoice — обычная логика
                 else
                 {
-                    // Перебираем все варианты
                     var chosenSet = chosenIds.ToHashSet();
                     foreach (var ansOpt in question.AnswerOptions)
                     {
@@ -409,6 +429,8 @@ namespace QuizMasterAPI.Services
             dto.CorrectAnswers = correctCount;
             return dto;
         }
+
+
 
 
         public async Task<PaginatedResponse<UserTestHistoryDto>> GetAllFullPaginatedAsync(int page, int pageSize)
