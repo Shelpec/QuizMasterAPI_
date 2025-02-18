@@ -17112,3 +17112,63 @@ ORDER BY [t1].[Id]
 2025-02-17 23:53:08.505 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI) in 18.0319ms
 2025-02-17 23:53:08.505 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetAllTests (QuizMasterAPI)'
 2025-02-17 23:53:08.506 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests?page=1&pageSize=5 - 200 null application/json; charset=utf-8 19.3079ms
+2025-02-17 23:59:23.999 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/tests/16026/questions - null null
+2025-02-17 23:59:24.000 +05:00 [INF] CORS policy execution successful.
+2025-02-17 23:59:24.000 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:44336/api/tests/16026/candidate-questions - null null
+2025-02-17 23:59:24.000 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/tests/16026/questions - 204 null null 0.5333ms
+2025-02-17 23:59:24.000 +05:00 [INF] CORS policy execution successful.
+2025-02-17 23:59:24.001 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:44336/api/tests/16026/candidate-questions - 204 null null 0.8587ms
+2025-02-17 23:59:24.015 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/tests/16026/questions - null null
+2025-02-17 23:59:24.015 +05:00 [INF] Request starting HTTP/2 GET https://localhost:44336/api/tests/16026/candidate-questions - null null
+2025-02-17 23:59:24.015 +05:00 [INF] CORS policy execution successful.
+2025-02-17 23:59:24.015 +05:00 [INF] CORS policy execution successful.
+2025-02-17 23:59:24.015 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-17 23:59:24.015 +05:00 [INF] Executing endpoint 'QuizMasterAPI.Controllers.TestsController.GetCandidateQuestions (QuizMasterAPI)'
+2025-02-17 23:59:24.015 +05:00 [INF] Route matched with {action = "GetCandidateQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuestionDto]]] GetCandidateQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-17 23:59:24.015 +05:00 [INF] Route matched with {action = "GetTestQuestions", controller = "Tests"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[QuestionDto]]] GetTestQuestions(Int32) on controller QuizMasterAPI.Controllers.TestsController (QuizMasterAPI).
+2025-02-17 23:59:24.016 +05:00 [INF] Запрос вопросов для теста 16026
+2025-02-17 23:59:24.016 +05:00 [INF] Запрос кандидатных вопросов для теста 16026
+2025-02-17 23:59:24.017 +05:00 [INF] Получаем вопросы для теста 16026
+2025-02-17 23:59:24.035 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__testId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t1].[Id], [t1].[CountOfQuestions], [t1].[CreatedAt], [t1].[IsPrivate], [t1].[IsRandom], [t1].[Name], [t1].[TestType], [t1].[TimeLimitMinutes], [t1].[TopicId], [s].[Id], [s].[QuestionId], [s].[TestId], [s].[Id0], [s].[CorrectTextAnswer], [s].[QuestionType], [s].[Text], [s].[TopicId], [s].[Id1], [s].[IsCorrect], [s].[QuestionId0], [s].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TimeLimitMinutes], [t].[TopicId]
+    FROM [Tests] AS [t]
+    WHERE [t].[Id] = @__testId_0
+) AS [t1]
+LEFT JOIN (
+    SELECT [t0].[Id], [t0].[QuestionId], [t0].[TestId], [q].[Id] AS [Id0], [q].[CorrectTextAnswer], [q].[QuestionType], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t0]
+    INNER JOIN [Questions] AS [q] ON [t0].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s] ON [t1].[Id] = [s].[TestId]
+ORDER BY [t1].[Id], [s].[Id], [s].[Id0]
+2025-02-17 23:59:24.035 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [s].[Id], [s].[CountOfQuestions], [s].[CreatedAt], [s].[IsPrivate], [s].[IsRandom], [s].[Name], [s].[TestType], [s].[TimeLimitMinutes], [s].[TopicId], [s].[Id0], [s].[CategoryId], [s].[Name0], [s0].[Id], [s0].[QuestionId], [s0].[TestId], [s0].[Id0], [s0].[CorrectTextAnswer], [s0].[QuestionType], [s0].[Text], [s0].[TopicId], [s0].[Id1], [s0].[IsCorrect], [s0].[QuestionId0], [s0].[Text0]
+FROM (
+    SELECT TOP(1) [t].[Id], [t].[CountOfQuestions], [t].[CreatedAt], [t].[IsPrivate], [t].[IsRandom], [t].[Name], [t].[TestType], [t].[TimeLimitMinutes], [t].[TopicId], [t0].[Id] AS [Id0], [t0].[CategoryId], [t0].[Name] AS [Name0]
+    FROM [Tests] AS [t]
+    LEFT JOIN [Topics] AS [t0] ON [t].[TopicId] = [t0].[Id]
+    WHERE [t].[Id] = @__id_0
+) AS [s]
+LEFT JOIN (
+    SELECT [t1].[Id], [t1].[QuestionId], [t1].[TestId], [q].[Id] AS [Id0], [q].[CorrectTextAnswer], [q].[QuestionType], [q].[Text], [q].[TopicId], [a].[Id] AS [Id1], [a].[IsCorrect], [a].[QuestionId] AS [QuestionId0], [a].[Text] AS [Text0]
+    FROM [TestQuestions] AS [t1]
+    INNER JOIN [Questions] AS [q] ON [t1].[QuestionId] = [q].[Id]
+    LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+) AS [s0] ON [s].[Id] = [s0].[TestId]
+ORDER BY [s].[Id], [s].[Id0], [s0].[Id], [s0].[Id0]
+2025-02-17 23:59:24.035 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-17 23:59:24.036 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI) in 20.4458ms
+2025-02-17 23:59:24.036 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetTestQuestions (QuizMasterAPI)'
+2025-02-17 23:59:24.036 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests/16026/questions - 200 null application/json; charset=utf-8 21.3333ms
+2025-02-17 23:59:24.038 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [q].[Id], [q].[CorrectTextAnswer], [q].[QuestionType], [q].[Text], [q].[TopicId], [t].[Id], [a].[Id], [a].[IsCorrect], [a].[QuestionId], [a].[Text], [t].[CategoryId], [t].[Name]
+FROM [Questions] AS [q]
+LEFT JOIN [Topics] AS [t] ON [q].[TopicId] = [t].[Id]
+LEFT JOIN [AnswerOptions] AS [a] ON [q].[Id] = [a].[QuestionId]
+ORDER BY [q].[Id], [t].[Id]
+2025-02-17 23:59:24.043 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[QuestionDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-17 23:59:24.044 +05:00 [INF] Executed action QuizMasterAPI.Controllers.TestsController.GetCandidateQuestions (QuizMasterAPI) in 28.2568ms
+2025-02-17 23:59:24.044 +05:00 [INF] Executed endpoint 'QuizMasterAPI.Controllers.TestsController.GetCandidateQuestions (QuizMasterAPI)'
+2025-02-17 23:59:24.044 +05:00 [INF] Request finished HTTP/2 GET https://localhost:44336/api/tests/16026/candidate-questions - 200 null application/json; charset=utf-8 29.1157ms

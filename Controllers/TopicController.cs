@@ -22,6 +22,14 @@ public class TopicController : ControllerBase
         return Ok(topics);
     }
 
+    [HttpGet("by-category/{categoryId}")]
+    public async Task<ActionResult<IEnumerable<TopicDto>>> GetByCategory(int categoryId)
+    {
+        var list = await _service.GetTopicsByCategoryIdAsync(categoryId);
+        return Ok(list);
+    }
+
+
     [HttpGet("{id}")]
     public async Task<ActionResult<TopicDto>> GetById(int id)
     {

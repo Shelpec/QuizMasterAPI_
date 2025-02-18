@@ -31,8 +31,8 @@ public class TopicRepository : GenericRepository<Topic>, ITopicRepository
     public async Task<IEnumerable<Topic>> GetTopicsByCategoryIdAsync(int categoryId)
     {
         return await _ctx.Topics
-            //.Include(t => t.Category)
             .Where(t => t.CategoryId == categoryId)
             .ToListAsync();
     }
+
 }

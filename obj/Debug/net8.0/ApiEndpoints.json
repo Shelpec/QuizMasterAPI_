@@ -846,6 +846,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "TopicController",
+    "Method": "GetByCategory",
+    "RelativePath": "api/Topic/by-category/{categoryId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "categoryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[QuizMasterAPI.Models.DTOs.TopicDto, QuizMasterAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "QuizMasterAPI.Controllers.UsersController",
     "Method": "GetAll",
     "RelativePath": "api/Users",

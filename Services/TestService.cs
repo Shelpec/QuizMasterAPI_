@@ -318,9 +318,15 @@ namespace QuizMasterAPI.Services
             if (!topicId.HasValue)
                 return new List<QuestionDto>();
 
+            var testTopicId = test.TopicId; // допустим
+            var alreadyIds = test.TestQuestions.Select(tq => tq.QuestionId).ToHashSet();
+
             // 4) Фильтруем вопросы в репозитории Questions, где TopicId == topicId
             var allQuestions = await _questionRepository.GetAllQuestionsAsync();
             var candidateQuestions = allQuestions.Where(q => q.TopicId == topicId.Value);
+
+            var candidates = candidateQuestions.Where(q => !alreadyIds.Contains(q.Id))
+                    .ToList();
 
             // 5) Фильтруем по testType
             // Логика условная:
@@ -331,20 +337,21 @@ namespace QuizMasterAPI.Services
             switch (testType)
             {
                 case TestTypeEnum.QuestionsOnly:
-                    filtered = candidateQuestions
+                    filtered = candidates
                         .Where(q => q.QuestionType == QuestionTypeEnum.SingleChoice
                                  || q.QuestionType == QuestionTypeEnum.MultipleChoice);
                     break;
                 case TestTypeEnum.SurveyOnly:
-                    filtered = candidateQuestions
+                    filtered = candidates
                         .Where(q => q.QuestionType == QuestionTypeEnum.Survey
                                  || q.QuestionType == QuestionTypeEnum.OpenText);
                     break;
                 case TestTypeEnum.Mixed:
                 default:
-                    filtered = candidateQuestions; // все
+                    filtered = candidates; // все
                     break;
             }
+
 
             // 6) Мапим в DTO
             var dtoList = filtered.Select(q => _mapper.Map<QuestionDto>(q)).ToList();

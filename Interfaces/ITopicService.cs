@@ -10,5 +10,7 @@ namespace QuizMasterAPI.Interfaces
         Task<TopicDto> CreateTopicAsync(CreateTopicDto dto);
         Task<TopicDto> UpdateTopicAsync(int id, UpdateTopicDto dto);
         Task<bool> DeleteTopicAsync(int id);
+        Task<IEnumerable<TopicDto>> GetTopicsByCategoryIdAsync(int categoryId);
+
     }
 }

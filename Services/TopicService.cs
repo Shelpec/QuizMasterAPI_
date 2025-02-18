@@ -72,5 +72,11 @@ namespace QuizMasterAPI.Services
             await _repo.SaveChangesAsync();
             return true;
         }
+        public async Task<IEnumerable<TopicDto>> GetTopicsByCategoryIdAsync(int categoryId)
+        {
+            var topics = await _repo.GetTopicsByCategoryIdAsync(categoryId);
+            return _mapper.Map<IEnumerable<TopicDto>>(topics);
+        }
+
     }
 }
