@@ -672,6 +672,22 @@
   },
   {
     "ContainingType": "QuizMasterAPI.Controllers.TestsController",
+    "Method": "GetTestReportPdf",
+    "RelativePath": "api/Tests/{testId}/report/pdf",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "testId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QuizMasterAPI.Controllers.TestsController",
     "Method": "CreateTemplate",
     "RelativePath": "api/Tests/create-template",
     "HttpMethod": "POST",

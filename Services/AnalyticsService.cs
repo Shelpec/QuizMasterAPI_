@@ -196,5 +196,163 @@ namespace QuizMasterAPI.Services
 
             return result;
         }
+
+
+        public async Task<int> GetTotalAttemptsAsync(int testId)
+        {
+            // Считаем, сколько записей UserTest есть с данным testId
+            int count = await _ctx.UserTests
+                .Where(ut => ut.TestId == testId)
+                .CountAsync();
+            return count;
+        }
+
+        public async Task<double> GetAverageScoreAsync(int testId)
+        {
+            // Предположим, у нас в UserTest есть CorrectAnswers, TotalQuestions
+            // И мы считаем (CorrectAnswers / TotalQuestions)*100
+            // Либо мы можем смотреть в UserTestAnswers
+
+            var list = await _ctx.UserTests
+                .Where(ut => ut.TestId == testId && ut.TotalQuestions > 0)
+                .Select(ut => new
+                {
+                    Score = (double)ut.CorrectAnswers / ut.TotalQuestions * 100.0
+                })
+                .ToListAsync();
+
+            if (list.Count == 0) return 0.0;
+
+            double avg = list.Average(x => x.Score);
+            return avg; // например, 76.123
+        }
+
+        public async Task<List<ScoreRangeDto>> GetScoreDistributionAsync(int testId)
+        {
+            // Допустим, хотим 4 сегмента:
+            // 80-100, 60-79, 40-59, 0-39
+            // Считаем по UserTests
+
+            var userTests = await _ctx.UserTests
+                .Where(ut => ut.TestId == testId && ut.TotalQuestions > 0)
+                .Select(ut => new
+                {
+                    Score = (double)ut.CorrectAnswers / ut.TotalQuestions * 100.0
+                })
+                .ToListAsync();
+
+            int c80 = userTests.Count(x => x.Score >= 80);
+            int c60 = userTests.Count(x => x.Score >= 60 && x.Score < 80);
+            int c40 = userTests.Count(x => x.Score >= 40 && x.Score < 60);
+            int c0 = userTests.Count(x => x.Score < 40);
+
+            var dist = new List<ScoreRangeDto>
+            {
+                new ScoreRangeDto { RangeLabel = "80-100%", Count = c80 },
+                new ScoreRangeDto { RangeLabel = "60-79%",  Count = c60 },
+                new ScoreRangeDto { RangeLabel = "40-59%",  Count = c40 },
+                new ScoreRangeDto { RangeLabel = "0-39%",   Count = c0 },
+            };
+
+            return dist;
+        }
+
+        public async Task<List<HardQuestionDto>> GetHardestQuestionsAsync(int testId, int top)
+        {
+            // Предположим, для определения "сложных" вопросов мы смотрим UserTestAnswers
+            // Сгруппируем по QuestionId, считаем кол-во правильных / общее.
+
+            // Нужно связать UserTest -> TestId, UserTestQuestions -> QuestionId, 
+            // и посмотреть корректность...
+
+            var query = await (
+                from ut in _ctx.UserTests
+                join utq in _ctx.UserTestQuestions on ut.Id equals utq.UserTestId
+                join q in _ctx.Questions on utq.QuestionId equals q.Id
+                where ut.TestId == testId && ut.TotalQuestions > 0
+                select new
+                {
+                    q.Id,
+                    q.Text,
+                    IsCorrect = true // например, если мы флаг храним
+                }
+            ).ToListAsync();
+
+            // но часто бывает, что IsCorrect хранится в UserTestAnswers
+            // Здесь псевдокод, возможно, в вашей схеме иначе.
+
+            // Группируем
+            var group = query
+                .GroupBy(x => new { x.Id, x.Text })
+                .Select(g => new
+                {
+                    QuestionId = g.Key.Id,
+                    QuestionText = g.Key.Text,
+                    Attempts = g.Count(),
+                    Correct = g.Count(x => x.IsCorrect) // или другое поле
+                })
+                .ToList();
+
+            // Считаем процент
+            var list = group
+                .Select(x => new HardQuestionDto
+                {
+                    QuestionId = x.QuestionId,
+                    QuestionText = x.QuestionText,
+                    AttemptsCount = x.Attempts,
+                    CorrectPercentage = x.Attempts > 0
+                        ? (double)x.Correct / x.Attempts * 100.0
+                        : 0.0
+                })
+                // сортируем по возрастанию процент правильных, т.е. самые низкие -> "самые сложные"
+                .OrderBy(h => h.CorrectPercentage)
+                .Take(top)
+                .ToList();
+
+            return list;
+        }
+
+        public async Task<List<TopPlayerDto>> GetTopPlayersAsync(int testId, int top)
+        {
+            // Ищем пользователей, у которых наивысший процент.
+            // UserTests => (CorrectAnswers / TotalQuestions)*100
+
+            var query = await (
+                from ut in _ctx.UserTests
+                join user in _ctx.Users on ut.UserId equals user.Id
+                where ut.TestId == testId && ut.TotalQuestions > 0
+                select new
+                {
+                    ut.UserId,
+                    user.FullName,
+                    Score = (double)ut.CorrectAnswers / ut.TotalQuestions * 100.0,
+                    // Предположим, храним TimeSpentSeconds
+                    ut.TimeSpentSeconds
+                }
+            ).ToListAsync();
+
+            var topList = query
+                .OrderByDescending(x => x.Score)
+                .ThenBy(x => x.TimeSpentSeconds) // например, кто быстрее при одинаковом балле
+                .Take(top)
+                .Select(x => new TopPlayerDto
+                {
+                    UserId = x.UserId,
+                    UserFullName = x.FullName ?? x.UserId,
+                    ScorePercent = x.Score,
+                    TimeSpentFormatted = FormatTime(x.TimeSpentSeconds)
+                })
+                .ToList();
+
+            return topList;
+        }
+
+        private string FormatTime(int? secs)
+        {
+            if (!secs.HasValue) return "--:--";
+            TimeSpan ts = TimeSpan.FromSeconds(secs.Value);
+            // Например, "mm:ss" 
+            return $"{(int)ts.TotalMinutes}:{ts.Seconds:00}";
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace QuizMasterAPI.Interfaces
         Task<List<QuestionDto>> GetQuestionsByTestId(int testId);
         Task<List<QuestionDto>> GetTestQuestionsAsync(int testId);
         Task<List<QuestionDto>> GetCandidateQuestionsAsync(int testId);
-
+        Task<byte[]> GenerateTestReportPdfAsync(int testId);
     }
 }
 

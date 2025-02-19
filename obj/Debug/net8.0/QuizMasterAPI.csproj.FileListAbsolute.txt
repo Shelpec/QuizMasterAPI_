@@ -192,3 +192,7 @@ C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Seri
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\Serilog.Sinks.File.dll
 C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\itextsharp.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\QRCoder.dll
+C:\Users\zhanarys\source\repos\QuizMasterAPI\QuizMasterAPI\bin\Debug\net8.0\ScottPlot.dll

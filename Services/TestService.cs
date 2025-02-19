@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting; // for IWebHostEnvironment
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using QuizMasterAPI.Data;
 using QuizMasterAPI.Interfaces;
 using QuizMasterAPI.Models.DTOs;
 using QuizMasterAPI.Models.Entities;
-using QuizMasterAPI.Models.Enums;  // <-- для TestTypeEnum
+using QuizMasterAPI.Models.Enums;
+using System.IO;
 
 namespace QuizMasterAPI.Services
 {
@@ -15,10 +20,12 @@ namespace QuizMasterAPI.Services
         private readonly IQuestionRepository _questionRepository;
         private readonly ILogger<TestService> _logger;
         private readonly IMapper _mapper;
-        private readonly QuizDbContext _ctx; // для LINQ-запросов, пагинации
-
+        private readonly QuizDbContext _ctx;
+        private readonly IAnalyticsService _analyticsService;
         private readonly ITestQuestionRepository _testQuestionRepository;
 
+        // Even though we have IWebHostEnvironment, we won't use it here for fonts
+        private readonly IWebHostEnvironment _env;
 
         public TestService(
             ITestRepository testRepository,
@@ -27,7 +34,10 @@ namespace QuizMasterAPI.Services
             ITestQuestionRepository testQuestionRepository,
             ILogger<TestService> logger,
             IMapper mapper,
-            QuizDbContext ctx)
+            QuizDbContext ctx,
+            IAnalyticsService analyticsService,
+            IWebHostEnvironment env
+        )
         {
             _testRepository = testRepository;
             _topicRepository = topicRepository;
@@ -36,12 +46,12 @@ namespace QuizMasterAPI.Services
             _logger = logger;
             _mapper = mapper;
             _ctx = ctx;
+            _analyticsService = analyticsService;
+            _env = env;
         }
 
-        /// <summary>
-        /// Создание нового теста.
-        /// Добавляем isRandom, testType (enum).
-        /// </summary>
+        #region Basic CRUD for Test
+
         public async Task<TestDto> CreateTemplateAsync(
             string name,
             int countOfQuestions,
@@ -75,8 +85,6 @@ namespace QuizMasterAPI.Services
                 IsPrivate = isPrivate,
                 IsRandom = isRandom,
                 TestType = finalTestType,
-
-                // ✅ Если хотим сразу передавать timeLimitMinutes, добавьте параметр
                 TimeLimitMinutes = timeLimitMinutes
             };
 
@@ -85,6 +93,7 @@ namespace QuizMasterAPI.Services
 
             return _mapper.Map<TestDto>(test);
         }
+
         public async Task<TestDto?> GetTestByIdAsync(int id)
         {
             _logger.LogInformation("GetTestByIdAsync(Id={Id})", id);
@@ -95,7 +104,6 @@ namespace QuizMasterAPI.Services
             return _mapper.Map<TestDto>(test);
         }
 
-
         public async Task<IEnumerable<TestDto>> GetAllTestsAsync()
         {
             _logger.LogInformation("GetAllTestsAsync()");
@@ -103,10 +111,51 @@ namespace QuizMasterAPI.Services
             return _mapper.Map<IEnumerable<TestDto>>(tests);
         }
 
+        public async Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(
+            int page,
+            int pageSize,
+            string? currentUserId,
+            bool isAdmin)
+        {
+            _logger.LogInformation("GetAllTestsPaginatedAsync(page={Page}, pageSize={Size}, userId={User}, isAdmin={Admin})",
+                page, pageSize, currentUserId, isAdmin);
 
-        /// <summary>
-        /// Обновление теста: учитываем isRandom, testType (enum).
-        /// </summary>
+            var query = _ctx.Tests
+                .Include(t => t.Topic)
+                .AsQueryable();
+
+            // If user is not admin => show only public or permitted tests
+            if (!isAdmin && !string.IsNullOrEmpty(currentUserId))
+            {
+                var testIdsWithAccess = _ctx.TestAccesses
+                    .Where(ta => ta.UserId == currentUserId)
+                    .Select(ta => ta.TestId)
+                    .Distinct();
+
+                query = query.Where(t => t.IsPrivate == false || testIdsWithAccess.Contains(t.Id));
+            }
+
+            var totalItems = await query.CountAsync();
+            var skip = (page - 1) * pageSize;
+            var tests = await query
+                .OrderBy(t => t.Id)
+                .Skip(skip)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            var dtos = _mapper.Map<List<TestDto>>(tests);
+
+            return new PaginatedResponse<TestDto>
+            {
+                Items = dtos,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                PageSize = pageSize
+            };
+        }
+
         public async Task<TestDto> UpdateTestAsync(
             int id,
             string newName,
@@ -130,7 +179,6 @@ namespace QuizMasterAPI.Services
             test.IsPrivate = isPrivate;
             test.IsRandom = isRandom;
 
-            // Если testType не пусто -> пытаемся распарсить
             if (!string.IsNullOrEmpty(testType))
             {
                 if (!Enum.TryParse<TestTypeEnum>(testType, ignoreCase: true, out var parsedType))
@@ -140,7 +188,6 @@ namespace QuizMasterAPI.Services
                 test.TestType = parsedType;
             }
 
-            // Если хотим менять TopicId
             if (topicId.HasValue)
             {
                 var topic = await _topicRepository.GetTopicByIdAsync(topicId.Value);
@@ -150,7 +197,6 @@ namespace QuizMasterAPI.Services
                 test.TopicId = topicId.Value;
                 test.Topic = topic;
             }
-
 
             if (timeLimitMinutes.HasValue)
             {
@@ -168,62 +214,19 @@ namespace QuizMasterAPI.Services
             _logger.LogInformation("DeleteTestAsync(Id={Id})", id);
             var test = await _testRepository.GetTestByIdAsync(id);
             if (test == null)
-                throw new KeyNotFoundException($"Шаблон теста с ID={id} не найден.");
+                throw new KeyNotFoundException($"Test with ID={id} not found.");
 
             await _testRepository.DeleteAsync(test);
             await _testRepository.SaveChangesAsync();
         }
 
-        public async Task<PaginatedResponse<TestDto>> GetAllTestsPaginatedAsync(
-            int page,
-            int pageSize,
-            string? currentUserId,
-            bool isAdmin)
-        {
-            _logger.LogInformation("GetAllTestsPaginatedAsync(page={Page}, pageSize={Size}, userId={User}, isAdmin={Admin})",
-                page, pageSize, currentUserId, isAdmin);
+        #endregion
 
-            var query = _ctx.Tests
-                .Include(t => t.Topic)
-                .AsQueryable();
-
-            // Если пользователь не админ, показываем либо публичные,
-            // либо приватные, на которые у него есть доступ
-            if (!isAdmin && !string.IsNullOrEmpty(currentUserId))
-            {
-                var testIdsWithAccess = _ctx.TestAccesses
-                    .Where(ta => ta.UserId == currentUserId)
-                    .Select(ta => ta.TestId)
-                    .Distinct();
-
-                query = query.Where(t => t.IsPrivate == false || testIdsWithAccess.Contains(t.Id));
-            }
-
-            var totalItems = await query.CountAsync();
-
-            var skip = (page - 1) * pageSize;
-            var tests = await query
-                .OrderBy(t => t.Id)
-                .Skip(skip)
-                .Take(pageSize)
-                .ToListAsync();
-
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-            var dtos = _mapper.Map<List<TestDto>>(tests);
-
-            return new PaginatedResponse<TestDto>
-            {
-                Items = dtos,
-                TotalItems = totalItems,
-                TotalPages = totalPages,
-                CurrentPage = page,
-                PageSize = pageSize
-            };
-        }
+        #region Adding / Removing Questions
 
         public async Task<TestDto> AddQuestionToTest(int testId, int questionId)
         {
-            _logger.LogInformation("Добавляем вопрос {QuestionId} в тест {TestId}", questionId, testId);
+            _logger.LogInformation("AddQuestionToTest(QuestionId={Q}, TestId={T})", questionId, testId);
 
             var test = await _testRepository.GetTestByIdAsync(testId);
             if (test == null)
@@ -248,7 +251,7 @@ namespace QuizMasterAPI.Services
 
         public async Task<TestDto> RemoveQuestionFromTest(int testId, int questionId)
         {
-            _logger.LogInformation("Удаляем вопрос {QuestionId} из теста {TestId}", questionId, testId);
+            _logger.LogInformation("RemoveQuestionFromTest(QuestionId={Q}, TestId={T})", questionId, testId);
 
             var testQuestion = await _ctx.TestQuestions
                 .FirstOrDefaultAsync(tq => tq.TestId == testId && tq.QuestionId == questionId);
@@ -267,10 +270,9 @@ namespace QuizMasterAPI.Services
         {
             var test = await _testRepository.GetTestByIdAsync(testId);
             if (test == null)
-                throw new KeyNotFoundException($"Тест с ID={testId} не найден.");
+                throw new KeyNotFoundException($"Test with ID={testId} not found.");
 
             List<Question> questions;
-
             if (test.IsRandom)
             {
                 questions = await _questionRepository.GetRandomQuestionsAsync(test.CountOfQuestions, test.TopicId);
@@ -286,78 +288,337 @@ namespace QuizMasterAPI.Services
 
         public async Task<List<QuestionDto>> GetTestQuestionsAsync(int testId)
         {
-            _logger.LogInformation("Получаем вопросы для теста {TestId}", testId);
-
+            _logger.LogInformation("GetTestQuestionsAsync(TestId={T})", testId);
             var questions = await _testRepository.GetTestQuestionsAsync(testId);
             if (questions == null || questions.Count == 0)
             {
-                _logger.LogWarning("Для теста {TestId} нет вопросов", testId);
+                _logger.LogWarning("No questions found for TestId={T}", testId);
                 return new List<QuestionDto>();
             }
 
             return _mapper.Map<List<QuestionDto>>(questions);
         }
 
-
         public async Task<List<QuestionDto>> GetCandidateQuestionsAsync(int testId)
         {
-            // 1) Получаем сам тест из БД
             var test = await _testRepository.GetTestByIdAsync(testId);
             if (test == null)
                 throw new KeyNotFoundException($"Test with ID={testId} not found.");
 
-            // Если хотите запрещать для isRandom:
             if (test.IsRandom)
-                throw new InvalidOperationException($"Test with ID={testId} is random => no manual candidate questions.");
+                throw new InvalidOperationException($"Test {testId} is random => no manual candidate questions.");
 
-            // 2) Берём topicId и testType
-            var topicId = test.TopicId; // может быть null
-            var testType = test.TestType; // QuestionsOnly / SurveyOnly / Mixed
+            var topicId = test.TopicId;
+            var testType = test.TestType;
 
-            // 3) Если topicId == null => return пустой список
             if (!topicId.HasValue)
                 return new List<QuestionDto>();
 
-            var testTopicId = test.TopicId; // допустим
-            var alreadyIds = test.TestQuestions.Select(tq => tq.QuestionId).ToHashSet();
-
-            // 4) Фильтруем вопросы в репозитории Questions, где TopicId == topicId
+            var existingIds = test.TestQuestions.Select(tq => tq.QuestionId).ToHashSet();
             var allQuestions = await _questionRepository.GetAllQuestionsAsync();
             var candidateQuestions = allQuestions.Where(q => q.TopicId == topicId.Value);
+            var unassigned = candidateQuestions.Where(q => !existingIds.Contains(q.Id)).ToList();
 
-            var candidates = candidateQuestions.Where(q => !alreadyIds.Contains(q.Id))
-                    .ToList();
-
-            // 5) Фильтруем по testType
-            // Логика условная:
-            // - QuestionsOnly => SingleChoice / MultipleChoice
-            // - SurveyOnly => Survey / OpenText
-            // - Mixed => всё
             IEnumerable<Question> filtered;
             switch (testType)
             {
                 case TestTypeEnum.QuestionsOnly:
-                    filtered = candidates
-                        .Where(q => q.QuestionType == QuestionTypeEnum.SingleChoice
-                                 || q.QuestionType == QuestionTypeEnum.MultipleChoice);
+                    filtered = unassigned.Where(q =>
+                        q.QuestionType == QuestionTypeEnum.SingleChoice ||
+                        q.QuestionType == QuestionTypeEnum.MultipleChoice
+                    );
                     break;
                 case TestTypeEnum.SurveyOnly:
-                    filtered = candidates
-                        .Where(q => q.QuestionType == QuestionTypeEnum.Survey
-                                 || q.QuestionType == QuestionTypeEnum.OpenText);
+                    filtered = unassigned.Where(q =>
+                        q.QuestionType == QuestionTypeEnum.Survey ||
+                        q.QuestionType == QuestionTypeEnum.OpenText
+                    );
                     break;
                 case TestTypeEnum.Mixed:
                 default:
-                    filtered = candidates; // все
+                    filtered = unassigned;
                     break;
             }
 
-
-            // 6) Мапим в DTO
-            var dtoList = filtered.Select(q => _mapper.Map<QuestionDto>(q)).ToList();
-            return dtoList;
+            return _mapper.Map<List<QuestionDto>>(filtered);
         }
 
+        #endregion
 
+        #region PDF Report Generation
+
+        public async Task<byte[]> GenerateTestReportPdfAsync(int testId)
+        {
+            try
+            {
+                var test = await _testRepository.GetTestByIdAsync(testId);
+                if (test == null)
+                    throw new KeyNotFoundException($"Test with ID={testId} not found.");
+
+                int totalAttempts = await _analyticsService.GetTotalAttemptsAsync(testId);
+                double averageScore = await _analyticsService.GetAverageScoreAsync(testId);
+                var distribution = await _analyticsService.GetScoreDistributionAsync(testId);
+                var hardest = await _analyticsService.GetHardestQuestionsAsync(testId, 5);
+                var topPlayers = await _analyticsService.GetTopPlayersAsync(testId, 5);
+
+                return await GeneratePdfWithITextSharp(
+                    test,
+                    totalAttempts,
+                    averageScore,
+                    distribution,
+                    hardest,
+                    topPlayers
+                );
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error generating PDF for Test ID={testId}");
+                throw new Exception("Error generating PDF", ex);
+            }
+        }
+
+        /// <summary>
+        /// Generates the PDF using iTextSharp. 
+        /// This version uses only the built-in Helvetica font (no external file).
+        /// </summary>
+        private async Task<byte[]> GeneratePdfWithITextSharp(
+            Test test,
+            int totalAttempts,
+            double avgScore,
+            List<ScoreRangeDto> distribution,
+            List<HardQuestionDto> hardest,
+            List<TopPlayerDto> topPlayers)
+        {
+            using var ms = new MemoryStream();
+            var doc = new Document(PageSize.A4, 40, 40, 40, 40);
+            var writer = PdfWriter.GetInstance(doc, ms);
+            doc.Open();
+
+            // Use only the built-in font
+            BaseFont baseFont = BaseFont.CreateFont(BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+
+            var titleFont = new Font(baseFont, 16, Font.BOLD, BaseColor.BLACK);
+            var headingFont = new Font(baseFont, 13, Font.BOLD, BaseColor.BLACK);
+            var normalFont = new Font(baseFont, 11, Font.NORMAL, BaseColor.BLACK);
+            var smallFont = new Font(baseFont, 9, Font.NORMAL, BaseColor.GRAY);
+
+            // Document metadata
+            doc.AddAuthor("QuizMasterAPI");
+            doc.AddTitle($"Report for Test: {test.Name}");
+
+            // Title
+            var titleParagraph = new Paragraph($"Report for Test: {test.Name}\n", titleFont)
+            {
+                Alignment = Element.ALIGN_CENTER,
+                SpacingAfter = 10f
+            };
+            doc.Add(titleParagraph);
+
+            // Separator line
+            doc.Add(new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator()))
+            {
+                SpacingAfter = 10f
+            });
+
+            // Basic info table
+            var infoTable = new PdfPTable(2)
+            {
+                WidthPercentage = 80,
+                HorizontalAlignment = Element.ALIGN_LEFT,
+                SpacingBefore = 5f,
+                SpacingAfter = 10f
+            };
+            infoTable.DefaultCell.Border = Rectangle.NO_BORDER;
+
+            infoTable.AddCell(new PdfPCell(new Phrase("Topic:", headingFont)) { Border = Rectangle.NO_BORDER });
+            infoTable.AddCell(new PdfPCell(new Phrase(test.Topic?.Name ?? "---", normalFont)) { Border = Rectangle.NO_BORDER });
+
+            infoTable.AddCell(new PdfPCell(new Phrase("Created date:", headingFont)) { Border = Rectangle.NO_BORDER });
+            infoTable.AddCell(new PdfPCell(new Phrase(test.CreatedAt.ToString("yyyy-MM-dd"), normalFont)) { Border = Rectangle.NO_BORDER });
+
+            infoTable.AddCell(new PdfPCell(new Phrase("Total attempts:", headingFont)) { Border = Rectangle.NO_BORDER });
+            infoTable.AddCell(new PdfPCell(new Phrase(totalAttempts.ToString(), normalFont)) { Border = Rectangle.NO_BORDER });
+
+            infoTable.AddCell(new PdfPCell(new Phrase("Average score (%):", headingFont)) { Border = Rectangle.NO_BORDER });
+            infoTable.AddCell(new PdfPCell(new Phrase($"{avgScore:F1}%", normalFont)) { Border = Rectangle.NO_BORDER });
+
+            doc.Add(infoTable);
+
+            // Score Distribution
+            if (distribution.Any())
+            {
+                doc.Add(new Paragraph("Score Distribution (by percentage):", headingFont) { SpacingAfter = 5f });
+
+                var distTable = new PdfPTable(2)
+                {
+                    WidthPercentage = 50,
+                    SpacingBefore = 2f,
+                    SpacingAfter = 10f
+                };
+                distTable.SetWidths(new float[] { 60f, 40f }); // Range / People
+
+                var cellRange = new PdfPCell(new Phrase("Score range", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                };
+                var cellCount = new PdfPCell(new Phrase("People", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                };
+                distTable.AddCell(cellRange);
+                distTable.AddCell(cellCount);
+
+                foreach (var seg in distribution)
+                {
+                    var rangeCell = new PdfPCell(new Phrase(seg.RangeLabel, normalFont))
+                    {
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    var countCell = new PdfPCell(new Phrase(seg.Count.ToString(), normalFont))
+                    {
+                        HorizontalAlignment = Element.ALIGN_RIGHT
+                    };
+
+                    distTable.AddCell(rangeCell);
+                    distTable.AddCell(countCell);
+                }
+
+                doc.Add(distTable);
+            }
+
+            // Hardest questions
+            if (hardest.Any())
+            {
+                doc.Add(new Paragraph("Hardest Questions:", headingFont) { SpacingAfter = 5f });
+
+                var tableHard = new PdfPTable(3)
+                {
+                    WidthPercentage = 90,
+                    SpacingBefore = 2f,
+                    SpacingAfter = 10f
+                };
+                tableHard.SetWidths(new float[] { 60f, 20f, 20f });
+
+                tableHard.AddCell(new PdfPCell(new Phrase("Question", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+                tableHard.AddCell(new PdfPCell(new Phrase("Correct, %", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+                tableHard.AddCell(new PdfPCell(new Phrase("Attempts", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+
+                bool alternateRow = false;
+                foreach (var hq in hardest)
+                {
+                    var bgColor = alternateRow ? new BaseColor(240, 240, 240) : BaseColor.WHITE;
+                    alternateRow = !alternateRow;
+
+                    var c1 = new PdfPCell(new Phrase(hq.QuestionText, normalFont)) { BackgroundColor = bgColor };
+                    var c2 = new PdfPCell(new Phrase($"{hq.CorrectPercentage:F1}%", normalFont))
+                    {
+                        BackgroundColor = bgColor,
+                        HorizontalAlignment = Element.ALIGN_RIGHT
+                    };
+                    var c3 = new PdfPCell(new Phrase(hq.AttemptsCount.ToString(), normalFont))
+                    {
+                        BackgroundColor = bgColor,
+                        HorizontalAlignment = Element.ALIGN_RIGHT
+                    };
+
+                    // highlight if under 30%
+                    if (hq.CorrectPercentage < 30)
+                    {
+                        c2.BackgroundColor = new BaseColor(255, 200, 200);
+                    }
+
+                    tableHard.AddCell(c1);
+                    tableHard.AddCell(c2);
+                    tableHard.AddCell(c3);
+                }
+                doc.Add(tableHard);
+            }
+
+            // Top participants
+            if (topPlayers.Any())
+            {
+                doc.Add(new Paragraph("Top Participants:", headingFont) { SpacingAfter = 5f });
+
+                var tableTop = new PdfPTable(3)
+                {
+                    WidthPercentage = 80,
+                    SpacingBefore = 2f,
+                    SpacingAfter = 10f
+                };
+                tableTop.SetWidths(new float[] { 40f, 30f, 30f });
+
+                tableTop.AddCell(new PdfPCell(new Phrase("Participant", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+                tableTop.AddCell(new PdfPCell(new Phrase("Score, %", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+                tableTop.AddCell(new PdfPCell(new Phrase("Time", normalFont))
+                {
+                    BackgroundColor = BaseColor.LIGHT_GRAY,
+                    HorizontalAlignment = Element.ALIGN_CENTER
+                });
+
+                bool alt = false;
+                foreach (var tp in topPlayers)
+                {
+                    var bg = alt ? new BaseColor(240, 240, 240) : BaseColor.WHITE;
+                    alt = !alt;
+
+                    var nameCell = new PdfPCell(new Phrase(tp.UserFullName, normalFont)) { BackgroundColor = bg };
+                    var scoreCell = new PdfPCell(new Phrase($"{tp.ScorePercent:F1}%", normalFont))
+                    {
+                        BackgroundColor = bg,
+                        HorizontalAlignment = Element.ALIGN_RIGHT
+                    };
+                    var timeCell = new PdfPCell(new Phrase(tp.TimeSpentFormatted, normalFont))
+                    {
+                        BackgroundColor = bg,
+                        HorizontalAlignment = Element.ALIGN_RIGHT
+                    };
+
+                    tableTop.AddCell(nameCell);
+                    tableTop.AddCell(scoreCell);
+                    tableTop.AddCell(timeCell);
+                }
+                doc.Add(tableTop);
+            }
+
+            // Additional info
+            var additionalInfo = new Paragraph(
+                "Additional notes or instructions on how to interpret the report can be placed here.\n",
+                normalFont
+            )
+            {
+                SpacingBefore = 5f,
+                SpacingAfter = 10f
+            };
+            doc.Add(additionalInfo);
+
+            // Finish
+            doc.Close();
+            writer.Close();
+            return ms.ToArray();
+        }
+
+        #endregion
     }
 }

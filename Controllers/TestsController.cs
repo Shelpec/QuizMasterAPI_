@@ -248,5 +248,33 @@ namespace QuizMasterAPI.Controllers
                 return StatusCode(500, "Ошибка сервера");
             }
         }
+
+
+
+        [HttpGet("{testId}/report/pdf")]
+        public async Task<IActionResult> GetTestReportPdf(int testId)
+        {
+            try
+            {
+                byte[] pdfBytes = await _testService.GenerateTestReportPdfAsync(testId);
+                if (pdfBytes == null || pdfBytes.Length == 0)
+                {
+                    return NotFound("Could not generate PDF (empty).");
+                }
+
+                return File(pdfBytes, "application/pdf", $"TestReport_{testId}.pdf");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error generating PDF for test={TestId}", testId);
+                return StatusCode(500, "Error generating PDF");
+            }
+        }
+
+
     }
 }
